@@ -10,8 +10,9 @@ app.use(cors());
 
 app.use('/search/:category/:query', async (req: Request, res: Response) => {
   try {
-    const searchResult = await axios.get(`https://api.jikan.moe/v3/search/anime?q=naruto&limit=1`);
-    console.log(searchResult.data.results);
+    const searchResult = await axios.get(
+      `https://api.jikan.moe/v3/search/${req.params.category}?q=${req.params.query}&limit=20`
+    );
 
     return res.status(200).send(searchResult.data.results);
   } catch (error) {

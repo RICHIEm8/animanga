@@ -5,24 +5,27 @@ import { Home } from './pages/Home';
 import { Results } from './pages/Results';
 import { SingleView } from './pages/SingleView';
 import { QueryParamProvider } from 'use-query-params';
+import { SearchContextProvider } from './hooks/SearchContext';
 
 function App() {
   return (
     <Router>
       <QueryParamProvider ReactRouterRoute={Route}>
-        <Nav />
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/results" exact>
-            <Results />
-          </Route>
-          <Route path="/single-view" exact>
-            <SingleView />
-          </Route>
-          <Redirect to="/" />
-        </Switch>
+        <SearchContextProvider>
+          <Nav />
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/results" exact>
+              <Results />
+            </Route>
+            <Route path="/single-view" exact>
+              <SingleView />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        </SearchContextProvider>
       </QueryParamProvider>
     </Router>
   );

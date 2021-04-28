@@ -1,25 +1,29 @@
-import { Alert, AlertIcon, AlertTitle, Flex, Spinner } from '@chakra-ui/react';
-import _ from 'lodash';
+import { SearchIcon } from '@chakra-ui/icons';
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Flex,
+  HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { StringParam, useQueryParam } from 'use-query-params';
-import { animeResults } from '../api/api';
 import { Anime } from '../components/Anime';
+import { useSearchContext } from '../hooks/SearchContext';
 
 export const Results = () => {
-  const [category] = useQueryParam('category', StringParam);
-  const [searchTerm] = useQueryParam('searchTerm', StringParam);
-
-  const { isFetching, data, error, isError } = useQuery(searchTerm || 'searchTerm', () => {
-    if (!_.isNil(category) && !_.isNil(searchTerm)) {
-      return animeResults(category, searchTerm);
-    }
-  });
+  const { isFetching, searchData, error, isError } = useSearchContext();
+  console.log('rendering', searchData);
 
   if (isFetching) {
     return (
       <Flex h="100vh" justify="center">
-        <Spinner color="red" />
+        <Spinner color="blue" />
       </Flex>
     );
   }
@@ -30,9 +34,40 @@ export const Results = () => {
     </Alert>;
   }
 
-  if (!data) {
+  if (!searchData) {
     return null;
   }
 
-  return <Anime animeResults={data} />;
+  return (
+    <Flex flexDir="column" mx={200} borderLeft="1px solid #E1E7F5" borderRight="1px solid #E1E7F5">
+      <HStack justify="center" my={10}>
+        <InputGroup size="lg" w={700}>
+          <Input bgColor="white" borderRadius={5} placeholder="Search Anime..." />
+          <InputRightElement
+            children={<IconButton size="lg" aria-label="Search API" icon={<SearchIcon />} />}
+          />
+        </InputGroup>
+      </HStack>
+      <Text fontWeight="bold" borderBottom="1px" mb={2} pl={2}>
+        Search Results
+      </Text>
+      <Flex>
+        <HStack bgColor="#E1E7F5" spacing={5} pr={2} py={1}>
+          <Text fontWeight="bold" w={805} align="center">
+            Title
+          </Text>
+          <Text fontWeight="bold" align="center" w={55}>
+            Type
+          </Text>
+          <Text fontWeight="bold" align="center" w={55}>
+            Eps.
+          </Text>
+          <Text fontWeight="bold" align="center" w={55}>
+            Score
+          </Text>
+        </HStack>
+      </Flex>
+      <Anime animeSearchResults={searchData} />
+    </Flex>
+  );
 };

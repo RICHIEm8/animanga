@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export interface AnimeResult {
+  mal_id: number;
   url: string;
   image_url: string;
   title: string;
@@ -15,6 +16,5 @@ export interface AnimeResult {
 export const animeResults = async (category: string, query: string): Promise<AnimeResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/${category}/${query}`);
 
-  console.log('working', results.data.results);
-  return results.data.results;
+  return results.data;
 };
