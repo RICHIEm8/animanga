@@ -63,6 +63,9 @@ export const Nav = () => {
               <option value="all">All</option>
               <option value="anime">Anime</option>
               <option value="manga">Manga</option>
+              <option value="characters">Characters</option>
+              <option value="people">People</option>
+              <option value="news">News</option>
             </Select>
             <InputGroup size="sm">
               <Input
@@ -88,10 +91,6 @@ export const Nav = () => {
           </HStack>
         </form>
       </Flex>
-
-      <Text bgColor="#E1E7F5" mt={0} pl={2} fontWeight="bold" fontSize={20}>
-        Welcome to AniMan
-      </Text>
     </Flex>
   );
 };

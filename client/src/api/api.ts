@@ -9,6 +9,7 @@ export interface AnimeResult {
   synopsis: string;
   type: string;
   episodes: number;
+  chapters: number;
   score: number;
   rated: string;
 }

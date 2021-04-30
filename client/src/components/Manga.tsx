@@ -21,15 +21,15 @@ interface Props {
   animeSearchResults: AnimeResult[];
 }
 
-export const Anime = (props: Props) => {
+export const Manga = (props: Props) => {
   const { animeSearchResults } = props;
 
   const animeResults = _.map(animeSearchResults, (anime) => {
-    const epCheck = () => {
-      if (anime.episodes === 0) {
+    const chptCheck = () => {
+      if (anime.chapters === 0) {
         return '-';
       } else {
-        return anime.episodes;
+        return anime.chapters;
       }
     };
 
@@ -43,7 +43,7 @@ export const Anime = (props: Props) => {
 
     return (
       <ListItem listStyleType="none" key={anime.mal_id} py={2} borderBottom="1px solid #E1E7F5">
-        <HStack align="left" spacing={1.5}>
+        <HStack align="left" spacing={2}>
           <Image w={75} h={100} fit="cover" src={anime.image_url} />
           <VStack align="left">
             <Heading size="xs">{anime.title}</Heading>
@@ -54,7 +54,7 @@ export const Anime = (props: Props) => {
               {anime.type}
             </Text>
             <Text w={45} align="center">
-              {epCheck()}
+              {chptCheck()}
             </Text>
             <Text w={45} align="center">
               {scoreCheck()}
@@ -75,7 +75,7 @@ export const Anime = (props: Props) => {
           Type
         </Text>
         <Text fontWeight="bold" align="center" w={55}>
-          Eps.
+          Chpts.
         </Text>
         <Text fontWeight="bold" align="center" w={55}>
           Score
