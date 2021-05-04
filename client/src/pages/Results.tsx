@@ -14,8 +14,10 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Anime } from '../components/Anime';
-import { Manga } from '../components/Manga';
+import { AllSearch } from '../components/AllSearch';
+import { Anime } from '../components/AnimeSearch';
+import { Manga } from '../components/MangaSearch';
+import { Character } from '../components/CharacterSearch';
 import { useSearchContext } from '../hooks/SearchContext';
 
 export const Results = () => {
@@ -23,7 +25,7 @@ export const Results = () => {
 
   const {
     isFetching,
-    searchData,
+    data,
     error,
     isError,
     category,
@@ -32,7 +34,7 @@ export const Results = () => {
     setQuery,
     refetch,
   } = useSearchContext();
-  console.log('rendering', searchData);
+  console.log('rendering', data);
 
   if (isFetching) {
     return (
@@ -48,7 +50,7 @@ export const Results = () => {
     </Alert>;
   }
 
-  if (!searchData) {
+  if (!data) {
     return null;
   }
 
@@ -65,14 +67,26 @@ export const Results = () => {
       return 'Anime Search';
     } else if (category === 'manga') {
       return 'Manga Search';
+    } else if (category === 'characters') {
+      return 'Character Search';
     }
   };
 
   const dataDisplayCheck = () => {
-    if (category === 'anime') {
-      return <Anime animeSearchResults={searchData} />;
+    if (category === 'all') {
+      return (
+        <AllSearch
+          animeSearchResults={data.animeResults}
+          mangaSearchResults={data.mangaResults}
+          charactersSearchResults={data.charactersResults}
+        />
+      );
+    } else if (category === 'anime') {
+      return <Anime animeSearchResults={data.animeResults} />;
     } else if (category === 'manga') {
-      return <Manga animeSearchResults={searchData} />;
+      return <Manga mangaSearchResults={data.mangaResults} />;
+    } else if (category === 'characters') {
+      return <Character charactersSearchResults={data.charactersResults} />;
     }
   };
 

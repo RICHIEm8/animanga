@@ -3,7 +3,20 @@ import React from 'react';
 import react, { useState } from 'react';
 import { QueryObserverResult, useQuery } from 'react-query';
 import { StringParam, useQueryParam } from 'use-query-params';
-import { AnimeResult, animeResults } from '../api/api';
+import {
+  AnimeResult,
+  animeResults,
+  CharactersResult,
+  charactersResults,
+  MangaResult,
+  mangaResults,
+} from '../api/api';
+
+export interface AllSearchResult {
+  animeResults: AnimeResult[];
+  mangaResults: MangaResult[];
+  charactersResults: CharactersResult[];
+}
 
 interface SearchContext {
   category: string | null | undefined;
@@ -11,35 +24,63 @@ interface SearchContext {
   query: string | null | undefined;
   setQuery: (query: string) => void;
   isFetching: boolean;
-  searchData: AnimeResult[];
+  data: AllSearchResult | undefined;
   error: unknown;
   isError: boolean;
-  refetch: () => Promise<QueryObserverResult<AnimeResult[] | undefined, unknown>>;
+  refetch: () => Promise<QueryObserverResult<AllSearchResult | undefined, unknown>>;
 }
+
+const doSearch = async (
+  category: string | undefined | null,
+  query: string | undefined | null
+): Promise<AllSearchResult> => {
+  if (_.isNil(query)) {
+    return {
+      animeResults: [],
+      mangaResults: [],
+      charactersResults: [],
+    };
+  } else if (category === 'all') {
+    return {
+      animeResults: await animeResults(query),
+      mangaResults: await mangaResults(query),
+      charactersResults: await charactersResults(query),
+    };
+  } else if (category === 'anime') {
+    return {
+      animeResults: await animeResults(query),
+      mangaResults: [],
+      charactersResults: [],
+    };
+  } else if (category === 'manga') {
+    return {
+      animeResults: [],
+      mangaResults: await mangaResults(query),
+      charactersResults: [],
+    };
+  } else if (category === 'characters') {
+    return {
+      animeResults: [],
+      mangaResults: [],
+      charactersResults: await charactersResults(query),
+    };
+  }
+  return {
+    animeResults: [],
+    mangaResults: [],
+    charactersResults: [],
+  };
+};
 
 export const SearchContext = React.createContext<SearchContext>(null as any);
 
 export const SearchContextProvider = (props: React.PropsWithChildren<{}>) => {
   const [category, setCategory] = useQueryParam('category', StringParam);
   const [query, setQuery] = useQueryParam('query', StringParam);
-  const [searchData, setSearchData] = useState([]);
 
-  const { isFetching, data, error, isError, refetch } = useQuery(
-    query || 'query',
-    () => {
-      if (!_.isNil(category) && !_.isNil(query)) {
-        return animeResults(category, query);
-      }
-    },
-    { enabled: false }
-  );
-
-  React.useEffect(() => {
-    console.log('setting new data as it changed', { prev: searchData, curr: data });
-    if (data) {
-      setSearchData(data as any);
-    }
-  }, [data]);
+  const { isFetching, data, error, isError, refetch } = useQuery('search', async () => {
+    return doSearch(category, query);
+  });
 
   const value = {
     category,
@@ -47,7 +88,7 @@ export const SearchContextProvider = (props: React.PropsWithChildren<{}>) => {
     query,
     setQuery,
     isFetching,
-    searchData,
+    data,
     error,
     isError,
     refetch,

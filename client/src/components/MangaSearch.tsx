@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import react from 'react';
-import { AnimeResult } from '../api/api';
+import { MangaResult } from '../api/api';
 import {
   Avatar,
   Flex,
@@ -18,40 +18,40 @@ import {
 import React from 'react';
 
 interface Props {
-  animeSearchResults: AnimeResult[];
+  mangaSearchResults: MangaResult[];
 }
 
 export const Manga = (props: Props) => {
-  const { animeSearchResults } = props;
+  const { mangaSearchResults } = props;
 
-  const animeResults = _.map(animeSearchResults, (anime) => {
+  const mangaResults = _.map(mangaSearchResults, (manga) => {
     const chptCheck = () => {
-      if (anime.chapters === 0) {
+      if (manga.chapters === 0) {
         return '-';
       } else {
-        return anime.chapters;
+        return manga.chapters;
       }
     };
 
     const scoreCheck = () => {
-      if (anime.score === 0) {
+      if (manga.score === 0) {
         return '-';
       } else {
-        return anime.score;
+        return manga.score;
       }
     };
 
     return (
-      <ListItem listStyleType="none" key={anime.mal_id} py={2} borderBottom="1px solid #E1E7F5">
+      <ListItem listStyleType="none" key={manga.mal_id} py={2} borderBottom="1px solid #E1E7F5">
         <HStack align="left" spacing={2}>
-          <Image w={75} h={100} fit="cover" src={anime.image_url} />
+          <Image w={75} h={100} fit="cover" src={manga.image_url} />
           <VStack align="left">
-            <Heading size="xs">{anime.title}</Heading>
-            <Text w={700}>{anime.synopsis}</Text>
+            <Heading size="xs">{manga.title}</Heading>
+            <Text w={700}>{manga.synopsis}</Text>
           </VStack>
           <HStack spacing={6}>
             <Text w={68} align="center">
-              {anime.type}
+              {manga.type}
             </Text>
             <Text w={45} align="center">
               {chptCheck()}
@@ -81,7 +81,7 @@ export const Manga = (props: Props) => {
           Score
         </Text>
       </HStack>
-      {animeResults}
+      {mangaResults}
     </UnorderedList>
   );
 };

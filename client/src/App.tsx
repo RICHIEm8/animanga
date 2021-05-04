@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Nav } from './components/Nav';
+import { Nav } from './components/NavBar';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Results } from './pages/Results';
