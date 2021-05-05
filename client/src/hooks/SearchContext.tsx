@@ -21,6 +21,8 @@ export interface AllSearchResult {
 interface SearchContext {
   category: string | null | undefined;
   setCategory: (category: string) => void;
+  currentCategory: string | null | undefined;
+  setCurrentCategory: (currentCategory: string) => void;
   query: string | null | undefined;
   setQuery: (query: string) => void;
   isFetching: boolean;
@@ -76,15 +78,24 @@ export const SearchContext = React.createContext<SearchContext>(null as any);
 
 export const SearchContextProvider = (props: React.PropsWithChildren<{}>) => {
   const [category, setCategory] = useQueryParam('category', StringParam);
+  const [currentCategory, setCurrentCategory] = useState<string | null | undefined>();
   const [query, setQuery] = useQueryParam('query', StringParam);
 
-  const { isFetching, data, error, isError, refetch } = useQuery('search', async () => {
-    return doSearch(category, query);
-  });
+  const { isFetching, data, error, isError, refetch } = useQuery(
+    'search',
+    async () => {
+      const search = await doSearch(category, query);
+      setCurrentCategory(category);
+      return search;
+    },
+    { enabled: false }
+  );
 
   const value = {
     category,
     setCategory,
+    currentCategory,
+    setCurrentCategory,
     query,
     setQuery,
     isFetching,

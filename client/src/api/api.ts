@@ -9,13 +9,11 @@ export interface AnimeResult {
   synopsis: string;
   type: string;
   episodes: number;
-  chapters: number;
   score: number;
+  start_date: string;
+  end_date: string;
+  members: number;
   rated: string;
-  alternative_names: string;
-  anime: [];
-  manga: [];
-  name: string;
 }
 
 export interface MangaResult {
@@ -23,12 +21,15 @@ export interface MangaResult {
   url: string;
   image_url: string;
   title: string;
-  airing: boolean;
+  publishing: boolean;
   synopsis: string;
   type: string;
   chapters: number;
+  volumes: number;
   score: number;
-  rated: string;
+  start_date: string;
+  end_date: string;
+  members: number;
 }
 
 export interface CharactersResult {
@@ -36,8 +37,18 @@ export interface CharactersResult {
   name: string;
   image_url: string;
   alternative_names: string;
-  anime: [];
-  manga: [];
+  anime: {
+    mal_id: string;
+    type: string;
+    name: string;
+    url: string;
+  }[];
+  manga: {
+    mal_id: string;
+    type: string;
+    name: string;
+    url: string;
+  }[];
 }
 
 export interface PeopleResult {

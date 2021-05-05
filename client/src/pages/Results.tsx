@@ -30,11 +30,11 @@ export const Results = () => {
     isError,
     category,
     setCategory,
+    currentCategory,
     query,
     setQuery,
     refetch,
   } = useSearchContext();
-  console.log('rendering', data);
 
   if (isFetching) {
     return (
@@ -61,19 +61,19 @@ export const Results = () => {
   };
 
   const categoryCheck = () => {
-    if (category === 'all') {
+    if (currentCategory === 'all') {
       return 'Search All';
-    } else if (category === 'anime') {
+    } else if (currentCategory === 'anime') {
       return 'Anime Search';
-    } else if (category === 'manga') {
+    } else if (currentCategory === 'manga') {
       return 'Manga Search';
-    } else if (category === 'characters') {
+    } else if (currentCategory === 'characters') {
       return 'Character Search';
     }
   };
 
   const dataDisplayCheck = () => {
-    if (category === 'all') {
+    if (currentCategory === 'all') {
       return (
         <AllSearch
           animeSearchResults={data.animeResults}
@@ -81,11 +81,11 @@ export const Results = () => {
           charactersSearchResults={data.charactersResults}
         />
       );
-    } else if (category === 'anime') {
+    } else if (currentCategory === 'anime') {
       return <Anime animeSearchResults={data.animeResults} />;
-    } else if (category === 'manga') {
+    } else if (currentCategory === 'manga') {
       return <Manga mangaSearchResults={data.mangaResults} />;
-    } else if (category === 'characters') {
+    } else if (currentCategory === 'characters') {
       return <Character charactersSearchResults={data.charactersResults} />;
     }
   };
