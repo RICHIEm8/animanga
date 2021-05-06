@@ -65,7 +65,6 @@ export const Nav = () => {
               <option value="manga">Manga</option>
               <option value="characters">Characters</option>
               <option value="people">People</option>
-              <option value="news">News</option>
             </Select>
             <InputGroup size="sm">
               <Input

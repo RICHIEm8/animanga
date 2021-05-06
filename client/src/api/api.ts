@@ -53,6 +53,7 @@ export interface CharactersResult {
 
 export interface PeopleResult {
   mal_id: number;
+  url: string;
   name: string;
   alternative_names: string;
   image_url: string;
@@ -81,10 +82,10 @@ export const charactersResults = async (query: string): Promise<CharactersResult
   return results.data;
 };
 
-export const personResults = async (query: string): Promise<AnimeResult[]> => {
-  const results = await axios.get(`http://localhost:8080/search/person/${query}`);
+export const peopleResults = async (query: string): Promise<PeopleResult[]> => {
+  const results = await axios.get(`http://localhost:8080/search/people/${query}`);
 
-  console.log('person', results.data);
+  console.log('people', results.data);
 
   return results.data;
 };

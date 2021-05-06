@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
-import react, { useState } from 'react';
+import React, { useState } from 'react';
 import { QueryObserverResult, useQuery } from 'react-query';
 import { StringParam, useQueryParam } from 'use-query-params';
 import {
@@ -10,12 +9,15 @@ import {
   charactersResults,
   MangaResult,
   mangaResults,
+  PeopleResult,
+  peopleResults,
 } from '../api/api';
 
 export interface AllSearchResult {
   animeResults: AnimeResult[];
   mangaResults: MangaResult[];
   charactersResults: CharactersResult[];
+  peopleResults: PeopleResult[];
 }
 
 interface SearchContext {
@@ -41,36 +43,49 @@ const doSearch = async (
       animeResults: [],
       mangaResults: [],
       charactersResults: [],
+      peopleResults: [],
     };
   } else if (category === 'all') {
     return {
       animeResults: await animeResults(query),
       mangaResults: await mangaResults(query),
       charactersResults: await charactersResults(query),
+      peopleResults: await peopleResults(query),
     };
   } else if (category === 'anime') {
     return {
       animeResults: await animeResults(query),
       mangaResults: [],
       charactersResults: [],
+      peopleResults: [],
     };
   } else if (category === 'manga') {
     return {
       animeResults: [],
       mangaResults: await mangaResults(query),
       charactersResults: [],
+      peopleResults: [],
     };
   } else if (category === 'characters') {
     return {
       animeResults: [],
       mangaResults: [],
       charactersResults: await charactersResults(query),
+      peopleResults: [],
+    };
+  } else if (category === 'people') {
+    return {
+      animeResults: [],
+      mangaResults: [],
+      charactersResults: [],
+      peopleResults: await peopleResults(query),
     };
   }
   return {
     animeResults: [],
     mangaResults: [],
     charactersResults: [],
+    peopleResults: [],
   };
 };
 

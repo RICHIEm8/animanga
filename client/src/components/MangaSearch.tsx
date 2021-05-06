@@ -1,21 +1,7 @@
+import { Heading, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
-import react from 'react';
-import { MangaResult } from '../api/api';
-import {
-  Avatar,
-  Flex,
-  Text,
-  Wrap,
-  WrapItem,
-  Image,
-  Heading,
-  VStack,
-  HStack,
-  Box,
-  UnorderedList,
-  ListItem,
-} from '@chakra-ui/react';
 import React from 'react';
+import { MangaResult } from '../api/api';
 
 interface Props {
   mangaSearchResults: MangaResult[];
@@ -67,6 +53,9 @@ export const Manga = (props: Props) => {
 
   return (
     <UnorderedList>
+      <Text fontWeight="bold" borderBottom="1px" mb={2} mr={4}>
+        Search Results
+      </Text>
       <HStack w={1007} bgColor="#E1E7F5" spacing={5} pr={2} py={1}>
         <Text fontWeight="bold" w={805} align="center">
           Title

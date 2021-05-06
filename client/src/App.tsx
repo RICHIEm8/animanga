@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { QueryParamProvider } from 'use-query-params';
 import { Nav } from './components/NavBar';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { SearchContextProvider } from './hooks/SearchContext';
 import { Home } from './pages/Home';
 import { Results } from './pages/Results';
 import { SingleView } from './pages/SingleView';
-import { QueryParamProvider } from 'use-query-params';
-import { SearchContextProvider } from './hooks/SearchContext';
 
 function App() {
   return (

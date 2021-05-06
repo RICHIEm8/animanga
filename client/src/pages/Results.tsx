@@ -16,8 +16,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { AllSearch } from '../components/AllSearch';
 import { Anime } from '../components/AnimeSearch';
-import { Manga } from '../components/MangaSearch';
 import { Character } from '../components/CharacterSearch';
+import { Manga } from '../components/MangaSearch';
+import { People } from '../components/PeopleSearch';
 import { useSearchContext } from '../hooks/SearchContext';
 
 export const Results = () => {
@@ -69,6 +70,8 @@ export const Results = () => {
       return 'Manga Search';
     } else if (currentCategory === 'characters') {
       return 'Character Search';
+    } else if (currentCategory === 'people') {
+      return 'People';
     }
   };
 
@@ -79,6 +82,7 @@ export const Results = () => {
           animeSearchResults={data.animeResults}
           mangaSearchResults={data.mangaResults}
           charactersSearchResults={data.charactersResults}
+          peopleSearchResults={data.peopleResults}
         />
       );
     } else if (currentCategory === 'anime') {
@@ -87,6 +91,8 @@ export const Results = () => {
       return <Manga mangaSearchResults={data.mangaResults} />;
     } else if (currentCategory === 'characters') {
       return <Character charactersSearchResults={data.charactersResults} />;
+    } else if (currentCategory === 'people') {
+      return <People peopleSearchResult={data.peopleResults} />;
     }
   };
 
@@ -120,9 +126,7 @@ export const Results = () => {
           </InputGroup>
         </form>
       </HStack>
-      <Text fontWeight="bold" borderBottom="1px" mb={2} mx={4}>
-        Search Results
-      </Text>
+
       {dataDisplayCheck()}
     </Flex>
   );

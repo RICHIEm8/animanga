@@ -1,21 +1,7 @@
+import { Heading, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
-import react from 'react';
-import { AnimeResult, animeResults, CharactersResult } from '../api/api';
-import {
-  Avatar,
-  Flex,
-  Text,
-  Wrap,
-  WrapItem,
-  Image,
-  Heading,
-  VStack,
-  HStack,
-  Box,
-  UnorderedList,
-  ListItem,
-} from '@chakra-ui/react';
 import React from 'react';
+import { CharactersResult } from '../api/api';
 
 interface Props {
   charactersSearchResults: CharactersResult[];
@@ -33,21 +19,47 @@ export const Character = (props: Props) => {
       return anime.name;
     });
 
+    const mangaNames = _.map(character.manga, (manga) => {
+      return manga.name;
+    });
+
+    const animeCheck = !_.isEmpty(character.anime) ? (
+      <Text fontSize="xs" w={800}>
+        <b>Anime:</b> {_.join(animeNames, ', ')}
+      </Text>
+    ) : null;
+
+    const mangaCheck = !_.isEmpty(character.manga) ? (
+      <Text fontSize="xs" w={800}>
+        <b>Manga:</b> {_.join(mangaNames, ', ')}
+      </Text>
+    ) : null;
+
     return (
       <ListItem listStyleType="none" key={character.mal_id} py={2} borderBottom="1px solid #E1E7F5">
-        <HStack>
-          <Image w={75} h={100} fit="cover" src={character.image_url} />
-          <VStack align="left">
-            <Heading size="xs">{character.name}</Heading>
-            {altNames}
-          </VStack>
+        <HStack mr={4}>
+          <HStack w={200}>
+            <Image w={75} h={100} fit="cover" src={character.image_url} />
+            <VStack align="left">
+              <Heading size="xs">{character.name}</Heading>
+              {altNames}
+            </VStack>
+          </HStack>
           <VStack>
-            <Text whiteSpace="pre-wrap">{_.join(animeNames, '\n')}</Text>
+            {animeCheck}
+            {mangaCheck}
           </VStack>
         </HStack>
       </ListItem>
     );
   });
 
-  return <UnorderedList>{charactersResults}</UnorderedList>;
+  return (
+    <UnorderedList>
+      <Text fontWeight="bold" borderBottom="1px" mb={2} mr={4}>
+        Search Results
+      </Text>
+      {charactersResults}
+    </UnorderedList>
+  );
 };
