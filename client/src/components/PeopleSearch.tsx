@@ -1,5 +1,5 @@
 import { Image } from '@chakra-ui/image';
-import { HStack, ListItem, UnorderedList, Heading, Text, VStack } from '@chakra-ui/layout';
+import { HStack, ListItem, UnorderedList, Heading, Text, VStack, Link } from '@chakra-ui/layout';
 import _ from 'lodash';
 
 import react from 'react';
@@ -22,7 +22,12 @@ export const People = (props: Props) => {
         <HStack>
           <Image w={50} h={75} fit="cover" src={people.image_url} />
           <VStack align="left">
-            <Heading size="xs">{people.name}</Heading>
+            <Link>
+              <Heading color="#2E51A2" size="xs">
+                {people.name}
+              </Heading>
+            </Link>
+
             {altNames}
           </VStack>
         </HStack>

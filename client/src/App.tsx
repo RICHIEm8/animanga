@@ -6,6 +6,8 @@ import { SearchContextProvider } from './hooks/SearchContext';
 import { Home } from './pages/Home';
 import { Results } from './pages/Results';
 import { SingleView } from './pages/SingleView';
+import { TopAnime } from './pages/TopAnime';
+import { topAnimeResults } from './api/api';
 
 function App() {
   return (
@@ -23,6 +25,9 @@ function App() {
             <Route path="/single-view" exact>
               <SingleView />
             </Route>
+            {/* <Route path="/top-anime" exact>
+              <TopAnime topAnimeResults={topAnimeResults} />
+            </Route> */}
             <Redirect to="/" />
           </Switch>
         </SearchContextProvider>

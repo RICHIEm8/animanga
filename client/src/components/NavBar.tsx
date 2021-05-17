@@ -1,6 +1,7 @@
 import { SearchIcon } from '@chakra-ui/icons';
 import {
   Box,
+  Button,
   Flex,
   Heading,
   HStack,
@@ -10,6 +11,10 @@ import {
   InputRightElement,
   LinkBox,
   LinkOverlay,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Select,
   Text,
 } from '@chakra-ui/react';
@@ -46,9 +51,81 @@ export const Nav = () => {
         </Box>
       </LinkBox>
       <Flex justify="space-between" bg="#2E51A2" h={50}>
-        <HStack fontWeight="bold" color="white" spacing={10} px={5}>
-          <Text>Anime</Text>
-          <Text>Manga</Text>
+        <HStack fontWeight="bold" color="white" spacing={0}>
+          <Menu autoSelect={false}>
+            <MenuButton
+              _hover={{ color: 'black', background: '#E1E7F5' }}
+              px={5}
+              py={3.5}
+              fontWeight="bold"
+              _expanded={{ color: 'black', background: '#E1E7F5' }}
+            >
+              Anime
+            </MenuButton>
+            <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
+              <MenuItem
+                pl={5}
+                color="black"
+                _hover={{ background: '#2E51A2', color: 'white' }}
+                onClick={() => {
+                  history.push(`top-anime`);
+                }}
+              >
+                Top Anime
+              </MenuItem>
+              <MenuItem pl={5} color="black" _hover={{ background: '#2E51A2', color: 'white' }}>
+                Seasonal Anime
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          <Menu autoSelect={false}>
+            <MenuButton
+              _hover={{ color: 'black', background: '#E1E7F5' }}
+              px={5}
+              py={3.5}
+              fontWeight="bold"
+              _expanded={{ color: 'black', background: '#E1E7F5' }}
+            >
+              Manga
+            </MenuButton>
+            <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
+              <MenuItem pl={5} color="black" _hover={{ background: '#2E51A2', color: 'white' }}>
+                Top Manga
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          <Menu autoSelect={false}>
+            <MenuButton
+              _hover={{ color: 'black', background: '#E1E7F5' }}
+              px={5}
+              py={3.5}
+              fontWeight="bold"
+              _expanded={{ color: 'black', background: '#E1E7F5' }}
+            >
+              Characters
+            </MenuButton>
+            <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
+              <MenuItem pl={5} color="black" _hover={{ background: '#2E51A2', color: 'white' }}>
+                Top Characters
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          <Menu autoSelect={false}>
+            <MenuButton
+              _hover={{ color: 'black', background: '#E1E7F5' }}
+              px={5}
+              py={3.5}
+              fontWeight="bold"
+              _expanded={{ color: 'black', background: '#E1E7F5' }}
+            >
+              People
+            </MenuButton>
+            <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
+              <MenuItem pl={5} color="black" _hover={{ background: '#2E51A2', color: 'white' }}>
+                Top People
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </HStack>
         <form onSubmit={onSubmit}>
           <HStack px={15} spacing={2} h={50}>

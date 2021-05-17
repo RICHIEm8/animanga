@@ -1,4 +1,13 @@
-import { Heading, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
+import {
+  Heading,
+  HStack,
+  Image,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
+  VStack,
+} from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
 import { AnimeResult } from '../api/api';
@@ -32,7 +41,11 @@ export const Anime = (props: Props) => {
         <HStack align="left" spacing={1.5}>
           <Image w={75} h={100} fit="cover" src={anime.image_url} />
           <VStack align="left">
-            <Heading size="xs">{anime.title}</Heading>
+            <Link>
+              <Heading color="#2E51A2" size="xs">
+                {anime.title}
+              </Heading>
+            </Link>
             <Text w={700}>{anime.synopsis}</Text>
           </VStack>
           <HStack spacing={6}>

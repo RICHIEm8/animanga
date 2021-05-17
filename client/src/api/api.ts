@@ -59,6 +59,21 @@ export interface PeopleResult {
   image_url: string;
 }
 
+export interface TopAnimeResult {
+  mal_id: number;
+  url: string;
+  name: string;
+  image_url: string;
+  airing: boolean;
+  synopsis: string;
+  type: string;
+  episodes: number;
+  score: number;
+  start_date: string;
+  end_date: string;
+  rated: string;
+}
+
 export const animeResults = async (query: string): Promise<AnimeResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/anime/${query}`);
 
@@ -86,6 +101,14 @@ export const peopleResults = async (query: string): Promise<PeopleResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/people/${query}`);
 
   console.log('people', results.data);
+
+  return results.data;
+};
+
+export const topAnimeResults = async (): Promise<TopAnimeResult[]> => {
+  const results = await axios.get(`http://localhost:8080/search/anime/&order_by=score&sort=desc`);
+
+  console.log('top anime', results.data);
 
   return results.data;
 };

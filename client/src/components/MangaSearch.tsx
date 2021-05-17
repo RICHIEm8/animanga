@@ -1,4 +1,13 @@
-import { Heading, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
+import {
+  Heading,
+  HStack,
+  Image,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
+  VStack,
+} from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
 import { MangaResult } from '../api/api';
@@ -32,7 +41,12 @@ export const Manga = (props: Props) => {
         <HStack align="left" spacing={2}>
           <Image w={75} h={100} fit="cover" src={manga.image_url} />
           <VStack align="left">
-            <Heading size="xs">{manga.title}</Heading>
+            <Link>
+              <Heading color="#2E51A2" size="xs">
+                {manga.title}
+              </Heading>
+            </Link>
+
             <Text w={700}>{manga.synopsis}</Text>
           </VStack>
           <HStack spacing={6}>

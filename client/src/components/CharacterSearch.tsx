@@ -1,4 +1,13 @@
-import { Heading, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
+import {
+  Heading,
+  HStack,
+  Image,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
+  VStack,
+} from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
 import { CharactersResult } from '../api/api';
@@ -41,7 +50,12 @@ export const Character = (props: Props) => {
           <HStack w={200}>
             <Image w={75} h={100} fit="cover" src={character.image_url} />
             <VStack align="left">
-              <Heading size="xs">{character.name}</Heading>
+              <Link>
+                <Heading color="#2E51A2" size="xs">
+                  {character.name}
+                </Heading>
+              </Link>
+
               {altNames}
             </VStack>
           </HStack>
