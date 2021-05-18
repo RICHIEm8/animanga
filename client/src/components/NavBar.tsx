@@ -18,14 +18,16 @@ import {
   Select,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { useSearchContext } from '../hooks/SearchContext';
+import { useSearch } from '../hooks/UseSearch';
 
 export const Nav = () => {
   const history = useHistory();
 
-  const { category, setCategory, query, setQuery, refetch } = useSearchContext();
+  const { category, setCategory, query, setQuery } = useSearch();
+  const [currentQuery, setCurrentQuery] = useState(query);
+  const [currentCategory, setCurrentCategory] = useState(category);
 
   React.useEffect(() => {
     setCategory('all');
@@ -33,8 +35,7 @@ export const Nav = () => {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    await refetch();
-    history.push(`/results?category=${category}&query=${query}`);
+    history.push(`/results?category=${currentCategory}&query=${currentQuery}`);
   };
 
   const homeButton = () => {
@@ -65,6 +66,7 @@ export const Nav = () => {
             <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
               <MenuItem
                 pl={5}
+                mt={0}
                 color="black"
                 _hover={{ background: '#2E51A2', color: 'white' }}
                 onClick={() => {
@@ -134,7 +136,7 @@ export const Nav = () => {
               bgColor="white"
               borderRadius={5}
               onChange={(e) => {
-                setCategory(e.target.value);
+                setCurrentCategory(e.target.value);
               }}
             >
               <option value="all">All</option>
@@ -150,7 +152,7 @@ export const Nav = () => {
                 w={300}
                 placeholder="Search Anime, Manga and more..."
                 onChange={(e) => {
-                  setQuery(e.target.value);
+                  setCurrentQuery(e.target.value);
                 }}
               />
               <InputRightElement

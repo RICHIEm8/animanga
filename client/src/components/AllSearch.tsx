@@ -13,7 +13,7 @@ import _ from 'lodash';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { AnimeResult, CharactersResult, MangaResult, PeopleResult } from '../api/api';
-import { useSearchContext } from '../hooks/SearchContext';
+import { useSearch } from '../hooks/UseSearch';
 
 interface Props {
   animeSearchResults: AnimeResult[];
@@ -25,7 +25,7 @@ interface Props {
 export const AllSearch = (props: Props) => {
   const history = useHistory();
 
-  const { query, refetch } = useSearchContext();
+  const { query } = useSearch();
 
   const { animeSearchResults, mangaSearchResults, charactersSearchResults, peopleSearchResults } =
     props;
@@ -235,7 +235,7 @@ export const AllSearch = (props: Props) => {
         <Button
           onClick={async (e: any) => {
             e.preventDefault();
-            await refetch();
+
             history.push(`/results?category=anime&query=${query}`);
           }}
           mt={2}
@@ -268,7 +268,7 @@ export const AllSearch = (props: Props) => {
         <Button
           onClick={async (e: any) => {
             e.preventDefault();
-            await refetch();
+
             history.push(`/results?category=manga&query=${query}`);
           }}
           mt={2}
@@ -287,7 +287,7 @@ export const AllSearch = (props: Props) => {
         <Button
           onClick={async (e: any) => {
             e.preventDefault();
-            await refetch();
+
             history.push(`/results?category=characters&query=${query}`);
           }}
           mt={2}
@@ -306,7 +306,6 @@ export const AllSearch = (props: Props) => {
         <Button
           onClick={async (e: any) => {
             e.preventDefault();
-            await refetch();
             history.push(`/results?category=people&query=${query}`);
           }}
           mt={2}

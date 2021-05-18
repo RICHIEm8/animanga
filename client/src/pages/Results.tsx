@@ -12,38 +12,114 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
+import _ from 'lodash';
 import React from 'react';
+import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
+import {
+  AnimeResult,
+  animeResults,
+  CharactersResult,
+  charactersResults,
+  MangaResult,
+  mangaResults,
+  PeopleResult,
+  peopleResults,
+} from '../api/api';
 import { AllSearch } from '../components/AllSearch';
 import { Anime } from '../components/AnimeSearch';
 import { Character } from '../components/CharacterSearch';
 import { Manga } from '../components/MangaSearch';
 import { People } from '../components/PeopleSearch';
-import { useSearchContext } from '../hooks/SearchContext';
+import { useSearch } from '../hooks/UseSearch';
+
+export interface AllSearchResult {
+  animeResults: AnimeResult[];
+  mangaResults: MangaResult[];
+  charactersResults: CharactersResult[];
+  peopleResults: PeopleResult[];
+}
+
+const doSearch = async (
+  category: string | undefined | null,
+  query: string | undefined | null
+): Promise<AllSearchResult> => {
+  if (_.isNil(query)) {
+    return {
+      animeResults: [],
+      mangaResults: [],
+      charactersResults: [],
+      peopleResults: [],
+    };
+  } else if (category === 'all') {
+    return {
+      animeResults: await animeResults(query),
+      mangaResults: await mangaResults(query),
+      charactersResults: await charactersResults(query),
+      peopleResults: await peopleResults(query),
+    };
+  } else if (category === 'anime') {
+    return {
+      animeResults: await animeResults(query),
+      mangaResults: [],
+      charactersResults: [],
+      peopleResults: [],
+    };
+  } else if (category === 'manga') {
+    return {
+      animeResults: [],
+      mangaResults: await mangaResults(query),
+      charactersResults: [],
+      peopleResults: [],
+    };
+  } else if (category === 'characters') {
+    return {
+      animeResults: [],
+      mangaResults: [],
+      charactersResults: await charactersResults(query),
+      peopleResults: [],
+    };
+  } else if (category === 'people') {
+    return {
+      animeResults: [],
+      mangaResults: [],
+      charactersResults: [],
+      peopleResults: await peopleResults(query),
+    };
+  }
+  return {
+    animeResults: [],
+    mangaResults: [],
+    charactersResults: [],
+    peopleResults: [],
+  };
+};
 
 export const Results = () => {
   const history = useHistory();
 
-  const {
-    isFetching,
-    data,
-    error,
-    isError,
-    category,
-    setCategory,
-    currentCategory,
-    query,
-    setQuery,
-    refetch,
-  } = useSearchContext();
+  const { category, query, setQuery, setCategory } = useSearch();
 
-  if (isFetching) {
+  const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
+    'search',
+    async () => {
+      return doSearch(category, query);
+    },
+    { enabled: false }
+  );
+
+  React.useEffect(() => {
+    refetch();
+  }, [query, category]);
+
+  if (isLoading || isFetching) {
     return (
       <Flex h="100vh" justify="center">
         <Spinner color="blue" />
       </Flex>
     );
   }
+
   if (isError) {
     <Alert status="error">
       <AlertIcon />
@@ -57,26 +133,25 @@ export const Results = () => {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    await refetch();
     history.push(`/results?category=${category}&query=${query}`);
   };
 
-  const categoryCheck = () => {
-    if (currentCategory === 'all') {
-      return 'Search All';
-    } else if (currentCategory === 'anime') {
-      return 'Anime Search';
-    } else if (currentCategory === 'manga') {
-      return 'Manga Search';
-    } else if (currentCategory === 'characters') {
-      return 'Character Search';
-    } else if (currentCategory === 'people') {
-      return 'People';
-    }
-  };
+  // const categoryCheck = () => {
+  //   if (currentCategory === 'all') {
+  //     return 'Search All';
+  //   } else if (currentCategory === 'anime') {
+  //     return 'Anime Search';
+  //   } else if (currentCategory === 'manga') {
+  //     return 'Manga Search';
+  //   } else if (currentCategory === 'characters') {
+  //     return 'Character Search';
+  //   } else if (currentCategory === 'people') {
+  //     return 'People';
+  //   }
+  // };
 
   const dataDisplayCheck = () => {
-    if (currentCategory === 'all') {
+    if (category === 'all') {
       return (
         <AllSearch
           animeSearchResults={data.animeResults}
@@ -85,13 +160,13 @@ export const Results = () => {
           peopleSearchResults={data.peopleResults}
         />
       );
-    } else if (currentCategory === 'anime') {
+    } else if (category === 'anime') {
       return <Anime animeSearchResults={data.animeResults} />;
-    } else if (currentCategory === 'manga') {
+    } else if (category === 'manga') {
       return <Manga mangaSearchResults={data.mangaResults} />;
-    } else if (currentCategory === 'characters') {
+    } else if (category === 'characters') {
       return <Character charactersSearchResults={data.charactersResults} />;
-    } else if (currentCategory === 'people') {
+    } else if (category === 'people') {
       return <People peopleSearchResult={data.peopleResults} />;
     }
   };
@@ -99,7 +174,7 @@ export const Results = () => {
   return (
     <Flex flexDir="column" mx={200} borderLeft="1px solid #E1E7F5" borderRight="1px solid #E1E7F5">
       <Text bgColor="#E1E7F5" fontWeight="bold" fontSize={20} pl={1}>
-        {categoryCheck()}
+        {/* {categoryCheck()} */}
       </Text>
       <HStack justify="center" my={10}>
         <form onSubmit={onSubmit}>
