@@ -18,15 +18,18 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
+          {/* <Route path="/top-anime" exact>
+            <TopAnime topAnimeResults={topAnimeResults} />
+          </Route> */}
+          <Route path="/top-anime" exact>
+            {/* <TopAnime topAnimeResults={topAnimeResults} /> */}
+          </Route>
           <Route path="/results" exact>
             <Results />
           </Route>
           <Route path="/single-view" exact>
             <SingleView />
           </Route>
-          {/* <Route path="/top-anime" exact>
-              <TopAnime topAnimeResults={topAnimeResults} />
-            </Route> */}
           <Redirect to="/" />
         </Switch>
       </QueryParamProvider>

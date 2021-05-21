@@ -1,7 +1,6 @@
 import { SearchIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Button,
   Flex,
   Heading,
   HStack,
@@ -16,7 +15,6 @@ import {
   MenuItem,
   MenuList,
   Select,
-  Text,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
@@ -25,12 +23,19 @@ import { useSearch } from '../hooks/UseSearch';
 export const Nav = () => {
   const history = useHistory();
 
-  const { category, setCategory, query, setQuery } = useSearch();
-  const [currentQuery, setCurrentQuery] = useState(query);
-  const [currentCategory, setCurrentCategory] = useState(category);
+  const {
+    category,
+    setCategory,
+    query,
+    setQuery,
+    currentCategory,
+    setCurrentCategory,
+    currentQuery,
+    setCurrentQuery,
+  } = useSearch();
 
   React.useEffect(() => {
-    setCategory('all');
+    setCurrentCategory('all');
   }, []);
 
   const onSubmit = async (e: any) => {
@@ -42,11 +47,15 @@ export const Nav = () => {
     history.push('/');
   };
 
+  const topAnimeButton = () => {
+    history.push('/top-anime');
+  };
+
   return (
     <Flex justify="center" flexDir="column" mx={200}>
-      <LinkBox w={130} h={45}>
+      <LinkBox w={130} h={45} onClick={homeButton}>
         <Box>
-          <Heading as="h1" color="#2E51A2" onClick={homeButton}>
+          <Heading as="h1" color="#2E51A2">
             <LinkOverlay href="/">AniMan</LinkOverlay>
           </Heading>
         </Box>
@@ -66,12 +75,10 @@ export const Nav = () => {
             <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
               <MenuItem
                 pl={5}
-                mt={0}
+                mt={-2.5}
                 color="black"
                 _hover={{ background: '#2E51A2', color: 'white' }}
-                onClick={() => {
-                  history.push(`top-anime`);
-                }}
+                onClick={topAnimeButton}
               >
                 Top Anime
               </MenuItem>
@@ -91,7 +98,12 @@ export const Nav = () => {
               Manga
             </MenuButton>
             <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
-              <MenuItem pl={5} color="black" _hover={{ background: '#2E51A2', color: 'white' }}>
+              <MenuItem
+                mt={-2.5}
+                pl={5}
+                color="black"
+                _hover={{ background: '#2E51A2', color: 'white' }}
+              >
                 Top Manga
               </MenuItem>
             </MenuList>
@@ -107,7 +119,12 @@ export const Nav = () => {
               Characters
             </MenuButton>
             <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
-              <MenuItem pl={5} color="black" _hover={{ background: '#2E51A2', color: 'white' }}>
+              <MenuItem
+                mt={-2.5}
+                pl={5}
+                color="black"
+                _hover={{ background: '#2E51A2', color: 'white' }}
+              >
                 Top Characters
               </MenuItem>
             </MenuList>
@@ -123,7 +140,12 @@ export const Nav = () => {
               People
             </MenuButton>
             <MenuList background="#E1E7F5" mt={-2} pb={0} borderRadius={0}>
-              <MenuItem pl={5} color="black" _hover={{ background: '#2E51A2', color: 'white' }}>
+              <MenuItem
+                mt={-2.5}
+                pl={5}
+                color="black"
+                _hover={{ background: '#2E51A2', color: 'white' }}
+              >
                 Top People
               </MenuItem>
             </MenuList>

@@ -98,7 +98,7 @@ const doSearch = async (
 export const Results = () => {
   const history = useHistory();
 
-  const { category, query, setQuery, setCategory } = useSearch();
+  const { category, query, currentQuery, setCurrentQuery } = useSearch();
 
   const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
     'search',
@@ -133,22 +133,22 @@ export const Results = () => {
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    history.push(`/results?category=${category}&query=${query}`);
+    history.push(`/results?category=${category}&query=${currentQuery}`);
   };
 
-  // const categoryCheck = () => {
-  //   if (currentCategory === 'all') {
-  //     return 'Search All';
-  //   } else if (currentCategory === 'anime') {
-  //     return 'Anime Search';
-  //   } else if (currentCategory === 'manga') {
-  //     return 'Manga Search';
-  //   } else if (currentCategory === 'characters') {
-  //     return 'Character Search';
-  //   } else if (currentCategory === 'people') {
-  //     return 'People';
-  //   }
-  // };
+  const categoryCheck = () => {
+    if (category === 'all') {
+      return 'Search All';
+    } else if (category === 'anime') {
+      return 'Anime Search';
+    } else if (category === 'manga') {
+      return 'Manga Search';
+    } else if (category === 'characters') {
+      return 'Character Search';
+    } else if (category === 'people') {
+      return 'People Search';
+    }
+  };
 
   const dataDisplayCheck = () => {
     if (category === 'all') {
@@ -174,7 +174,7 @@ export const Results = () => {
   return (
     <Flex flexDir="column" mx={200} borderLeft="1px solid #E1E7F5" borderRight="1px solid #E1E7F5">
       <Text bgColor="#E1E7F5" fontWeight="bold" fontSize={20} pl={1}>
-        {/* {categoryCheck()} */}
+        {categoryCheck()}
       </Text>
       <HStack justify="center" my={10}>
         <form onSubmit={onSubmit}>
@@ -185,7 +185,7 @@ export const Results = () => {
               placeholder="Search Anime..."
               defaultValue={query || undefined}
               onChange={(e) => {
-                setQuery(e.target.value);
+                setCurrentQuery(e.target.value);
               }}
             />
             <InputRightElement

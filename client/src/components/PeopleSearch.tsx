@@ -1,8 +1,6 @@
 import { Image } from '@chakra-ui/image';
-import { HStack, ListItem, UnorderedList, Heading, Text, VStack, Link } from '@chakra-ui/layout';
+import { Heading, HStack, Link, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/layout';
 import _ from 'lodash';
-
-import react from 'react';
 import { PeopleResult } from '../api/api';
 
 interface Props {

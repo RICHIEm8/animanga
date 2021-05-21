@@ -208,114 +208,158 @@ export const AllSearch = (props: Props) => {
     );
   });
 
+  const animeResultsCheck = () => {
+    if (_.isEmpty(animeSearchResults)) {
+      return null;
+    } else {
+      return (
+        <UnorderedList align="center">
+          <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" my={2}>
+            Anime
+          </Text>
+          <HStack w={1000} bgColor="#E1E7F5" spacing={5} pr={2} py={1}>
+            <Text fontWeight="bold" w={805} align="center">
+              Title
+            </Text>
+            <Text fontWeight="bold" align="center" w={55}>
+              Type
+            </Text>
+            <Text fontWeight="bold" align="center" w={55}>
+              Eps.
+            </Text>
+            <Text fontWeight="bold" align="center" w={55}>
+              Score
+            </Text>
+          </HStack>
+          {animeResults}
+          <Button
+            onClick={async (e: any) => {
+              e.preventDefault();
+
+              history.push(`/results?category=anime&query=${query}`);
+            }}
+            mt={2}
+            bgColor="#2E51A2"
+            color="white"
+            fontWeight="bold"
+            _hover={{ bgColor: '#336fb8' }}
+          >
+            Search for "{query}" in Anime
+          </Button>
+        </UnorderedList>
+      );
+    }
+  };
+
+  const mangaResultsCheck = () => {
+    if (_.isEmpty(mangaSearchResults)) {
+      return null;
+    } else {
+      return (
+        <UnorderedList align="center">
+          <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" my={2}>
+            Manga
+          </Text>
+          <HStack w={1000} bgColor="#E1E7F5" spacing={5} pr={2} py={1}>
+            <Text fontWeight="bold" w={805} align="center">
+              Title
+            </Text>
+            <Text fontWeight="bold" align="center" w={55}>
+              Type
+            </Text>
+            <Text fontWeight="bold" align="center" w={55}>
+              Chpts.
+            </Text>
+            <Text fontWeight="bold" align="center" w={55}>
+              Score
+            </Text>
+          </HStack>
+          {mangaResults}
+          <Button
+            onClick={async (e: any) => {
+              e.preventDefault();
+
+              history.push(`/results?category=manga&query=${query}`);
+            }}
+            mt={2}
+            bgColor="#2E51A2"
+            color="white"
+            fontWeight="bold"
+            _hover={{ bgColor: '#336fb8' }}
+          >
+            Search for "{query}" in Manga
+          </Button>
+        </UnorderedList>
+      );
+    }
+  };
+
+  const characterResultsCheck = () => {
+    if (_.isEmpty(charactersSearchResults)) {
+      return null;
+    } else {
+      return (
+        <UnorderedList align="center">
+          <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" my={2}>
+            Characters
+          </Text>
+          {charactersResults}
+          <Button
+            onClick={async (e: any) => {
+              e.preventDefault();
+
+              history.push(`/results?category=characters&query=${query}`);
+            }}
+            mt={2}
+            bgColor="#2E51A2"
+            color="white"
+            fontWeight="bold"
+            _hover={{ bgColor: '#336fb8' }}
+          >
+            Search for "{query}" in Characters
+          </Button>
+        </UnorderedList>
+      );
+    }
+  };
+
+  const peopleResultsCheck = () => {
+    if (_.isEmpty(peopleSearchResults)) {
+      return null;
+    } else {
+      return (
+        <UnorderedList align="center">
+          <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" mb={2}>
+            People
+          </Text>
+          {peopleResult}
+          <Button
+            onClick={async (e: any) => {
+              e.preventDefault();
+              history.push(`/results?category=people&query=${query}`);
+            }}
+            mt={2}
+            bgColor="#2E51A2"
+            color="white"
+            fontWeight="bold"
+            _hover={{ bgColor: '#336fb8' }}
+          >
+            Search for "{query}" in People
+          </Button>
+        </UnorderedList>
+      );
+    }
+  };
+
   return (
     <VStack>
       <Text bgColor="#2E51A2" color="white" fontWeight="bold" width={997} align="center">
         Search Results for "{query}"
       </Text>
-      <UnorderedList align="center">
-        <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" my={2}>
-          Anime
-        </Text>
-        <HStack w={1000} bgColor="#E1E7F5" spacing={5} pr={2} py={1}>
-          <Text fontWeight="bold" w={805} align="center">
-            Title
-          </Text>
-          <Text fontWeight="bold" align="center" w={55}>
-            Type
-          </Text>
-          <Text fontWeight="bold" align="center" w={55}>
-            Eps.
-          </Text>
-          <Text fontWeight="bold" align="center" w={55}>
-            Score
-          </Text>
-        </HStack>
-        {animeResults}
-        <Button
-          onClick={async (e: any) => {
-            e.preventDefault();
-
-            history.push(`/results?category=anime&query=${query}`);
-          }}
-          mt={2}
-          bgColor="#2E51A2"
-          color="white"
-          fontWeight="bold"
-        >
-          Search for "{query}" in Anime
-        </Button>
-      </UnorderedList>
-      <UnorderedList align="center">
-        <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" my={2}>
-          Manga
-        </Text>
-        <HStack w={1000} bgColor="#E1E7F5" spacing={5} pr={2} py={1}>
-          <Text fontWeight="bold" w={805} align="center">
-            Title
-          </Text>
-          <Text fontWeight="bold" align="center" w={55}>
-            Type
-          </Text>
-          <Text fontWeight="bold" align="center" w={55}>
-            Chpts.
-          </Text>
-          <Text fontWeight="bold" align="center" w={55}>
-            Score
-          </Text>
-        </HStack>
-        {mangaResults}
-        <Button
-          onClick={async (e: any) => {
-            e.preventDefault();
-
-            history.push(`/results?category=manga&query=${query}`);
-          }}
-          mt={2}
-          bgColor="#2E51A2"
-          color="white"
-          fontWeight="bold"
-        >
-          Search for "{query}" in Manga
-        </Button>
-      </UnorderedList>
-      <UnorderedList align="center">
-        <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" my={2}>
-          Characters
-        </Text>
-        {charactersResults}
-        <Button
-          onClick={async (e: any) => {
-            e.preventDefault();
-
-            history.push(`/results?category=characters&query=${query}`);
-          }}
-          mt={2}
-          bgColor="#2E51A2"
-          color="white"
-          fontWeight="bold"
-        >
-          Search for "{query}" in Characters
-        </Button>
-      </UnorderedList>
-      <UnorderedList align="center">
-        <Text align="left" fontSize="xl" fontWeight="bold" borderBottom="1px" mb={2}>
-          People
-        </Text>
-        {peopleResult}
-        <Button
-          onClick={async (e: any) => {
-            e.preventDefault();
-            history.push(`/results?category=people&query=${query}`);
-          }}
-          mt={2}
-          bgColor="#2E51A2"
-          color="white"
-          fontWeight="bold"
-        >
-          Search for "{query}" in People
-        </Button>
-      </UnorderedList>
+      {animeResultsCheck()}
+      {mangaResultsCheck()}
+      {characterResultsCheck()}
+      {peopleResultsCheck()}
     </VStack>
   );
 };
