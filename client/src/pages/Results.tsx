@@ -98,7 +98,7 @@ const doSearch = async (
 export const Results = () => {
   const history = useHistory();
 
-  const { category, query, currentQuery, setCurrentQuery } = useSearch();
+  const { category, query, setQuery, currentQuery, setCurrentQuery } = useSearch();
 
   const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
     'search',
@@ -184,9 +184,7 @@ export const Results = () => {
               borderRadius={5}
               placeholder="Search Anime..."
               defaultValue={query || undefined}
-              onChange={(e) => {
-                setCurrentQuery(e.target.value);
-              }}
+              onChange={(e) => setCurrentQuery(e.target.value)}
             />
             <InputRightElement
               children={

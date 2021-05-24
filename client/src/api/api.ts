@@ -105,10 +105,8 @@ export const peopleResults = async (query: string): Promise<PeopleResult[]> => {
   return results.data;
 };
 
-export const topAnimeResults = async (): Promise<TopAnimeResult[]> => {
+export const topAnimeResultsData = async (): Promise<TopAnimeResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/anime/&order_by=score&sort=desc`);
-
-  console.log('top anime', results.data);
 
   return results.data;
 };
