@@ -53,7 +53,9 @@ export const TopAnime = () => {
         borderX="1px solid #E1E7F5"
       >
         <HStack color="#2E51A2" spacing={0} textAlign="center">
-          <Text w={200}>999</Text>
+          <Text color="#767676" fontSize="6xl" w={200}>
+            {_.toString(_.indexOf(topAnimeData, anime) + 1)}
+          </Text>
           <HStack align="left" w={700} py={2} pl={2} borderX="1px solid #E1E7F5">
             <Image w={75} h={100} fit="cover" src={anime.image_url} />
             <VStack textAlign="left" align="left">
@@ -68,7 +70,9 @@ export const TopAnime = () => {
               {airingDate()}
             </VStack>
           </HStack>
-          <Text w={200}>{anime.score}</Text>
+          <Text fontSize="2xl" w={200}>
+            {anime.score}
+          </Text>
         </HStack>
       </ListItem>
     );
