@@ -1,5 +1,18 @@
-import { Flex, Text } from '@chakra-ui/layout';
-import { Alert, AlertIcon, AlertTitle, Spinner } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Spinner,
+  Flex,
+  HStack,
+  ListItem,
+  Text,
+  UnorderedList,
+  Image,
+  VStack,
+  Link,
+  Heading,
+} from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -17,8 +30,50 @@ export const TopAnime = () => {
   });
 
   const topAnimeResults = _.map(topAnimeData, (anime) => {
-    return <Text>Top Anime</Text>;
+    const airingDate = () => {
+      let startDate = new Date(anime.start_date).toDateString().split(' ');
+      let endDate = new Date(anime.end_date).toDateString().split(' ');
+
+      let fixedStartDate = _.remove(startDate, (_v, i) => i === 1 || i === 3).join(' ');
+      let fixedEndDate = _.remove(endDate, (_v, i) => i === 1 || i === 3).join(' ');
+
+      return (
+        <Text>
+          {fixedStartDate} - {fixedEndDate}
+        </Text>
+      );
+    };
+
+    return (
+      <ListItem
+        listStyleType="none"
+        key={anime.mal_id}
+        ml={-16.5}
+        borderBottom="1px solid #E1E7F5"
+        borderX="1px solid #E1E7F5"
+      >
+        <HStack color="#2E51A2" spacing={0} textAlign="center">
+          <Text w={200}>999</Text>
+          <HStack align="left" w={700} py={2} pl={2} borderX="1px solid #E1E7F5">
+            <Image w={75} h={100} fit="cover" src={anime.image_url} />
+            <VStack textAlign="left" align="left">
+              <Link>
+                <Heading color="#2E51A2" size="md">
+                  {anime.title}
+                </Heading>
+              </Link>
+              <Text>
+                {anime.type} ({anime.episodes} eps)
+              </Text>
+              {airingDate()}
+            </VStack>
+          </HStack>
+          <Text w={200}>{anime.score}</Text>
+        </HStack>
+      </ListItem>
+    );
   });
+
   if (isLoading || isFetching) {
     return (
       <Flex h="100vh" justify="center">
@@ -38,24 +93,21 @@ export const TopAnime = () => {
     return null;
   }
 
-  // console.log('top anime', data);
-
   return (
     <Flex justify="center" flexDir="column" mx={200}>
       <Text bgColor="#E1E7F5" fontWeight="bold" fontSize={20} pl={1}>
         Top Anime
       </Text>
-      {topAnimeResults}
-      {JSON.stringify(topAnimeData, null, 2)}
+      <HStack bgColor="#2E51A2" color="white" spacing={0} textAlign="center">
+        <Text w={200} borderRight="1px solid #E1E7F5">
+          Rank
+        </Text>
+        <Text w={700} borderRight="1px solid #E1E7F5">
+          Title
+        </Text>
+        <Text w={200}>Score</Text>
+      </HStack>
+      <UnorderedList>{topAnimeResults}</UnorderedList>
     </Flex>
   );
-  // const { topAnimeResults } = props;
-
-  // console.log('top-anime hello');
-
-  // const topAnimeSearchResults = _.map(topAnimeResults, (anime) => {
-  //   console.log('top-anime-name', anime.name);
-  //   return <Text>{anime.name}</Text>;
-  // });
-  // return <Flex>{topAnimeResultsTwo}</Flex>;
 };

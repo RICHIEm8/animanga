@@ -62,7 +62,7 @@ export interface PeopleResult {
 export interface TopAnimeResult {
   mal_id: number;
   url: string;
-  name: string;
+  title: string;
   image_url: string;
   airing: boolean;
   synopsis: string;
