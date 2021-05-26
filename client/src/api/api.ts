@@ -73,40 +73,51 @@ export interface TopAnimeResult {
   end_date: string;
   rated: string;
 }
+export interface TopMangaResult {
+  mal_id: number;
+  url: string;
+  title: string;
+  image_url: string;
+  synopsis: string;
+  type: string;
+  chapters: number;
+  score: number;
+  start_date: string;
+  end_date: string;
+  rated: string;
+  publishing: boolean;
+}
 
-export const animeResults = async (query: string): Promise<AnimeResult[]> => {
+export const animeResultsData = async (query: string): Promise<AnimeResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/anime/${query}`);
 
-  console.log('anime', results.data);
-
   return results.data;
 };
-export const mangaResults = async (query: string): Promise<MangaResult[]> => {
+export const mangaResultsData = async (query: string): Promise<MangaResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/manga/${query}`);
 
-  console.log('manga result', results.data);
-
   return results.data;
 };
 
-export const charactersResults = async (query: string): Promise<CharactersResult[]> => {
+export const charactersResultsData = async (query: string): Promise<CharactersResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/character/${query}`);
 
-  console.log('character', results.data);
-
   return results.data;
 };
 
-export const peopleResults = async (query: string): Promise<PeopleResult[]> => {
+export const peopleResultsData = async (query: string): Promise<PeopleResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/people/${query}`);
-
-  console.log('people', results.data);
 
   return results.data;
 };
 
 export const topAnimeResultsData = async (): Promise<TopAnimeResult[]> => {
   const results = await axios.get(`http://localhost:8080/search/anime/&order_by=score&sort=desc`);
+
+  return results.data;
+};
+export const topMangaResultsData = async (): Promise<TopMangaResult[]> => {
+  const results = await axios.get(`http://localhost:8080/search/manga/&order_by=score&sort=desc`);
 
   return results.data;
 };

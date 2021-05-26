@@ -18,13 +18,13 @@ import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import {
   AnimeResult,
-  animeResults,
+  animeResultsData,
   CharactersResult,
-  charactersResults,
+  charactersResultsData,
   MangaResult,
-  mangaResults,
+  mangaResultsData,
   PeopleResult,
-  peopleResults,
+  peopleResultsData,
 } from '../api/api';
 import { AllSearch } from '../components/AllSearch';
 import { Anime } from '../components/AnimeSearch';
@@ -53,14 +53,14 @@ const doSearch = async (
     };
   } else if (category === 'all') {
     return {
-      animeResults: await animeResults(query),
-      mangaResults: await mangaResults(query),
-      charactersResults: await charactersResults(query),
-      peopleResults: await peopleResults(query),
+      animeResults: await animeResultsData(query),
+      mangaResults: await mangaResultsData(query),
+      charactersResults: await charactersResultsData(query),
+      peopleResults: await peopleResultsData(query),
     };
   } else if (category === 'anime') {
     return {
-      animeResults: await animeResults(query),
+      animeResults: await animeResultsData(query),
       mangaResults: [],
       charactersResults: [],
       peopleResults: [],
@@ -68,7 +68,7 @@ const doSearch = async (
   } else if (category === 'manga') {
     return {
       animeResults: [],
-      mangaResults: await mangaResults(query),
+      mangaResults: await mangaResultsData(query),
       charactersResults: [],
       peopleResults: [],
     };
@@ -76,7 +76,7 @@ const doSearch = async (
     return {
       animeResults: [],
       mangaResults: [],
-      charactersResults: await charactersResults(query),
+      charactersResults: await charactersResultsData(query),
       peopleResults: [],
     };
   } else if (category === 'people') {
@@ -84,7 +84,7 @@ const doSearch = async (
       animeResults: [],
       mangaResults: [],
       charactersResults: [],
-      peopleResults: await peopleResults(query),
+      peopleResults: await peopleResultsData(query),
     };
   }
   return {
@@ -182,7 +182,7 @@ export const Results = () => {
             <Input
               bgColor="white"
               borderRadius={5}
-              placeholder="Search Anime..."
+              placeholder={categoryCheck()}
               defaultValue={query || undefined}
               onChange={(e) => setCurrentQuery(e.target.value)}
             />

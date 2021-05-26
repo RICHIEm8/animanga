@@ -50,6 +50,9 @@ export const Nav = () => {
   const topAnimeButton = () => {
     history.push('/top-anime');
   };
+  const topMangaButton = () => {
+    history.push('/top-manga');
+  };
 
   return (
     <Flex justify="center" flexDir="column" mx={200}>
@@ -103,6 +106,7 @@ export const Nav = () => {
                 pl={5}
                 color="black"
                 _hover={{ background: '#2E51A2', color: 'white' }}
+                onClick={topMangaButton}
               >
                 Top Manga
               </MenuItem>
