@@ -50,8 +50,17 @@ export const Nav = () => {
   const topAnimeButton = () => {
     history.push('/top-anime');
   };
+
   const topMangaButton = () => {
     history.push('/top-manga');
+  };
+
+  const topCharactersButton = () => {
+    history.push('/top-characters');
+  };
+
+  const topPeopleButton = () => {
+    history.push('/top-people');
   };
 
   return (
@@ -128,6 +137,7 @@ export const Nav = () => {
                 pl={5}
                 color="black"
                 _hover={{ background: '#2E51A2', color: 'white' }}
+                onClick={topCharactersButton}
               >
                 Top Characters
               </MenuItem>
@@ -149,6 +159,7 @@ export const Nav = () => {
                 pl={5}
                 color="black"
                 _hover={{ background: '#2E51A2', color: 'white' }}
+                onClick={topPeopleButton}
               >
                 Top People
               </MenuItem>

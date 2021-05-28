@@ -71,7 +71,7 @@ export const Character = (props: Props) => {
   return (
     <UnorderedList>
       <Text fontWeight="bold" borderBottom="1px" mb={2} mr={4}>
-        Search Results
+        Top Characters
       </Text>
       {charactersResults}
     </UnorderedList>

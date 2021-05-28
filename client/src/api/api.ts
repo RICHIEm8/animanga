@@ -1,3 +1,4 @@
+import { NumberInputFieldProps } from '@chakra-ui/number-input';
 import axios from 'axios';
 
 export interface AnimeResult {
@@ -64,28 +65,59 @@ export interface TopAnimeResult {
   url: string;
   title: string;
   image_url: string;
-  airing: boolean;
-  synopsis: string;
   type: string;
   episodes: number;
   score: number;
   start_date: string;
   end_date: string;
   rated: string;
+  members: number;
+  rank: number;
 }
 export interface TopMangaResult {
   mal_id: number;
   url: string;
   title: string;
   image_url: string;
-  synopsis: string;
   type: string;
-  chapters: number;
+  volumes: number;
   score: number;
   start_date: string;
   end_date: string;
-  rated: string;
-  publishing: boolean;
+  members: number;
+  rank: number;
+}
+
+export interface TopCharactersResult {
+  mal_id: number;
+  rank: number;
+  title: string;
+  image_url: string;
+  url: string;
+  name_kanji: string;
+  animeography: {
+    mal_id: number;
+    name: string;
+    type: string;
+    url: string;
+  }[];
+  mangaography: {
+    mal_id: number;
+    name: string;
+    type: string;
+    url: string;
+  }[];
+}
+
+export interface TopPeopleResult {
+  birthday: string;
+  favorites: number;
+  mal_id: number;
+  image_url: string;
+  name_kanji: string;
+  rank: number;
+  title: string;
+  url: string;
 }
 
 export const animeResultsData = async (query: string): Promise<AnimeResult[]> => {
@@ -112,12 +144,29 @@ export const peopleResultsData = async (query: string): Promise<PeopleResult[]> 
 };
 
 export const topAnimeResultsData = async (): Promise<TopAnimeResult[]> => {
-  const results = await axios.get(`http://localhost:8080/search/anime/&order_by=score&sort=desc`);
+  const results = await axios.get(`http://localhost:8080/top/anime/1`);
 
   return results.data;
 };
+
 export const topMangaResultsData = async (): Promise<TopMangaResult[]> => {
-  const results = await axios.get(`http://localhost:8080/search/manga/&order_by=score&sort=desc`);
+  const results = await axios.get(`http://localhost:8080/top/manga/1`);
+
+  console.log(results.data);
+
+  return results.data;
+};
+
+export const topCharactersResultsData = async (): Promise<TopCharactersResult[]> => {
+  const results = await axios.get(`http://localhost:8080/top/characters/1`);
+
+  console.log('top characters', results.data);
+
+  return results.data;
+};
+
+export const topPeopleResultsData = async (): Promise<TopPeopleResult[]> => {
+  const results = await axios.get(`http://localhost:8080/top/people/1`);
 
   return results.data;
 };

@@ -36,26 +36,20 @@ export const TopManga = () => {
 
   const topMangaResults = _.map(topMangaData, (manga, index) => {
     const chptCheck = () => {
-      if (manga.chapters === 0) {
-        return '(? chpts)';
+      if (_.isNull(manga.volumes)) {
+        return '(? vols)';
       } else {
-        return `(${manga.chapters} chpts)`;
+        return `(${manga.volumes} vols)`;
       }
     };
 
     const airingDate = () => {
-      let startDate = new Date(manga.start_date).toDateString().split(' ');
-      let endDate = new Date(manga.end_date).toDateString().split(' ');
-
-      let fixedStartDate = _.remove(startDate, (_v, i) => i === 1 || i === 3).join(' ');
-      let fixedEndDate = _.remove(endDate, (_v, i) => i === 1 || i === 3).join(' ');
-
-      if (manga.publishing === true) {
-        return <Text>{fixedStartDate} -</Text>;
+      if (_.isNull(manga.end_date)) {
+        return <Text>{manga.start_date} -</Text>;
       } else
         return (
           <Text>
-            {fixedStartDate} - {fixedEndDate}
+            {manga.start_date} - {manga.end_date}
           </Text>
         );
     };
@@ -70,7 +64,7 @@ export const TopManga = () => {
       >
         <HStack color="#2E51A2" spacing={0} textAlign="center">
           <Text color="#767676" fontSize="6xl" w={200}>
-            {_.toString(index + 1)}
+            {_.toString(manga.rank)}
           </Text>
           <HStack align="left" w={700} py={2} pl={2} borderX="1px solid #E1E7F5">
             <Image w={75} h={100} fit="cover" src={manga.image_url} />

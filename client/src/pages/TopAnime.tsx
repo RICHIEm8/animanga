@@ -34,9 +34,9 @@ export const TopAnime = () => {
     { refetchOnWindowFocus: false }
   );
 
-  const topAnimeResults = _.map(topAnimeData, (anime, index) => {
+  const topAnimeResults = _.map(topAnimeData, (anime) => {
     const epsCheck = () => {
-      if (anime.episodes === 0) {
+      if (_.isNull(anime.episodes)) {
         return '(? eps)';
       } else {
         return `(${anime.episodes} eps)`;
@@ -44,18 +44,12 @@ export const TopAnime = () => {
     };
 
     const airingDate = () => {
-      let startDate = new Date(anime.start_date).toDateString().split(' ');
-      let endDate = new Date(anime.end_date).toDateString().split(' ');
-
-      let fixedStartDate = _.remove(startDate, (_v, i) => i === 1 || i === 3).join(' ');
-      let fixedEndDate = _.remove(endDate, (_v, i) => i === 1 || i === 3).join(' ');
-
-      if (anime.airing === true) {
-        return <Text>{fixedStartDate} -</Text>;
+      if (_.isNull(anime.end_date)) {
+        return <Text>{anime.start_date} -</Text>;
       } else
         return (
           <Text>
-            {fixedStartDate} - {fixedEndDate}
+            {anime.start_date} - {anime.end_date}
           </Text>
         );
     };
@@ -70,7 +64,7 @@ export const TopAnime = () => {
       >
         <HStack color="#2E51A2" spacing={0} textAlign="center">
           <Text color="#767676" fontSize="6xl" w={200}>
-            {_.toString(index + 1)}
+            {_.toString(anime.rank)}
           </Text>
           <HStack align="left" w={700} py={2} pl={2} borderX="1px solid #E1E7F5">
             <Image w={75} h={100} fit="cover" src={anime.image_url} />
@@ -81,7 +75,7 @@ export const TopAnime = () => {
                 </Heading>
               </Link>
               <Text>
-                {anime.type} ({anime.episodes} eps)
+                {anime.type} {epsCheck()}
               </Text>
               {airingDate()}
             </VStack>
@@ -99,7 +93,7 @@ export const TopAnime = () => {
 
   if (isLoading || isFetching) {
     return (
-      <Flex h="100vh" justify="center">
+      <Flex h="100vh" justify="center" mt={50}>
         <Spinner color="blue" />
       </Flex>
     );

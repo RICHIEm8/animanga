@@ -7,7 +7,9 @@ import { Home } from './pages/Home';
 import { Results } from './pages/Results';
 import { SingleView } from './pages/SingleView';
 import { TopAnime } from './pages/TopAnime';
+import { TopCharacters } from './pages/TopCharacters';
 import { TopManga } from './pages/TopManga';
+import { TopPeople } from './pages/TopPeople';
 
 function App() {
   return (
@@ -23,6 +25,12 @@ function App() {
           </Route>
           <Route path="/top-manga" exact>
             <TopManga />
+          </Route>
+          <Route path="/top-characters" exact>
+            <TopCharacters />
+          </Route>
+          <Route path="/top-people" exact>
+            <TopPeople />
           </Route>
           <Route path="/results" exact>
             <Results />
