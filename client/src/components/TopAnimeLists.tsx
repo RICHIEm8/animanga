@@ -1,9 +1,4 @@
 import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Spinner,
-  Flex,
   HStack,
   ListItem,
   Text,
@@ -12,31 +7,21 @@ import {
   VStack,
   Link,
   Heading,
-  LinkBox,
   Box,
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { topResultsResponse } from '../api/api';
+import { TopAnimeList } from '../api/api';
 
-export const TopAiring = () => {
-  const {
-    isLoading,
-    isFetching,
-    data: topAiringData,
-    error,
-    isError,
-  } = useQuery(
-    'search',
-    async () => {
-      return topResultsResponse('anime', 'airing');
-    },
-    { refetchOnWindowFocus: false }
-  );
+interface Props {
+  data: TopAnimeList[];
+}
 
-  const topAiringResults = _.map(topAiringData, (anime) => {
+export const TopAnimeLists = (props: Props) => {
+  const { data } = props;
+
+  const topAnimeResults = _.map(data, (anime) => {
     const epsCheck = () => {
       if (_.isNull(anime.episodes)) {
         return '(? eps)';
@@ -93,25 +78,6 @@ export const TopAiring = () => {
     );
   });
 
-  if (isLoading || isFetching) {
-    return (
-      <Flex h="100vh" justify="center" mt={50}>
-        <Spinner color="blue" />
-      </Flex>
-    );
-  }
-
-  if (isError) {
-    <Alert status="error">
-      <AlertIcon />
-      <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-    </Alert>;
-  }
-
-  if (!topAiringData) {
-    return null;
-  }
-
   return (
     <Box>
       <Heading size="md" mb={2}>
@@ -126,7 +92,7 @@ export const TopAiring = () => {
         </Text>
         <Text w={200}>Score</Text>
       </HStack>
-      <UnorderedList>{topAiringResults}</UnorderedList>
+      <UnorderedList>{topAnimeResults}</UnorderedList>
     </Box>
   );
 };

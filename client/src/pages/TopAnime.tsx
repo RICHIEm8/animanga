@@ -1,17 +1,21 @@
-import { Flex, HStack, LinkBox, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Flex,
+  HStack,
+  LinkBox,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { topResultsResponse } from '../api/api';
-import { TopAiring } from '../components/TopAiring';
-import { TopAnimeSeries } from '../components/TopAnimeSeries';
-import { TopMovie } from '../components/TopMovie';
-import { TopOva } from '../components/TopOva';
-import { TopTvSeries } from '../components/TopTvSeries';
-import { TopUpcoming } from '../components/TopUpcoming';
-import { useTopSearch } from '../hooks/TopSearch';
+import { TopAnimeLists } from '../components/TopAnimeLists';
+import { useSearch } from '../hooks/UseSearch';
 
 export const TopAnime = () => {
-  const { subtype, setSubtype } = useTopSearch();
+  const { subtype, setSubtype } = useSearch();
 
   const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
     'search',
@@ -26,21 +30,24 @@ export const TopAnime = () => {
     refetch();
   }, [subtype]);
 
-  const typeCheck = () => {
-    if (subtype === undefined) {
-      return <TopAnimeSeries />;
-    } else if (subtype === 'airing') {
-      return <TopAiring />;
-    } else if (subtype === 'upcoming') {
-      return <TopUpcoming />;
-    } else if (subtype === 'tv') {
-      return <TopTvSeries />;
-    } else if (subtype === 'movie') {
-      return <TopMovie />;
-    } else if (subtype === 'ova') {
-      return <TopOva />;
-    }
-  };
+  if (isLoading || isFetching) {
+    return (
+      <Flex h="100vh" justify="center" mt={50}>
+        <Spinner color="blue" />
+      </Flex>
+    );
+  }
+
+  if (isError) {
+    <Alert status="error">
+      <AlertIcon />
+      <AlertTitle mr={2}>{error}placeholder</AlertTitle>
+    </Alert>;
+  }
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <Flex justify="center" flexDir="column" mx={200}>
@@ -92,7 +99,7 @@ export const TopAnime = () => {
           <Text color="#2E51A2">Top OVAs</Text>
         </LinkBox>
       </HStack>
-      {typeCheck()}
+      <TopAnimeLists data={data} />
     </Flex>
   );
 };
