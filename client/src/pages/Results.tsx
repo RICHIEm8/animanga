@@ -18,13 +18,10 @@ import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import {
   AnimeResult,
-  animeResultsData,
   CharactersResult,
-  charactersResultsData,
   MangaResult,
-  mangaResultsData,
   PeopleResult,
-  peopleResultsData,
+  categorisedResultsResponse,
 } from '../api/api';
 import { AllSearch } from '../components/AllSearch';
 import { Anime } from '../components/AnimeSearch';
@@ -53,14 +50,14 @@ const doSearch = async (
     };
   } else if (category === 'all') {
     return {
-      animeResults: await animeResultsData(query),
-      mangaResults: await mangaResultsData(query),
-      charactersResults: await charactersResultsData(query),
-      peopleResults: await peopleResultsData(query),
+      animeResults: await categorisedResultsResponse('anime', query),
+      mangaResults: await categorisedResultsResponse('manga', query),
+      charactersResults: await categorisedResultsResponse('character', query),
+      peopleResults: await categorisedResultsResponse('people', query),
     };
   } else if (category === 'anime') {
     return {
-      animeResults: await animeResultsData(query),
+      animeResults: await categorisedResultsResponse('anime', query),
       mangaResults: [],
       charactersResults: [],
       peopleResults: [],
@@ -68,15 +65,15 @@ const doSearch = async (
   } else if (category === 'manga') {
     return {
       animeResults: [],
-      mangaResults: await mangaResultsData(query),
+      mangaResults: await categorisedResultsResponse('manga', query),
       charactersResults: [],
       peopleResults: [],
     };
-  } else if (category === 'characters') {
+  } else if (category === 'character') {
     return {
       animeResults: [],
       mangaResults: [],
-      charactersResults: await charactersResultsData(query),
+      charactersResults: await categorisedResultsResponse('characters', query),
       peopleResults: [],
     };
   } else if (category === 'people') {
@@ -84,7 +81,7 @@ const doSearch = async (
       animeResults: [],
       mangaResults: [],
       charactersResults: [],
-      peopleResults: await peopleResultsData(query),
+      peopleResults: await categorisedResultsResponse('people', query),
     };
   }
   return {

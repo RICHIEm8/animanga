@@ -120,53 +120,14 @@ export interface TopPeopleResult {
   url: string;
 }
 
-export const animeResultsData = async (query: string): Promise<AnimeResult[]> => {
-  const results = await axios.get(`http://localhost:8080/search/anime/${query}`);
-
-  return results.data;
-};
-export const mangaResultsData = async (query: string): Promise<MangaResult[]> => {
-  const results = await axios.get(`http://localhost:8080/search/manga/${query}`);
+export const categorisedResultsResponse = async (category: string, query: string) => {
+  const results = await axios.get(`http://localhost:8080/search/${category}/${query}`);
 
   return results.data;
 };
 
-export const charactersResultsData = async (query: string): Promise<CharactersResult[]> => {
-  const results = await axios.get(`http://localhost:8080/search/character/${query}`);
-
-  return results.data;
-};
-
-export const peopleResultsData = async (query: string): Promise<PeopleResult[]> => {
-  const results = await axios.get(`http://localhost:8080/search/people/${query}`);
-
-  return results.data;
-};
-
-export const topAnimeResultsData = async (): Promise<TopAnimeResult[]> => {
-  const results = await axios.get(`http://localhost:8080/top/anime/1`);
-
-  return results.data;
-};
-
-export const topMangaResultsData = async (): Promise<TopMangaResult[]> => {
-  const results = await axios.get(`http://localhost:8080/top/manga/1`);
-
-  console.log(results.data);
-
-  return results.data;
-};
-
-export const topCharactersResultsData = async (): Promise<TopCharactersResult[]> => {
-  const results = await axios.get(`http://localhost:8080/top/characters/1`);
-
-  console.log('top characters', results.data);
-
-  return results.data;
-};
-
-export const topPeopleResultsData = async (): Promise<TopPeopleResult[]> => {
-  const results = await axios.get(`http://localhost:8080/top/people/1`);
+export const topResultsResponse = async (category: string, subtype?: string) => {
+  const results = await axios.get(`http://localhost:8080/top/${category}/1/${subtype || null}`);
 
   return results.data;
 };

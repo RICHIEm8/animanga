@@ -43,7 +43,7 @@ export const Nav = () => {
     history.push(`/results?category=${currentCategory}&query=${currentQuery}`);
   };
 
-  const homeButton = () => {
+  const homeRedirect = () => {
     history.push('/');
   };
 
@@ -65,7 +65,7 @@ export const Nav = () => {
 
   return (
     <Flex justify="center" flexDir="column" mx={200}>
-      <LinkBox w={130} h={45} onClick={homeButton}>
+      <LinkBox w={130} h={45} onClick={homeRedirect}>
         <Box>
           <Heading as="h1" color="#2E51A2">
             <LinkOverlay href="/">AniMan</LinkOverlay>

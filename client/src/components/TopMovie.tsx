@@ -1,4 +1,3 @@
-import { StarIcon } from '@chakra-ui/icons';
 import {
   Alert,
   AlertIcon,
@@ -13,43 +12,46 @@ import {
   VStack,
   Link,
   Heading,
+  LinkBox,
+  Box,
 } from '@chakra-ui/react';
+import { StarIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { topResultsResponse } from '../api/api';
 
-export const TopManga = () => {
+export const TopMovie = () => {
   const {
     isLoading,
     isFetching,
-    data: topMangaData,
+    data: topMovieData,
     error,
     isError,
   } = useQuery(
     'search',
     async () => {
-      return topResultsResponse('manga');
+      return topResultsResponse('anime', 'movie');
     },
     { refetchOnWindowFocus: false }
   );
 
-  const topMangaResults = _.map(topMangaData, (manga, index) => {
-    const chptCheck = () => {
-      if (_.isNull(manga.volumes)) {
-        return '(? vols)';
+  const topMovieResults = _.map(topMovieData, (anime) => {
+    const epsCheck = () => {
+      if (_.isNull(anime.episodes)) {
+        return '(? eps)';
       } else {
-        return `(${manga.volumes} vols)`;
+        return `(${anime.episodes} eps)`;
       }
     };
 
     const airingDate = () => {
-      if (_.isNull(manga.end_date)) {
-        return <Text>{manga.start_date} -</Text>;
+      if (_.isNull(anime.end_date)) {
+        return <Text>{anime.start_date} -</Text>;
       } else
         return (
           <Text>
-            {manga.start_date} - {manga.end_date}
+            {anime.start_date} - {anime.end_date}
           </Text>
         );
     };
@@ -57,25 +59,25 @@ export const TopManga = () => {
     return (
       <ListItem
         listStyleType="none"
-        key={manga.mal_id}
+        key={anime.mal_id}
         ml={-16.5}
         borderBottom="1px solid #E1E7F5"
         borderX="1px solid #E1E7F5"
       >
         <HStack color="#2E51A2" spacing={0} textAlign="center">
           <Text color="#767676" fontSize="6xl" w={200}>
-            {_.toString(manga.rank)}
+            {_.toString(anime.rank)}
           </Text>
           <HStack align="left" w={700} py={2} pl={2} borderX="1px solid #E1E7F5">
-            <Image w={75} h={100} fit="cover" src={manga.image_url} />
+            <Image w={75} h={100} fit="cover" src={anime.image_url} />
             <VStack textAlign="left" align="left">
               <Link>
                 <Heading color="#2E51A2" size="md">
-                  {manga.title}
+                  {anime.title}
                 </Heading>
               </Link>
               <Text>
-                {manga.type} {chptCheck()}
+                {anime.type} {epsCheck()}
               </Text>
               {airingDate()}
             </VStack>
@@ -83,7 +85,7 @@ export const TopManga = () => {
           <HStack w={200} justifyContent="center">
             <StarIcon boxSize={5} color="#DDCC00" />
             <Text fontSize="2xl" w={65} align="left" color="black">
-              {manga.score}
+              {anime.score}
             </Text>
           </HStack>
         </HStack>
@@ -93,7 +95,7 @@ export const TopManga = () => {
 
   if (isLoading || isFetching) {
     return (
-      <Flex h="100vh" justify="center">
+      <Flex h="100vh" justify="center" mt={50}>
         <Spinner color="blue" />
       </Flex>
     );
@@ -106,15 +108,15 @@ export const TopManga = () => {
     </Alert>;
   }
 
-  if (!topMangaData) {
+  if (!topMovieData) {
     return null;
   }
 
   return (
-    <Flex justify="center" flexDir="column" mx={200}>
-      <Text bgColor="#E1E7F5" fontWeight="bold" fontSize={20} pl={1}>
-        Top Manga
-      </Text>
+    <Box>
+      <Heading size="md" mb={2}>
+        Top Anime Series
+      </Heading>
       <HStack bgColor="#2E51A2" color="white" spacing={0} textAlign="center">
         <Text w={200} borderRight="1px solid #E1E7F5">
           Rank
@@ -124,7 +126,7 @@ export const TopManga = () => {
         </Text>
         <Text w={200}>Score</Text>
       </HStack>
-      <UnorderedList>{topMangaResults}</UnorderedList>
-    </Flex>
+      <UnorderedList>{topMovieResults}</UnorderedList>
+    </Box>
   );
 };
