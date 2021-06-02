@@ -127,7 +127,7 @@ export const categorisedResultsResponse = async (category: string, query: string
 };
 
 export const topResultsResponse = async (category: string, subtype?: string) => {
-  const results = await axios.get(`http://localhost:8080/top/${category}/1/${subtype || null}`);
+  const results = await axios.get(`http://localhost:8080/top/${category}/1/${subtype ?? ''}`);
 
   return results.data;
 };

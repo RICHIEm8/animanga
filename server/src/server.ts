@@ -21,20 +21,19 @@ app.use('/search/:category/:query', async (req: Request, res: Response) => {
   }
 });
 
-app.use(
-  `/top/:category/:page${'/:subtype' || null || undefined}`,
-  async (req: Request, res: Response) => {
-    try {
-      const topResult = await axios.get(
-        `https://api.jikan.moe/v3/top/${req.params.category}/${req.params.page}/${req.params.subtype}`
-      );
+app.use('/top/:category/:page/:subtype?', async (req: Request, res: Response) => {
+  try {
+    const topResult = await axios.get(
+      `https://api.jikan.moe/v3/top/${req.params.category}/${req.params.page}/${
+        req.params.subtype ?? ''
+      }`
+    );
 
-      return res.status(200).send(topResult.data.top);
-    } catch (error) {
-      res.status(500).send(error);
-    }
+    return res.status(200).send(topResult.data.top);
+  } catch (error) {
+    res.status(500).send(error);
   }
-);
+});
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost${port}`);

@@ -6,6 +6,7 @@ export const useSearch = () => {
   const [query, setQuery] = useQueryParam('query', StringParam);
   const [currentQuery, setCurrentQuery] = useState(query);
   const [currentCategory, setCurrentCategory] = useState(category);
+  const [subtype, setSubtype] = useState('');
 
   return {
     category,
@@ -16,5 +17,7 @@ export const useSearch = () => {
     setCurrentCategory,
     currentQuery,
     setCurrentQuery,
+    subtype,
+    setSubtype,
   };
 };

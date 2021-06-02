@@ -8,22 +8,36 @@ import { TopMovie } from '../components/TopMovie';
 import { TopOva } from '../components/TopOva';
 import { TopTvSeries } from '../components/TopTvSeries';
 import { TopUpcoming } from '../components/TopUpcoming';
+import { useTopSearch } from '../hooks/TopSearch';
 
 export const TopAnime = () => {
-  const [type, setType] = useState('');
+  const { subtype, setSubtype } = useTopSearch();
+
+  const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
+    'search',
+    async () => {
+      console.log('searching', subtype);
+      return topResultsResponse('anime', subtype);
+    },
+    { refetchOnWindowFocus: false }
+  );
+
+  React.useEffect(() => {
+    refetch();
+  }, [subtype]);
 
   const typeCheck = () => {
-    if (type === '') {
+    if (subtype === undefined) {
       return <TopAnimeSeries />;
-    } else if (type === 'airing') {
+    } else if (subtype === 'airing') {
       return <TopAiring />;
-    } else if (type === 'upcoming') {
+    } else if (subtype === 'upcoming') {
       return <TopUpcoming />;
-    } else if (type === 'tv') {
+    } else if (subtype === 'tv') {
       return <TopTvSeries />;
-    } else if (type === 'movie') {
+    } else if (subtype === 'movie') {
       return <TopMovie />;
-    } else if (type === 'ova') {
+    } else if (subtype === 'ova') {
       return <TopOva />;
     }
   };
@@ -40,7 +54,7 @@ export const TopAnime = () => {
         <LinkBox
           w="16%"
           onClick={() => {
-            setType('airing');
+            setSubtype('airing');
           }}
         >
           <Text color="#2E51A2">Top Airing</Text>
@@ -48,7 +62,7 @@ export const TopAnime = () => {
         <LinkBox
           w="16%"
           onClick={() => {
-            setType('upcoming');
+            setSubtype('upcoming');
           }}
         >
           <Text color="#2E51A2">Top Upcoming</Text>
@@ -56,7 +70,7 @@ export const TopAnime = () => {
         <LinkBox
           w="16%"
           onClick={() => {
-            setType('tv');
+            setSubtype('tv');
           }}
         >
           <Text color="#2E51A2">Top TV Series</Text>
@@ -64,7 +78,7 @@ export const TopAnime = () => {
         <LinkBox
           w="16%"
           onClick={() => {
-            setType('movie');
+            setSubtype('movie');
           }}
         >
           <Text color="#2E51A2">Top Movies</Text>
@@ -72,7 +86,7 @@ export const TopAnime = () => {
         <LinkBox
           w="16%"
           onClick={() => {
-            setType('ova');
+            setSubtype('ova');
           }}
         >
           <Text color="#2E51A2">Top OVAs</Text>

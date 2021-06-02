@@ -31,7 +31,7 @@ export const TopAnimeSeries = () => {
   } = useQuery(
     'search',
     async () => {
-      return topResultsResponse('anime', 'favorite');
+      return topResultsResponse('anime');
     },
     { refetchOnWindowFocus: false }
   );
