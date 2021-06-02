@@ -60,7 +60,7 @@ export interface PeopleResult {
   image_url: string;
 }
 
-export interface TopAnimeResult {
+export interface TopAnimeList {
   mal_id: number;
   url: string;
   title: string;
@@ -74,6 +74,7 @@ export interface TopAnimeResult {
   members: number;
   rank: number;
 }
+
 export interface TopMangaResult {
   mal_id: number;
   url: string;
