@@ -5,21 +5,21 @@ import {
   UnorderedList,
   Image,
   VStack,
+  Link,
   Heading,
   Box,
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
 import React from 'react';
-import { TopAnimeList } from '../api/api';
+import { TopMangaList } from '../api/api';
 import { useSearch } from '../hooks/UseSearch';
-import { Link } from 'react-router-dom';
 
 interface Props {
-  data: TopAnimeList[];
+  data: TopMangaList[];
 }
 
-export const TopAnimeLists = (props: Props) => {
+export const TopMangaLists = (props: Props) => {
   const { data } = props;
 
   const { subtype } = useSearch();
@@ -28,58 +28,58 @@ export const TopAnimeLists = (props: Props) => {
     if (subtype === undefined) {
       return (
         <Heading size="md" mb={2}>
-          Top Anime Series
+          All Manga
         </Heading>
       );
-    } else if (subtype === 'airing') {
+    } else if (subtype === 'manga') {
       return (
         <Heading size="md" mb={2}>
-          Top Airing Anime
+          Top Manga
         </Heading>
       );
-    } else if (subtype === 'upcoming') {
+    } else if (subtype === 'oneshots') {
       return (
         <Heading size="md" mb={2}>
-          Top Upcoming Anime
+          Top One-shots
         </Heading>
       );
-    } else if (subtype === 'tv') {
+    } else if (subtype === 'novels') {
       return (
         <Heading size="md" mb={2}>
-          Top TV Anime
+          Top Novels
         </Heading>
       );
-    } else if (subtype === 'movie') {
+    } else if (subtype === 'manhwa') {
       return (
         <Heading size="md" mb={2}>
-          Top Anime Movies
+          Top Manhwa
         </Heading>
       );
-    } else if (subtype === 'ova') {
+    } else if (subtype === 'manhua') {
       return (
         <Heading size="md" mb={2}>
-          Top Anime OVA Series
+          Top Manhua
         </Heading>
       );
     }
   };
 
-  const topAnimeResults = _.map(data, (anime) => {
-    const epsCheck = () => {
-      if (_.isNull(anime.episodes)) {
-        return '(? eps)';
+  const topMangaResults = _.map(data, (manga) => {
+    const chptCheck = () => {
+      if (_.isNull(manga.volumes)) {
+        return '(? vols)';
       } else {
-        return `(${anime.episodes} eps)`;
+        return `(${manga.volumes} vols)`;
       }
     };
 
     const airingDate = () => {
-      if (_.isNull(anime.end_date)) {
-        return <Text>{anime.start_date} -</Text>;
+      if (_.isNull(manga.end_date)) {
+        return <Text>{manga.start_date} -</Text>;
       } else
         return (
           <Text>
-            {anime.start_date} - {anime.end_date}
+            {manga.start_date} - {manga.end_date}
           </Text>
         );
     };
@@ -87,25 +87,25 @@ export const TopAnimeLists = (props: Props) => {
     return (
       <ListItem
         listStyleType="none"
-        key={anime.mal_id}
+        key={manga.mal_id}
         ml={-16.5}
         borderBottom="1px solid #E1E7F5"
         borderX="1px solid #E1E7F5"
       >
         <HStack color="#2E51A2" spacing={0} textAlign="center">
           <Text color="#767676" fontSize="6xl" w={200}>
-            {_.toString(anime.rank)}
+            {_.toString(manga.rank)}
           </Text>
           <HStack align="left" w={700} py={2} pl={2} borderX="1px solid #E1E7F5">
-            <Image w={75} h={100} fit="cover" src={anime.image_url} />
+            <Image w={75} h={100} fit="cover" src={manga.image_url} />
             <VStack textAlign="left" align="left">
-              <Link to={`/anime/${anime.mal_id}`}>
+              <Link>
                 <Heading color="#2E51A2" size="md">
-                  {anime.title}
+                  {manga.title}
                 </Heading>
               </Link>
               <Text>
-                {anime.type} {epsCheck()}
+                {manga.type} {chptCheck()}
               </Text>
               {airingDate()}
             </VStack>
@@ -113,7 +113,7 @@ export const TopAnimeLists = (props: Props) => {
           <HStack w={200} justifyContent="center">
             <StarIcon boxSize={5} color="#DDCC00" />
             <Text fontSize="2xl" w={65} align="left" color="black">
-              {anime.score}
+              {manga.score}
             </Text>
           </HStack>
         </HStack>
@@ -133,7 +133,7 @@ export const TopAnimeLists = (props: Props) => {
         </Text>
         <Text w={200}>Score</Text>
       </HStack>
-      <UnorderedList>{topAnimeResults}</UnorderedList>
+      <UnorderedList>{topMangaResults}</UnorderedList>
     </Box>
   );
 };
