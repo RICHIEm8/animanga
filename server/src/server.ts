@@ -35,10 +35,10 @@ app.use('/top/:category/:page/:subtype?', async (req: Request, res: Response) =>
   }
 });
 
-app.use('/:category/:id/', async (req: Request, res: Response) => {
+app.use('/:category/:id/:request?', async (req: Request, res: Response) => {
   try {
     const singleResult = await axios.get(
-      `https://api.jikan.moe/v3/${req.params.category}/${req.params.id}/`
+      `https://api.jikan.moe/v3/${req.params.category}/${req.params.id}/${req.params.request ?? ''}`
     );
 
     return res.status(200).send(singleResult.data);

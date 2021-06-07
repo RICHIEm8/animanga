@@ -122,7 +122,7 @@ export interface TopPeopleResult {
   url: string;
 }
 
-export interface SingleViewAnimeResult {
+export interface Anime {
   mal_id: number;
   image_url: string;
   title: string;
@@ -206,8 +206,8 @@ export const topResultsResponse = async (category: string, subtype?: string) => 
   return results.data;
 };
 
-export const singleResultResponse = async (category: string, id: number) => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}`);
+export const singleResultResponse = async (category: string, id: number, request?: string) => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/${request ?? ''}`);
 
   return results.data;
 };
