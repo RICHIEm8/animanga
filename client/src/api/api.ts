@@ -1,6 +1,4 @@
-import { NumberInputFieldProps } from '@chakra-ui/number-input';
 import axios from 'axios';
-import { SubscriptionManager } from 'framer-motion/types/utils/subscription-manager';
 
 export interface AnimeResult {
   mal_id: number;
@@ -144,28 +142,28 @@ export interface Anime {
   synopsis: string;
   premiered: string;
   related: {
-    adaptation: [
+    adaptation?: [
       {
         mal_id: number;
         type: string;
         name: string;
       }
     ];
-    alternative_version: [
+    alternative_version?: [
       {
         mal_id: number;
         type: string;
         name: string;
       }
     ];
-    side_story: [
+    side_story?: [
       {
         mal_id: number;
         type: string;
         name: string;
       }
     ];
-    spin_off: [
+    spin_off?: [
       {
         mal_id: number;
         type: string;
@@ -194,6 +192,29 @@ export interface Anime {
   ending_themes: string[];
 }
 
+export interface AnimeVideos {
+  promo: [
+    {
+      title: string;
+      image_url: string;
+      video_url: string;
+    }
+  ];
+  episodes: [
+    {
+      title: string;
+      episode: string;
+      url: string;
+      image_url: string;
+    }
+  ];
+}
+
+export interface CombinedAnimeResponse {
+  details: Anime;
+  videos: AnimeVideos;
+}
+
 export const categorisedResultsResponse = async (category: string, query: string) => {
   const results = await axios.get(`http://localhost:8080/search/${category}/${query}`);
 
@@ -206,8 +227,28 @@ export const topResultsResponse = async (category: string, subtype?: string) => 
   return results.data;
 };
 
-export const singleResultResponse = async (category: string, id: number, request?: string) => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/${request ?? ''}`);
+export const animeResponse = async (category: string, id: number): Promise<Anime> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/`);
 
   return results.data;
+};
+
+export const animeVideosResponse = async (category: string, id: number): Promise<AnimeVideos> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/videos`);
+
+  return results.data;
+};
+
+export const combinedAnimeResponse = async (
+  category: string,
+  id: number
+): Promise<CombinedAnimeResponse> => {
+  const [details, videos] = await Promise.all([
+    animeResponse(category, id),
+    animeVideosResponse(category, id),
+  ]);
+  return {
+    details,
+    videos,
+  };
 };

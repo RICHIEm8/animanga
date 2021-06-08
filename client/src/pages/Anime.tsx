@@ -16,29 +16,19 @@ import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { singleResultResponse } from '../api/api';
+import { combinedAnimeResponse } from '../api/api';
 
 export const Anime = () => {
   const { id } = useParams<{ id: string }>();
   const parsedId = parseInt(id);
 
-  const {
-    isLoading,
-    isFetching,
-    data: anime,
-    error,
-    isError,
-  } = useQuery(
+  const { isLoading, isFetching, data, error, isError } = useQuery(
     'anime',
     () => {
-      return singleResultResponse('anime', parsedId);
+      return combinedAnimeResponse('anime', parsedId);
     },
     { refetchOnWindowFocus: false }
   );
-
-  const { data: animeVideos } = useQuery('video', () => {
-    return singleResultResponse('anime', parsedId, 'videos');
-  });
 
   if (isLoading || isFetching) {
     return (
@@ -55,66 +45,69 @@ export const Anime = () => {
     </Alert>;
   }
 
-  if (!anime) {
+  if (!data) {
     return null;
   }
 
-  const producers = _.map(anime.producers, (producer) => {
+  const { details, videos } = data;
+
+  const producers = _.map(details.producers, (producer) => {
     return producer.name;
   });
 
-  const studios = _.map(anime.studios, (studio) => {
+  const studios = _.map(details.studios, (studio) => {
     return studio.name;
   });
 
-  const genres = _.map(anime.genres, (genre) => {
+  const genres = _.map(details.genres, (genre) => {
     return genre.name;
   });
 
-  const side_stories = _.map(anime.related['Side story'], (side_story) => {
-    return side_story.name;
+  const relatedItems = _.map(details.related, (value, key) => {
+    return (
+      <Text borderBottom="1px solid #E1E7F5" w={720}>
+        <b>{key}:</b>{' '}
+        {_.map(value, (v) => {
+          return v.name;
+        })}
+      </Text>
+    );
   });
-
-  // const relatedItems = _.map(anime.related, (related) => {
-  //   _.map(related, (related_arrays) => {
-  //     return related_arrays;
-  //   });
-  // });
 
   return (
     <Flex flexDir="column" mx={200} borderX="1px solid #E1E7F5" borderBottom="1px solid #E1E7F5">
       <Text bgColor="#E1E7F5" fontWeight="bold" fontSize={20} pl={1}>
-        {anime.title}
+        {details.title}
       </Text>
       <HStack spacing={0} alignItems="flex-start">
         <VStack w={300} px={3} pt={2} borderRight="1px solid #E1E7F5" align="left" fontSize="sm">
-          <Image w={275} fit="cover" src={anime.image_url} />
+          <Image w={275} fit="cover" src={details.image_url} />
           <Text borderBottom="1px solid black" fontWeight="bold">
             Alternative Titles
           </Text>
           <Text>
-            <b>English:</b> {anime.title_english}
+            <b>English:</b> {details.title_english}
           </Text>
           <Text>
-            <b>Synonym:</b> {anime.title_synonyms.join(', ')}
+            <b>Synonym:</b> {details.title_synonyms.join(', ')}
           </Text>
           <Text>
-            <b>Japanese:</b> {anime.title_japanese}
+            <b>Japanese:</b> {details.title_japanese}
           </Text>
           <Text borderBottom="1px solid black" fontWeight="bold">
             Information
           </Text>
           <Text>
-            <b>Type:</b> {anime.type}
+            <b>Type:</b> {details.type}
           </Text>
           <Text>
-            <b>Episodes:</b> {anime.episodes}
+            <b>Episodes:</b> {details.episodes}
           </Text>
           <Text>
-            <b>Status:</b> {anime.status}
+            <b>Status:</b> {details.status}
           </Text>
           <Text>
-            <b>Premiered:</b> {anime.premiered}
+            <b>Premiered:</b> {details.premiered}
           </Text>
           <Text>
             <b>Producers:</b> {producers.join(', ')}
@@ -123,25 +116,25 @@ export const Anime = () => {
             <b>Studios:</b> {studios.join(', ')}
           </Text>
           <Text>
-            <b>Sources:</b> {anime.source}
+            <b>Sources:</b> {details.source}
           </Text>
           <Text>
             <b>Genres:</b> {genres.join(', ')}
           </Text>
           <Text>
-            <b>Duration:</b> {anime.duration}
+            <b>Duration:</b> {details.duration}
           </Text>
           <Text>
-            <b>Rating:</b> {anime.rating}
+            <b>Rating:</b> {details.rating}
           </Text>
           <Text borderBottom="1px solid black" fontWeight="bold">
             Statistics
           </Text>
           <Text>
-            <b>Score:</b> {anime.score}
+            <b>Score:</b> {details.score}
           </Text>
           <Text>
-            <b>Ranked:</b> {anime.rank}
+            <b>Ranked:</b> {details.rank}
           </Text>
         </VStack>
         <VStack w={740} alignItems="flex-start" pl={2}>
@@ -183,26 +176,26 @@ export const Anime = () => {
                   Score
                 </Text>
                 <Text fontSize="2xl" fontWeight="bold">
-                  {anime.score}
+                  {details.score}
                 </Text>
                 <Text fontSize="xs">
-                  Ranked #<b>{anime.rank}</b>
+                  Ranked #<b>{details.rank}</b>
                 </Text>
               </VStack>
               <HStack justifyContent="space-between" spacing={5}>
                 <Text borderRight="1px solid black" pr={5}>
-                  {anime.premiered}
+                  {details.premiered}
                 </Text>
                 <Text borderRight="1px solid black" pr={5}>
-                  {anime.type}
+                  {details.type}
                 </Text>
                 <Text>{studios.join(', ')}</Text>
               </HStack>
             </HStack>
             <AspectRatio w={300}>
               <iframe
-                title={`${anime.title} promo vid`}
-                src={_.replace(animeVideos.promo[0].video_url, 'autoplay=1', 'autoplay=0')}
+                title={`${details.title} promo vid`}
+                src={_.replace(videos.promo[0].video_url, 'autoplay=1', 'autoplay=0')}
                 allowFullScreen
               />
             </AspectRatio>
@@ -210,31 +203,11 @@ export const Anime = () => {
           <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
             Synopsis
           </Text>
-          <Text w={720}>{anime.synopsis}</Text>
+          <Text w={720}>{details.synopsis}</Text>
           <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
             Related Anime
           </Text>
-          <Text borderBottom="1px solid #E1E7F5" w={720}>
-            <b>Adaptation:</b>{' '}
-            {_.map(anime.related['Adaptation'], (adaptation) => {
-              return adaptation.name;
-            })}
-          </Text>
-          <Text borderBottom="1px solid #E1E7F5" w={720}>
-            <b>Alternate version:</b>{' '}
-            {_.map(anime.related['Alternative version'], (alternative_version) => {
-              return alternative_version.name;
-            })}
-          </Text>
-          <Text borderBottom="1px solid #E1E7F5" w={720}>
-            <b>Side story:</b> {side_stories.join(', ')}
-          </Text>
-          <Text borderBottom="1px solid #E1E7F5" w={720}>
-            <b>Spin-off:</b>{' '}
-            {_.map(anime.related['Spin-off'], (spin_off) => {
-              return spin_off.name;
-            })}
-          </Text>
+          {relatedItems}
           <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
             Characters and Voice Actors
           </Text>
