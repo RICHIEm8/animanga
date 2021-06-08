@@ -2,6 +2,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Box,
   Flex,
   HStack,
   LinkBox,
@@ -20,7 +21,6 @@ export const TopAnime = () => {
   const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
     'search',
     async () => {
-      console.log('searching', subtype);
       return topResultsResponse('anime', subtype);
     },
     { refetchOnWindowFocus: false }
@@ -55,49 +55,66 @@ export const TopAnime = () => {
         Top Anime
       </Text>
       <HStack spacing={-1} justifyContent="space-between" my={2} textAlign="center">
-        <LinkBox w="16%" bgColor="#2E51A2">
-          <Text color="white">All Anime</Text>
-        </LinkBox>
-        <LinkBox
+        <Box
+          w="16%"
+          onClick={() => {
+            setSubtype(undefined);
+          }}
+        >
+          <Text color="#2E51A2" _hover={{ bg: '#2E51A2', color: 'white' }}>
+            All Anime
+          </Text>
+        </Box>
+        <Box
           w="16%"
           onClick={() => {
             setSubtype('airing');
           }}
         >
-          <Text color="#2E51A2">Top Airing</Text>
-        </LinkBox>
-        <LinkBox
+          <Text color="#2E51A2" _hover={{ bg: '#2E51A2', color: 'white' }}>
+            Top Airing
+          </Text>
+        </Box>
+        <Box
           w="16%"
           onClick={() => {
             setSubtype('upcoming');
           }}
         >
-          <Text color="#2E51A2">Top Upcoming</Text>
-        </LinkBox>
-        <LinkBox
+          <Text color="#2E51A2" _hover={{ bg: '#2E51A2', color: 'white' }}>
+            Top Upcoming
+          </Text>
+        </Box>
+        <Box
           w="16%"
           onClick={() => {
             setSubtype('tv');
           }}
         >
-          <Text color="#2E51A2">Top TV Series</Text>
-        </LinkBox>
-        <LinkBox
+          <Text color="#2E51A2" _hover={{ bg: '#2E51A2', color: 'white' }}>
+            Top TV Series
+          </Text>
+        </Box>
+        <Box
           w="16%"
           onClick={() => {
             setSubtype('movie');
           }}
         >
-          <Text color="#2E51A2">Top Movies</Text>
-        </LinkBox>
-        <LinkBox
+          <Text color="#2E51A2" _hover={{ bg: '#2E51A2', color: 'white' }}>
+            Top Movies
+          </Text>
+        </Box>
+        <Box
           w="16%"
           onClick={() => {
             setSubtype('ova');
           }}
         >
-          <Text color="#2E51A2">Top OVAs</Text>
-        </LinkBox>
+          <Text color="#2E51A2" _hover={{ bg: '#2E51A2', color: 'white' }}>
+            Top OVAs
+          </Text>
+        </Box>
       </HStack>
       <TopAnimeLists data={data} />
     </Flex>

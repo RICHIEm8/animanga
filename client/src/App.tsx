@@ -5,7 +5,7 @@ import { Nav } from './components/NavBar';
 
 import { Home } from './pages/Home';
 import { Results } from './pages/Results';
-import { SingleView } from './pages/SingleView';
+import { Anime } from './pages/Anime';
 import { TopAnime } from './pages/TopAnime';
 import { TopCharacters } from './pages/TopCharacters';
 import { TopManga } from './pages/TopManga';
@@ -35,8 +35,8 @@ function App() {
           <Route path="/results" exact>
             <Results />
           </Route>
-          <Route path="/single-view" exact>
-            <SingleView />
+          <Route path="/anime/:id" exact>
+            <Anime />
           </Route>
           <Redirect to="/" />
         </Switch>
