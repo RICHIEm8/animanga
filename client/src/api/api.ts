@@ -144,28 +144,28 @@ export interface Anime {
   synopsis: string;
   premiered: string;
   related: {
-    Adaption: [
+    adaptation: [
       {
         mal_id: number;
         type: string;
         name: string;
       }
     ];
-    Alternative_version: [
+    alternative_version: [
       {
         mal_id: number;
         type: string;
         name: string;
       }
     ];
-    Side_story: [
+    side_story: [
       {
         mal_id: number;
         type: string;
         name: string;
       }
     ];
-    Spin_off: [
+    spin_off: [
       {
         mal_id: number;
         type: string;

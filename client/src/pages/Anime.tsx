@@ -9,6 +9,7 @@ import {
   Image,
   Spinner,
   Text,
+  UnorderedList,
   VStack,
 } from '@chakra-ui/react';
 import _ from 'lodash';
@@ -70,7 +71,15 @@ export const Anime = () => {
     return genre.name;
   });
 
-  console.log(animeVideos.promo[0].video_url);
+  const side_stories = _.map(anime.related['Side story'], (side_story) => {
+    return side_story.name;
+  });
+
+  // const relatedItems = _.map(anime.related, (related) => {
+  //   _.map(related, (related_arrays) => {
+  //     return related_arrays;
+  //   });
+  // });
 
   return (
     <Flex flexDir="column" mx={200} borderX="1px solid #E1E7F5" borderBottom="1px solid #E1E7F5">
@@ -167,36 +176,90 @@ export const Anime = () => {
               <Text>Pictures</Text>
             </Box>
           </HStack>
-          <HStack justifyContent="center" bgColor="#ECF2FF">
-            <VStack borderRight="1px solid black" px={2} py={2} my={2}>
-              <Text mb={-3} bgColor="#2E51A2" color="white" px={5} borderRadius={5}>
-                Score
-              </Text>
-              <Text fontSize="2xl" fontWeight="bold">
-                {anime.score}
-              </Text>
-              <Text fontSize="xs">
-                Ranked #<b>{anime.rank}</b>
-              </Text>
-            </VStack>
-            <Text borderRight="1px solid black" pr={2}>
-              {anime.premiered}
-            </Text>
-            <Text borderRight="1px solid black" pr={2}>
-              {anime.type}
-            </Text>
-            <Text>{studios.join(', ')}</Text>
-          </HStack>
-          <Box>
-            <AspectRatio>
+          <HStack justifyContent="space-between" alignItems="flex-start">
+            <HStack justifyContent="flex-start" spacing={8} bgColor="#ECF2FF" w={412}>
+              <VStack borderRight="1px solid black" px={2} py={2} my={2}>
+                <Text mb={-3} bgColor="#2E51A2" color="white" px={5} borderRadius={5}>
+                  Score
+                </Text>
+                <Text fontSize="2xl" fontWeight="bold">
+                  {anime.score}
+                </Text>
+                <Text fontSize="xs">
+                  Ranked #<b>{anime.rank}</b>
+                </Text>
+              </VStack>
+              <HStack justifyContent="space-between" spacing={5}>
+                <Text borderRight="1px solid black" pr={5}>
+                  {anime.premiered}
+                </Text>
+                <Text borderRight="1px solid black" pr={5}>
+                  {anime.type}
+                </Text>
+                <Text>{studios.join(', ')}</Text>
+              </HStack>
+            </HStack>
+            <AspectRatio w={300}>
               <iframe
                 title={`${anime.title} promo vid`}
-                // src={animeVideos.promo[0].video_url}
-                src="https://www.youtube.com/embed/--IcmZkvL0Q?enablejsapi=1&wmode=opaque&autoplay=1"
+                src={_.replace(animeVideos.promo[0].video_url, 'autoplay=1', 'autoplay=0')}
                 allowFullScreen
               />
             </AspectRatio>
-          </Box>
+          </HStack>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+            Synopsis
+          </Text>
+          <Text w={720}>{anime.synopsis}</Text>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+            Related Anime
+          </Text>
+          <Text borderBottom="1px solid #E1E7F5" w={720}>
+            <b>Adaptation:</b>{' '}
+            {_.map(anime.related['Adaptation'], (adaptation) => {
+              return adaptation.name;
+            })}
+          </Text>
+          <Text borderBottom="1px solid #E1E7F5" w={720}>
+            <b>Alternate version:</b>{' '}
+            {_.map(anime.related['Alternative version'], (alternative_version) => {
+              return alternative_version.name;
+            })}
+          </Text>
+          <Text borderBottom="1px solid #E1E7F5" w={720}>
+            <b>Side story:</b> {side_stories.join(', ')}
+          </Text>
+          <Text borderBottom="1px solid #E1E7F5" w={720}>
+            <b>Spin-off:</b>{' '}
+            {_.map(anime.related['Spin-off'], (spin_off) => {
+              return spin_off.name;
+            })}
+          </Text>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+            Characters and Voice Actors
+          </Text>
+          <UnorderedList></UnorderedList>
+          <HStack w={720} justifyContent="space-between" pt={2}>
+            <VStack>
+              <Text fontWeight="bold" borderBottom="1px solid black" w={360}>
+                Opening Theme
+              </Text>
+            </VStack>
+            <VStack>
+              <Text fontWeight="bold" borderBottom="1px solid black" w={350}>
+                Ending Theme
+              </Text>
+            </VStack>
+          </HStack>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+            Reviews
+          </Text>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+            News
+          </Text>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+            Recommendations
+          </Text>
         </VStack>
       </HStack>
     </Flex>
