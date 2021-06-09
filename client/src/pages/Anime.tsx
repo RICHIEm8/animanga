@@ -7,6 +7,7 @@ import {
   Flex,
   HStack,
   Image,
+  ListItem,
   Spinner,
   Text,
   UnorderedList,
@@ -73,10 +74,18 @@ export const Anime = () => {
   });
 
   const charactersList = _.map(characters, (character) => {
-    return character;
+    const characterInfo = _.map(character, (info) => {
+      return info.name;
+    });
+    console.log('characters', characterInfo.slice(0, 10));
+    return (
+      <ListItem listStyleType="none" m={1}>
+        <Text>{characterInfo.slice(0, 10)}</Text>
+      </ListItem>
+    );
   });
 
-  console.log('characters', charactersList);
+  // console.log('characters', charactersList);
 
   return (
     <Flex flexDir="column" mx={200} borderX="1px solid #E1E7F5" borderBottom="1px solid #E1E7F5">
@@ -215,7 +224,14 @@ export const Anime = () => {
           <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             Characters and Voice Actors
           </Text>
-          <UnorderedList></UnorderedList>
+          <HStack>
+            <VStack>
+              <UnorderedList>{charactersList}</UnorderedList>
+            </VStack>
+            <VStack>
+              <UnorderedList></UnorderedList>
+            </VStack>
+          </HStack>
           <HStack w={720} justifyContent="space-between" pt={5}>
             <VStack>
               <Text fontWeight="bold" borderBottom="1px solid black" w={360}>
