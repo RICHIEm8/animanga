@@ -49,7 +49,7 @@ export const Anime = () => {
     return null;
   }
 
-  const { details, videos } = data;
+  const { details, videos, characters } = data;
 
   const producers = _.map(details.producers, (producer) => {
     return producer.name;
@@ -64,15 +64,19 @@ export const Anime = () => {
   });
 
   const relatedItems = _.map(details.related, (value, key) => {
+    const relatedItemNames = _.map(value, ({ name }) => name);
     return (
-      <Text borderBottom="1px solid #E1E7F5" w={720}>
-        <b>{key}:</b>{' '}
-        {_.map(value, (v) => {
-          return v.name;
-        })}
+      <Text borderBottom="1px solid #E1E7F5" w={720} key={key} pb={1}>
+        <b>{key}:</b> {relatedItemNames.join(', ')}
       </Text>
     );
   });
+
+  const charactersList = _.map(characters, (character) => {
+    return character;
+  });
+
+  console.log('characters', charactersList);
 
   return (
     <Flex flexDir="column" mx={200} borderX="1px solid #E1E7F5" borderBottom="1px solid #E1E7F5">
@@ -82,7 +86,7 @@ export const Anime = () => {
       <HStack spacing={0} alignItems="flex-start">
         <VStack w={300} px={3} pt={2} borderRight="1px solid #E1E7F5" align="left" fontSize="sm">
           <Image w={275} fit="cover" src={details.image_url} />
-          <Text borderBottom="1px solid black" fontWeight="bold">
+          <Text borderBottom="1px solid black" fontWeight="bold" pt={5}>
             Alternative Titles
           </Text>
           <Text>
@@ -94,7 +98,7 @@ export const Anime = () => {
           <Text>
             <b>Japanese:</b> {details.title_japanese}
           </Text>
-          <Text borderBottom="1px solid black" fontWeight="bold">
+          <Text borderBottom="1px solid black" fontWeight="bold" pt={5}>
             Information
           </Text>
           <Text>
@@ -127,7 +131,7 @@ export const Anime = () => {
           <Text>
             <b>Rating:</b> {details.rating}
           </Text>
-          <Text borderBottom="1px solid black" fontWeight="bold">
+          <Text borderBottom="1px solid black" fontWeight="bold" pt={5}>
             Statistics
           </Text>
           <Text>
@@ -204,15 +208,15 @@ export const Anime = () => {
             Synopsis
           </Text>
           <Text w={720}>{details.synopsis}</Text>
-          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             Related Anime
           </Text>
           {relatedItems}
-          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             Characters and Voice Actors
           </Text>
           <UnorderedList></UnorderedList>
-          <HStack w={720} justifyContent="space-between" pt={2}>
+          <HStack w={720} justifyContent="space-between" pt={5}>
             <VStack>
               <Text fontWeight="bold" borderBottom="1px solid black" w={360}>
                 Opening Theme
@@ -224,13 +228,13 @@ export const Anime = () => {
               </Text>
             </VStack>
           </HStack>
-          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             Reviews
           </Text>
-          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             News
           </Text>
-          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={2}>
+          <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             Recommendations
           </Text>
         </VStack>

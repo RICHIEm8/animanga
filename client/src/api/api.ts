@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Bluebird from 'bluebird';
 
 export interface AnimeResult {
   mal_id: number;
@@ -210,9 +211,71 @@ export interface AnimeVideos {
   ];
 }
 
+export interface AnimeCharacters {
+  characters: [
+    {
+      mal_id: number;
+      image_url: string;
+      name: string;
+      role: string;
+      voice_actors: [
+        {
+          mal_id: number;
+          name: string;
+          imague_url: string;
+          language: string;
+        }
+      ];
+    }
+  ];
+}
+
+export interface AnimeReviews {
+  reviews: [
+    {
+      mal_id: number;
+      content: string;
+      date: string;
+      reviewer: {
+        username: string;
+        scores: {
+          overall: number;
+        };
+      };
+    }
+  ];
+}
+
+export interface AnimeNews {
+  articles: [
+    {
+      title: string;
+      date: string;
+      author_name: string;
+      image_url: string;
+      intro: string;
+    }
+  ];
+}
+
+export interface AnimeRecommendations {
+  recommendations: [
+    {
+      mal_id: number;
+      image_url: string;
+      title: string;
+      recommendation_count: number;
+    }
+  ];
+}
+
 export interface CombinedAnimeResponse {
   details: Anime;
   videos: AnimeVideos;
+  characters: AnimeCharacters;
+  reviews: AnimeReviews;
+  news: AnimeNews;
+  recommendations: AnimeRecommendations;
 }
 
 export const categorisedResultsResponse = async (category: string, query: string) => {
@@ -227,7 +290,7 @@ export const topResultsResponse = async (category: string, subtype?: string) => 
   return results.data;
 };
 
-export const animeResponse = async (category: string, id: number): Promise<Anime> => {
+export const animeDetailsResponse = async (category: string, id: number): Promise<Anime> => {
   const results = await axios.get(`http://localhost:8080/${category}/${id}/`);
 
   return results.data;
@@ -239,16 +302,54 @@ export const animeVideosResponse = async (category: string, id: number): Promise
   return results.data;
 };
 
+export const animeCharactersResponse = async (
+  category: string,
+  id: number
+): Promise<AnimeCharacters> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/characters_staff`);
+
+  return results.data;
+};
+
+export const animeReviewsResponse = async (category: string, id: number): Promise<AnimeReviews> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/reviews`);
+
+  return results.data;
+};
+
+export const animeNewsResponse = async (category: string, id: number): Promise<AnimeNews> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/news`);
+
+  return results.data;
+};
+
+export const animeRecommendationsResponse = async (
+  category: string,
+  id: number
+): Promise<AnimeRecommendations> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/recommendations`);
+
+  return results.data;
+};
+
 export const combinedAnimeResponse = async (
   category: string,
   id: number
 ): Promise<CombinedAnimeResponse> => {
-  const [details, videos] = await Promise.all([
-    animeResponse(category, id),
+  const [details, videos, characters, reviews, news, recommendations] = await Promise.all([
+    animeDetailsResponse(category, id),
     animeVideosResponse(category, id),
+    animeCharactersResponse(category, id),
+    animeReviewsResponse(category, id),
+    animeNewsResponse(category, id),
+    animeRecommendationsResponse(category, id),
   ]);
   return {
     details,
     videos,
+    characters,
+    reviews,
+    news,
+    recommendations,
   };
 };
