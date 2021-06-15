@@ -15,7 +15,7 @@ import {
 import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { topResultsResponse } from '../api/api';
+import { getTopResults } from '../api/api';
 
 export const TopPeople = () => {
   const {
@@ -27,7 +27,7 @@ export const TopPeople = () => {
   } = useQuery(
     'search',
     async () => {
-      return topResultsResponse('people');
+      return getTopResults('people');
     },
     { refetchOnWindowFocus: false }
   );

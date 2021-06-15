@@ -8,10 +8,13 @@ import {
   HStack,
   Image,
   ListItem,
+  Spacer,
   Spinner,
   Text,
   UnorderedList,
   VStack,
+  Wrap,
+  WrapItem,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
@@ -50,7 +53,7 @@ export const Anime = () => {
     return null;
   }
 
-  const { details, videos, characters } = data;
+  const { details, videos, charactersStaff, reviews } = data;
 
   const producers = _.map(details.producers, (producer) => {
     return producer.name;
@@ -73,19 +76,87 @@ export const Anime = () => {
     );
   });
 
-  const charactersList = _.map(characters, (character) => {
-    const characterInfo = _.map(character, (info) => {
-      return info.name;
+  const charactersList = _.map(_.take(charactersStaff.characters, 10), (character) => {
+    const voiceActorsName = _.map(character.voice_actors, (voice_actors) => {
+      return voice_actors.name;
     });
-    console.log('characters', characterInfo.slice(0, 10));
+    const voiceActorImg = _.map(character.voice_actors, (voice_actors) => {
+      return voice_actors.image_url;
+    });
+    const voiceActorNat = _.map(character.voice_actors, (voice_actors) => {
+      return voice_actors.language;
+    });
+
     return (
-      <ListItem listStyleType="none" m={1}>
-        <Text>{characterInfo.slice(0, 10)}</Text>
+      <WrapItem key={character.mal_id} w={360} m={0} p={0} spacing={0}>
+        <HStack justifyContent="space-between" spacing={50} w={360}>
+          <HStack alignItems="flex-start" w={160}>
+            <Image w={50} fit="cover" src={character.image_url} />
+            <VStack alignItems="flex-start" spacing={0}>
+              <Text fontSize="sm">{character.name}</Text>
+              <Text fontSize="xs">{character.role}</Text>
+            </VStack>
+          </HStack>
+          <HStack w={160} spacing={0}>
+            <VStack w={100} h={75} align="right">
+              <Text fontSize="sm" mt={2}>
+                {voiceActorsName[0]}
+              </Text>
+              <Text fontSize="xs">{voiceActorNat[0]}</Text>
+            </VStack>
+            <Image w={50} fit="cover" src={voiceActorImg[0]} />
+          </HStack>
+        </HStack>
+      </WrapItem>
+    );
+  });
+
+  const openingsList = _.map(details.opening_themes, (opening) => {
+    return (
+      <ListItem listStyleType="none" key={opening} mb={2}>
+        {opening}
       </ListItem>
     );
   });
 
-  // console.log('characters', charactersList);
+  const endingsList = _.map(details.ending_themes, (ending) => {
+    return (
+      <ListItem listStyleType="none" key={ending} mb={2}>
+        {ending}
+      </ListItem>
+    );
+  });
+
+  const reviewsList = _.map(_.take(reviews.reviews, 4), (review) => {
+    const date = new Date(review.date).toString().split(' ');
+    const fixedDate = `${date[1]} ${date[2]} ${date[3]}`;
+
+    return (
+      <ListItem
+        key={review.mal_id}
+        listStyleType="none"
+        h={250}
+        w={720}
+        borderBottom="1px solid #E1E7F5"
+      >
+        <HStack align="flex-start" justify="space-between" borderBottom="1px solid #E1E7F5" p={2}>
+          <HStack align="flex-start">
+            <Image w={50} border="1px solid #E1E7F5" fit="cover" src={review.reviewer.image_url} />
+            <Text fontWeight="bold">{review.reviewer.username}</Text>
+          </HStack>
+          <VStack align="flex-end" p={2}>
+            <Text>{fixedDate}</Text>
+            <Text>Overall Rating: {review.reviewer.scores.overall}</Text>
+          </VStack>
+        </HStack>
+        <Text noOfLines={4} mt={2}>
+          {review.content}
+        </Text>
+      </ListItem>
+    );
+  });
+
+  // console.log('reviews', reviews.reviews);
 
   return (
     <Flex flexDir="column" mx={200} borderX="1px solid #E1E7F5" borderBottom="1px solid #E1E7F5">
@@ -93,7 +164,7 @@ export const Anime = () => {
         {details.title}
       </Text>
       <HStack spacing={0} alignItems="flex-start">
-        <VStack w={300} px={3} pt={2} borderRight="1px solid #E1E7F5" align="left" fontSize="sm">
+        <VStack w={300} px={3} pt={2} align="left" fontSize="sm">
           <Image w={275} fit="cover" src={details.image_url} />
           <Text borderBottom="1px solid black" fontWeight="bold" pt={5}>
             Alternative Titles
@@ -150,7 +221,7 @@ export const Anime = () => {
             <b>Ranked:</b> {details.rank}
           </Text>
         </VStack>
-        <VStack w={740} alignItems="flex-start" pl={2}>
+        <VStack w={740} alignItems="flex-start" pl={2} borderLeft="1px solid #E1E7F5">
           <HStack
             w={720}
             justifyContent="space-between"
@@ -224,29 +295,27 @@ export const Anime = () => {
           <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             Characters and Voice Actors
           </Text>
-          <HStack>
-            <VStack>
-              <UnorderedList>{charactersList}</UnorderedList>
-            </VStack>
-            <VStack>
-              <UnorderedList></UnorderedList>
-            </VStack>
-          </HStack>
-          <HStack w={720} justifyContent="space-between" pt={5}>
+          <Wrap justify="space-between" w={720} spacing={0}>
+            {charactersList}
+          </Wrap>
+          <HStack w={720} minH={100} align="flex-start" justifyContent="space-between" pt={5}>
             <VStack>
               <Text fontWeight="bold" borderBottom="1px solid black" w={360}>
                 Opening Theme
               </Text>
+              <UnorderedList>{openingsList}</UnorderedList>
             </VStack>
             <VStack>
               <Text fontWeight="bold" borderBottom="1px solid black" w={350}>
                 Ending Theme
               </Text>
+              <UnorderedList>{endingsList}</UnorderedList>
             </VStack>
           </HStack>
           <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             Reviews
           </Text>
+          <UnorderedList>{reviewsList}</UnorderedList>
           <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
             News
           </Text>

@@ -1,7 +1,7 @@
-import axios from "axios";
-import Bluebird from "bluebird";
+import axios from 'axios';
+import Bluebird from 'bluebird';
 
-export interface AnimeResult {
+export interface AnimeResultResponse {
   mal_id: number;
   url: string;
   image_url: string;
@@ -17,7 +17,7 @@ export interface AnimeResult {
   rated: string;
 }
 
-export interface MangaResult {
+export interface MangaResultResponse {
   mal_id: number;
   url: string;
   image_url: string;
@@ -33,7 +33,7 @@ export interface MangaResult {
   members: number;
 }
 
-export interface CharactersResult {
+export interface CharactersResultResponse {
   mal_id: number;
   name: string;
   image_url: string;
@@ -52,7 +52,7 @@ export interface CharactersResult {
   }[];
 }
 
-export interface PeopleResult {
+export interface PeopleResultResponse {
   mal_id: number;
   url: string;
   name: string;
@@ -60,7 +60,7 @@ export interface PeopleResult {
   image_url: string;
 }
 
-export interface TopAnimeList {
+export interface TopAnimeListResponse {
   mal_id: number;
   url: string;
   title: string;
@@ -75,7 +75,7 @@ export interface TopAnimeList {
   rank: number;
 }
 
-export interface TopMangaList {
+export interface TopMangaListResponse {
   mal_id: number;
   url: string;
   title: string;
@@ -89,7 +89,7 @@ export interface TopMangaList {
   rank: number;
 }
 
-export interface TopCharactersResult {
+export interface TopCharactersResultResponse {
   mal_id: number;
   rank: number;
   title: string;
@@ -110,7 +110,7 @@ export interface TopCharactersResult {
   }[];
 }
 
-export interface TopPeopleResult {
+export interface TopPeopleResultResponse {
   birthday: string;
   favorites: number;
   mal_id: number;
@@ -121,7 +121,7 @@ export interface TopPeopleResult {
   url: string;
 }
 
-export interface Anime {
+export interface AnimeResponse {
   mal_id: number;
   image_url: string;
   title: string;
@@ -193,7 +193,7 @@ export interface Anime {
   ending_themes: string[];
 }
 
-export interface AnimeVideos {
+export interface AnimeVideosResponse {
   promo: [
     {
       title: string;
@@ -211,42 +211,43 @@ export interface AnimeVideos {
   ];
 }
 
-export interface AnimeCharacters {
-  characters: [
-    {
+export interface AnimeCharactersStaffResponse {
+  characters: {
+    mal_id: number;
+    image_url: string;
+    name: string;
+    role: string;
+    voice_actors: {
       mal_id: number;
       image_url: string;
       name: string;
-      role: string;
-      voice_actors: [
-        {
-          mal_id: number;
-          name: string;
-          imague_url: string;
-          language: string;
-        }
-      ];
-    }
-  ];
+      language: string;
+    }[];
+  }[];
+  staff: {
+    mal_id: number;
+    name: string;
+    image_url: string;
+    positions: string[];
+  }[];
 }
 
-export interface AnimeReviews {
-  reviews: [
-    {
-      mal_id: number;
-      content: string;
-      date: string;
-      reviewer: {
-        username: string;
-        scores: {
-          overall: number;
-        };
+export interface AnimeReviewsResponse {
+  reviews: {
+    mal_id: number;
+    date: string;
+    content: string;
+    reviewer: {
+      image_url: string;
+      username: string;
+      scores: {
+        overall: number;
       };
-    }
-  ];
+    };
+  }[];
 }
 
-export interface AnimeNews {
+export interface AnimeNewsResponse {
   articles: [
     {
       title: string;
@@ -258,7 +259,7 @@ export interface AnimeNews {
   ];
 }
 
-export interface AnimeRecommendations {
+export interface AnimeRecommendationsResponse {
   recommendations: [
     {
       mal_id: number;
@@ -270,119 +271,86 @@ export interface AnimeRecommendations {
 }
 
 export interface CombinedAnimeResponse {
-  details: Anime;
-  videos: AnimeVideos;
-  characters: AnimeCharacters;
-  reviews: AnimeReviews;
-  news: AnimeNews;
-  recommendations: AnimeRecommendations;
+  details: AnimeResponse;
+  videos: AnimeVideosResponse;
+  charactersStaff: AnimeCharactersStaffResponse;
+  reviews: AnimeReviewsResponse;
+  // news: AnimeNews;
+  // recommendations: AnimeRecommendations;
 }
 
-export const categorisedResultsResponse = async (
-  category: string,
-  query: string
-) => {
-  const results = await axios.get(
-    `http://localhost:8080/search/${category}/${query}`
-  );
+export const getCategorisedResults = async (category: string, query: string) => {
+  const results = await axios.get(`http://localhost:8080/search/${category}/${query}`);
 
   return results.data;
 };
 
-export const topResultsResponse = async (
-  category: string,
-  subtype?: string
-) => {
-  const results = await axios.get(
-    `http://localhost:8080/top/${category}/1/${subtype ?? ""}`
-  );
+export const getTopResults = async (category: string, subtype?: string) => {
+  const results = await axios.get(`http://localhost:8080/top/${category}/1/${subtype ?? ''}`);
 
   return results.data;
 };
 
-export const animeDetailsResponse = async (
-  category: string,
-  id: number
-): Promise<Anime> => {
+export const getAnimeDetails = async (category: string, id: number): Promise<AnimeResponse> => {
   const results = await axios.get(`http://localhost:8080/${category}/${id}/`);
 
   return results.data;
 };
 
-export const animeVideosResponse = async (
+export const getAnimeVideos = async (
   category: string,
   id: number
-): Promise<AnimeVideos> => {
-  const results = await axios.get(
-    `http://localhost:8080/${category}/${id}/videos`
-  );
+): Promise<AnimeVideosResponse> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/videos`);
 
   return results.data;
 };
 
-export const animeCharactersResponse = async (
+export const getAnimeCharactersStaff = async (
   category: string,
   id: number
-): Promise<AnimeCharacters> => {
-  const results = await axios.get(
-    `http://localhost:8080/${category}/${id}/characters_staff`
-  );
+): Promise<AnimeCharactersStaffResponse> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/characters_staff`);
 
   return results.data;
 };
 
-export const animeReviewsResponse = async (
+export const getAnimeReviews = async (
   category: string,
   id: number
-): Promise<AnimeReviews> => {
-  const results = await axios.get(
-    `http://localhost:8080/${category}/${id}/reviews`
-  );
+): Promise<AnimeReviewsResponse> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/reviews`);
 
   return results.data;
 };
 
-export const animeNewsResponse = async (
-  category: string,
-  id: number
-): Promise<AnimeNews> => {
-  const results = await axios.get(
-    `http://localhost:8080/${category}/${id}/news`
-  );
+// export const animeNewsResponse = async (category: string, id: number): Promise<AnimeNews> => {
+//   const results = await axios.get(`http://localhost:8080/${category}/${id}/news`);
 
-  return results.data;
-};
+//   return results.data;
+// };
 
-export const animeRecommendationsResponse = async (
-  category: string,
-  id: number
-): Promise<AnimeRecommendations> => {
-  const results = await axios.get(
-    `http://localhost:8080/${category}/${id}/recommendations`
-  );
+// export const animeRecommendationsResponse = async (
+//   category: string,
+//   id: number
+// ): Promise<AnimeRecommendations> => {
+//   const results = await axios.get(`http://localhost:8080/${category}/${id}/recommendations`);
 
-  return results.data;
-};
+//   return results.data;
+// };
 
 export const combinedAnimeResponse = async (
   category: string,
   id: number
 ): Promise<CombinedAnimeResponse> => {
-  const [
-    details,
-    videos,
-    characters,
-    reviews,
-    news,
-    recommendations,
-  ] = await Bluebird.map(
+  const [details, videos, charactersStaff, reviews /*news, recommendations*/] = await Bluebird.map(
     [
-      () => animeDetailsResponse(category, id),
-      () => animeVideosResponse(category, id),
-      () => animeCharactersResponse(category, id),
-      () => animeReviewsResponse(category, id),
-      () => animeNewsResponse(category, id),
-      () => animeRecommendationsResponse(category, id),
+      () => getAnimeDetails(category, id),
+      () => getAnimeVideos(category, id),
+      () => getAnimeCharactersStaff(category, id),
+      () => getAnimeReviews(category, id),
+      // () => animeNewsResponse(category, id),
+      // () => animeRecommendationsResponse(category, id),
     ],
     (v) => v() as any,
     { concurrency: 2 }
@@ -390,9 +358,9 @@ export const combinedAnimeResponse = async (
   return {
     details,
     videos,
-    characters,
+    charactersStaff,
     reviews,
-    news,
-    recommendations,
+    // news,
+    // recommendations,
   };
 };

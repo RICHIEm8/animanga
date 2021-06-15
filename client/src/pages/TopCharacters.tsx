@@ -14,7 +14,7 @@ import {
 import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { topResultsResponse } from '../api/api';
+import { getTopResults} from '../api/api';
 
 export const TopCharacters = () => {
   const {
@@ -26,7 +26,7 @@ export const TopCharacters = () => {
   } = useQuery(
     'search',
     async () => {
-      return topResultsResponse('characters');
+      return getTopResults('characters');
     },
     { refetchOnWindowFocus: false }
   );

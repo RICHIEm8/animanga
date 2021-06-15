@@ -17,11 +17,11 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import {
-  AnimeResult,
-  CharactersResult,
-  MangaResult,
-  PeopleResult,
-  categorisedResultsResponse,
+  AnimeResultResponse,
+  CharactersResultResponse,
+  MangaResultResponse,
+  PeopleResultResponse,
+  getCategorisedResults,
 } from '../api/api';
 import { AllSearch } from '../components/AllSearch';
 import { Anime } from '../components/AnimeSearch';
@@ -31,10 +31,10 @@ import { People } from '../components/PeopleSearch';
 import { useSearch } from '../hooks/UseSearch';
 
 export interface AllSearchResult {
-  animeResults: AnimeResult[];
-  mangaResults: MangaResult[];
-  charactersResults: CharactersResult[];
-  peopleResults: PeopleResult[];
+  animeResults: AnimeResultResponse[];
+  mangaResults: MangaResultResponse[];
+  charactersResults: CharactersResultResponse[];
+  peopleResults: PeopleResultResponse[];
 }
 
 const doSearch = async (
@@ -50,14 +50,14 @@ const doSearch = async (
     };
   } else if (category === 'all') {
     return {
-      animeResults: await categorisedResultsResponse('anime', query),
-      mangaResults: await categorisedResultsResponse('manga', query),
-      charactersResults: await categorisedResultsResponse('character', query),
-      peopleResults: await categorisedResultsResponse('people', query),
+      animeResults: await getCategorisedResults('anime', query),
+      mangaResults: await getCategorisedResults('manga', query),
+      charactersResults: await getCategorisedResults('character', query),
+      peopleResults: await getCategorisedResults('people', query),
     };
   } else if (category === 'anime') {
     return {
-      animeResults: await categorisedResultsResponse('anime', query),
+      animeResults: await getCategorisedResults('anime', query),
       mangaResults: [],
       charactersResults: [],
       peopleResults: [],
@@ -65,7 +65,7 @@ const doSearch = async (
   } else if (category === 'manga') {
     return {
       animeResults: [],
-      mangaResults: await categorisedResultsResponse('manga', query),
+      mangaResults: await getCategorisedResults('manga', query),
       charactersResults: [],
       peopleResults: [],
     };
@@ -73,7 +73,7 @@ const doSearch = async (
     return {
       animeResults: [],
       mangaResults: [],
-      charactersResults: await categorisedResultsResponse('characters', query),
+      charactersResults: await getCategorisedResults('characters', query),
       peopleResults: [],
     };
   } else if (category === 'people') {
@@ -81,7 +81,7 @@ const doSearch = async (
       animeResults: [],
       mangaResults: [],
       charactersResults: [],
-      peopleResults: await categorisedResultsResponse('people', query),
+      peopleResults: await getCategorisedResults('people', query),
     };
   }
   return {

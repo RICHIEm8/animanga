@@ -12,11 +12,11 @@ import {
 import { StarIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
 import React from 'react';
-import { TopMangaList } from '../api/api';
+import { TopMangaListResponse } from '../api/api';
 import { useSearch } from '../hooks/UseSearch';
 
 interface Props {
-  data: TopMangaList[];
+  data: TopMangaListResponse[];
 }
 
 export const TopMangaLists = (props: Props) => {

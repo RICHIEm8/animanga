@@ -12,14 +12,14 @@ import {
 import _ from 'lodash';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AnimeResult, CharactersResult, MangaResult, PeopleResult } from '../api/api';
+import { AnimeResultResponse, CharactersResultResponse, MangaResultResponse, PeopleResultResponse } from '../api/api';
 import { useSearch } from '../hooks/UseSearch';
 
 interface Props {
-  animeSearchResults: AnimeResult[];
-  mangaSearchResults: MangaResult[];
-  charactersSearchResults: CharactersResult[];
-  peopleSearchResults: PeopleResult[];
+  animeSearchResults: AnimeResultResponse[];
+  mangaSearchResults: MangaResultResponse[];
+  charactersSearchResults: CharactersResultResponse[];
+  peopleSearchResults: PeopleResultResponse[];
 }
 
 export const AllSearch = (props: Props) => {

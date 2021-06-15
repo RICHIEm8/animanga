@@ -10,10 +10,10 @@ import {
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { CharactersResult } from '../api/api';
+import { CharactersResultResponse } from '../api/api';
 
 interface Props {
-  charactersSearchResults: CharactersResult[];
+  charactersSearchResults: CharactersResultResponse[];
 }
 
 export const Character = (props: Props) => {

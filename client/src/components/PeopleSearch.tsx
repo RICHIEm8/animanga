@@ -1,10 +1,10 @@
 import { Image } from '@chakra-ui/image';
 import { Heading, HStack, Link, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/layout';
 import _ from 'lodash';
-import { PeopleResult } from '../api/api';
+import { PeopleResultResponse } from '../api/api';
 
 interface Props {
-  peopleSearchResult: PeopleResult[];
+  peopleSearchResult: PeopleResultResponse[];
 }
 
 export const People = (props: Props) => {

@@ -11,12 +11,12 @@ import {
 import { StarIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
 import React from 'react';
-import { TopAnimeList } from '../api/api';
+import { TopAnimeListResponse } from '../api/api';
 import { useSearch } from '../hooks/UseSearch';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  data: TopAnimeList[];
+  data: TopAnimeListResponse[];
 }
 
 export const TopAnimeLists = (props: Props) => {
