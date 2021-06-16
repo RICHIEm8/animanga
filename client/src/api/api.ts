@@ -248,34 +248,32 @@ export interface AnimeReviewsResponse {
 }
 
 export interface AnimeNewsResponse {
-  articles: [
-    {
-      title: string;
-      date: string;
-      author_name: string;
-      image_url: string;
-      intro: string;
-    }
-  ];
+  articles: {
+    title: string;
+    date: string;
+    author_name: string;
+    image_url: string;
+    intro: string;
+  }[];
 }
 
-export interface AnimeRecommendationsResponse {
-  recommendations: [
-    {
-      mal_id: number;
-      image_url: string;
-      title: string;
-      recommendation_count: number;
-    }
-  ];
-}
+// export interface AnimeRecommendationsResponse {
+//   recommendations: [
+//     {
+//       mal_id: number;
+//       image_url: string;
+//       title: string;
+//       recommendation_count: number;
+//     }
+//   ];
+// }
 
 export interface CombinedAnimeResponse {
   details: AnimeResponse;
   videos: AnimeVideosResponse;
   charactersStaff: AnimeCharactersStaffResponse;
   reviews: AnimeReviewsResponse;
-  // news: AnimeNews;
+  news: AnimeNewsResponse;
   // recommendations: AnimeRecommendations;
 }
 
@@ -324,11 +322,11 @@ export const getAnimeReviews = async (
   return results.data;
 };
 
-// export const animeNewsResponse = async (category: string, id: number): Promise<AnimeNews> => {
-//   const results = await axios.get(`http://localhost:8080/${category}/${id}/news`);
+export const getAnimeNews = async (category: string, id: number): Promise<AnimeNewsResponse> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/news`);
 
-//   return results.data;
-// };
+  return results.data;
+};
 
 // export const animeRecommendationsResponse = async (
 //   category: string,
@@ -343,13 +341,13 @@ export const combinedAnimeResponse = async (
   category: string,
   id: number
 ): Promise<CombinedAnimeResponse> => {
-  const [details, videos, charactersStaff, reviews /*news, recommendations*/] = await Bluebird.map(
+  const [details, videos, charactersStaff, reviews, news /*recommendations*/] = await Bluebird.map(
     [
       () => getAnimeDetails(category, id),
       () => getAnimeVideos(category, id),
       () => getAnimeCharactersStaff(category, id),
       () => getAnimeReviews(category, id),
-      // () => animeNewsResponse(category, id),
+      () => getAnimeNews(category, id),
       // () => animeRecommendationsResponse(category, id),
     ],
     (v) => v() as any,
@@ -360,7 +358,7 @@ export const combinedAnimeResponse = async (
     videos,
     charactersStaff,
     reviews,
-    // news,
+    news,
     // recommendations,
   };
 };
