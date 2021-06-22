@@ -1,7 +1,16 @@
-import { Image } from '@chakra-ui/image';
-import { Heading, HStack, Link, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/layout';
-import _ from 'lodash';
-import { PeopleResultResponse } from '../api/api';
+import React from "react";
+import { Image } from "@chakra-ui/image";
+import {
+  Heading,
+  HStack,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
+  VStack,
+} from "@chakra-ui/layout";
+import _ from "lodash";
+import { PeopleResultResponse } from "../api/api";
 
 interface Props {
   peopleSearchResult: PeopleResultResponse[];
@@ -12,11 +21,16 @@ export const People = (props: Props) => {
 
   const peopleResult = _.map(peopleSearchResult, (people) => {
     const altNames = !_.isEmpty(people.alternative_names) ? (
-      <Text fontSize="xs">({_.join(people.alternative_names, ', ')})</Text>
+      <Text fontSize="xs">({_.join(people.alternative_names, ", ")})</Text>
     ) : null;
 
     return (
-      <ListItem listStyleType="none" key={people.mal_id} py={2} borderBottom="1px solid #E1E7F5">
+      <ListItem
+        listStyleType="none"
+        key={people.mal_id}
+        py={2}
+        borderBottom="1px solid #E1E7F5"
+      >
         <HStack>
           <Image w={50} h={75} fit="cover" src={people.image_url} />
           <VStack align="left">

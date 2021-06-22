@@ -9,29 +9,31 @@ import {
   Text,
   HStack,
   Flex,
-} from '@chakra-ui/react';
-import _ from 'lodash';
-import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
-import { combinedAnimeResponse } from '../../api/api';
+} from "@chakra-ui/react";
+import _ from "lodash";
+import React from "react";
+import { useQuery } from "react-query";
+import { useParams } from "react-router";
+import { combinedAnimeResponse } from "../../api/api";
 
 export const CharactersStaff = () => {
   const { id } = useParams<{ id: string }>();
   const parsedId = parseInt(id);
   const { isLoading, isFetching, data, error, isError } = useQuery(
-    'anime',
+    "anime",
     () => {
-      return combinedAnimeResponse('anime', parsedId);
+      return combinedAnimeResponse("anime", parsedId);
     },
     { refetchOnWindowFocus: false }
   );
 
   if (isError) {
-    <Alert status="error">
-      <AlertIcon />
-      <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-    </Alert>;
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle mr={2}>{error}placeholder</AlertTitle>
+      </Alert>
+    );
   }
 
   if (!data) {
@@ -40,31 +42,23 @@ export const CharactersStaff = () => {
 
   const { charactersStaff } = data;
 
-//   const charactersStaffList = _.map(charactersStaff.characters, (character) => {
-//     const voiceActors: {} = _.map(character.voice_actors, (voiceActor) => {
-//       return {
-//         malId: voiceActor.mal_id,
-//         name: voiceActor.name,
-//         imageUrl: voiceActor.image_url,
-//         language: voiceActor.language,
-//       };
-//       return { name: character.name, voiceActors };
-//     });
-
-    const charactersStaffList = _.map(charactersStaff.characters, (character) => {
-      const voiceActors: {} = _.map(character.voice_actors, (voiceActor) => {
-        return {
-          malId: voiceActor.mal_id,
-          name: voiceActor.name,
-          imageUrl: voiceActor.image_url,
-          language: voiceActor.language,
-        };
-      });
-      return { name: character.name, voiceActors };
+  const charactersStaffList = _.map(charactersStaff.characters, (character) => {
+    const voiceActors = _.map(character.voice_actors, (voiceActor) => {
+      return {
+        malId: voiceActor.mal_id,
+        name: voiceActor.name,
+        imageUrl: voiceActor.image_url,
+        language: voiceActor.language,
+      };
     });
 
     return (
-      <ListItem key={character.mal_id} listStyleType="none" w={720} alignItems="flex-start">
+      <ListItem
+        key={character.mal_id}
+        listStyleType="none"
+        w={720}
+        alignItems="flex-start"
+      >
         <HStack border="1px solid blue" justifyContent="space-between">
           <HStack alignItems="flex-start">
             <Image w={50} fit="cover" src={character.image_url} />
