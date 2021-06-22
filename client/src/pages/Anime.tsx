@@ -17,16 +17,18 @@ import {
   WrapItem,
 } from '@chakra-ui/react';
 import _ from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { combinedAnimeResponse } from '../api/api';
+import { CharactersStaff } from '../components/Anime/CharactersStaff';
 import { Details } from '../components/Anime/Details';
 import { SideInfo } from '../components/Anime/SideInfo';
 
 export const Anime = () => {
   const { id } = useParams<{ id: string }>();
   const parsedId = parseInt(id);
+  const [infoType, setInfoType] = useState('details');
 
   const { isLoading, isFetching, data, error, isError } = useQuery(
     'anime',
@@ -57,6 +59,18 @@ export const Anime = () => {
 
   const { details } = data;
 
+  console.log(infoType);
+
+  const infoTabDisplay = () => {
+    if (infoType === 'details') {
+      return <Details />;
+    } else if (infoType === 'charactersStaff') {
+      return <CharactersStaff />;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Flex flexDir="column" mx={200} borderX="1px solid #E1E7F5" borderBottom="1px solid #E1E7F5">
       <Text bgColor="#E1E7F5" fontWeight="bold" fontSize={20} pl={1}>
@@ -71,32 +85,68 @@ export const Anime = () => {
             textAlign="center"
             my={2}
             px={2}
+            spacing={-5}
             borderBottom="1px solid black"
             color="#2E51A2"
           >
-            <Box>
-              <Text>Details</Text>
+            <Box
+              _hover={{ bg: '#2E51A2', color: 'white' }}
+              onClick={() => {
+                setInfoType('details');
+              }}
+            >
+              <Text mx={2}>Details</Text>
             </Box>
-            <Box>
-              <Text>Characters & Staff</Text>
+            <Box
+              _hover={{ bg: '#2E51A2', color: 'white' }}
+              onClick={() => {
+                setInfoType('charactersStaff');
+              }}
+            >
+              <Text mx={2}>Characters & Staff</Text>
             </Box>
-            <Box>
-              <Text>Reviews</Text>
+            <Box
+              _hover={{ bg: '#2E51A2', color: 'white' }}
+              onClick={() => {
+                setInfoType('reviews');
+              }}
+            >
+              <Text mx={2}>Reviews</Text>
             </Box>
-            <Box>
-              <Text>Recommendations</Text>
+            <Box
+              _hover={{ bg: '#2E51A2', color: 'white' }}
+              onClick={() => {
+                setInfoType('recommendations');
+              }}
+            >
+              <Text mx={2}>Recommendations</Text>
             </Box>
-            <Box>
-              <Text>News</Text>
+            <Box
+              _hover={{ bg: '#2E51A2', color: 'white' }}
+              onClick={() => {
+                setInfoType('news');
+              }}
+            >
+              <Text mx={2}>News</Text>
             </Box>
-            <Box>
-              <Text>Videos</Text>
+            <Box
+              _hover={{ bg: '#2E51A2', color: 'white' }}
+              onClick={() => {
+                setInfoType('videos');
+              }}
+            >
+              <Text mx={2}>Videos</Text>
             </Box>
-            <Box>
-              <Text>Pictures</Text>
+            <Box
+              _hover={{ bg: '#2E51A2', color: 'white' }}
+              onClick={() => {
+                setInfoType('pictures');
+              }}
+            >
+              <Text mx={2}>Pictures</Text>
             </Box>
           </HStack>
-          <Details />
+          {infoTabDisplay()}
         </VStack>
       </HStack>
     </Flex>
