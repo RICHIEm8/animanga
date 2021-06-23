@@ -23,6 +23,7 @@ import { useParams } from 'react-router-dom';
 import { combinedAnimeResponse } from '../api/api';
 import { CharactersStaff } from '../components/Anime/CharactersStaff';
 import { Details } from '../components/Anime/Details';
+import { Reviews } from '../components/Anime/Reviews';
 import { SideInfo } from '../components/Anime/SideInfo';
 
 export const Anime = () => {
@@ -66,6 +67,8 @@ export const Anime = () => {
       return <Details />;
     } else if (infoType === 'charactersStaff') {
       return <CharactersStaff />;
+    } else if (infoType === 'reviews') {
+      return <Reviews />;
     } else {
       return null;
     }
