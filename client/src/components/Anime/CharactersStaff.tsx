@@ -9,20 +9,20 @@ import {
   Text,
   HStack,
   Flex,
-} from "@chakra-ui/react";
-import _ from "lodash";
-import React from "react";
-import { useQuery } from "react-query";
-import { useParams } from "react-router";
-import { combinedAnimeResponse } from "../../api/api";
+} from '@chakra-ui/react';
+import _ from 'lodash';
+import React from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router';
+import { combinedAnimeResponse } from '../../api/api';
 
 export const CharactersStaff = () => {
   const { id } = useParams<{ id: string }>();
   const parsedId = parseInt(id);
   const { isLoading, isFetching, data, error, isError } = useQuery(
-    "anime",
+    'anime',
     () => {
-      return combinedAnimeResponse("anime", parsedId);
+      return combinedAnimeResponse('anime', parsedId);
     },
     { refetchOnWindowFocus: false }
   );
@@ -44,22 +44,27 @@ export const CharactersStaff = () => {
 
   const charactersStaffList = _.map(charactersStaff.characters, (character) => {
     const voiceActors = _.map(character.voice_actors, (voiceActor) => {
-      return {
-        malId: voiceActor.mal_id,
-        name: voiceActor.name,
-        imageUrl: voiceActor.image_url,
-        language: voiceActor.language,
-      };
+      return (
+        <ListItem
+          listStyleType="none"
+          key={voiceActor.mal_id}
+          display="flex"
+          justifyContent="flex-end"
+        >
+          <HStack>
+            <VStack display="flex" alignItems="flex-end">
+              <Text fontSize="sm">{voiceActor.name}</Text>
+              <Text fontSize="xs">{voiceActor.language}</Text>
+            </VStack>
+            <Image w={50} fit="cover" src={voiceActor.image_url} />
+          </HStack>
+        </ListItem>
+      );
     });
 
     return (
-      <ListItem
-        key={character.mal_id}
-        listStyleType="none"
-        w={720}
-        alignItems="flex-start"
-      >
-        <HStack border="1px solid blue" justifyContent="space-between">
+      <ListItem key={character.mal_id} listStyleType="none" w={720} alignItems="flex-start">
+        <HStack justifyContent="space-between" alignItems="flex-start">
           <HStack alignItems="flex-start">
             <Image w={50} fit="cover" src={character.image_url} />
             <VStack alignItems="flex-start" spacing={0}>
@@ -67,13 +72,13 @@ export const CharactersStaff = () => {
               <Text fontSize="xs">{character.role}</Text>
             </VStack>
           </HStack>
-          <UnorderedList>
-            <ListItem listStyleType="none"></ListItem>
-          </UnorderedList>
+          <UnorderedList w={300}>{voiceActors}</UnorderedList>
         </HStack>
       </ListItem>
     );
   });
+
+  //   console.log(charactersStaffList);
 
   return (
     <Flex w={720} flexDir="column">
