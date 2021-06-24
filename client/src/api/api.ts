@@ -257,24 +257,29 @@ export interface AnimeNewsResponse {
   }[];
 }
 
-// export interface AnimeRecommendationsResponse {
-//   recommendations: [
-//     {
-//       mal_id: number;
-//       image_url: string;
-//       title: string;
-//       recommendation_count: number;
-//     }
-//   ];
-// }
+export interface AnimeRecommendationsResponse {
+  recommendations: {
+    mal_id: number;
+    image_url: string;
+    title: string;
+    recommendation_count: number;
+  }[];
+}
+
+export interface AnimePicturesResponse {
+  pictures: {
+    large: string;
+  }[];
+}
 
 export interface CombinedAnimeResponse {
   details: AnimeResponse;
   videos: AnimeVideosResponse;
+  pictures: AnimePicturesResponse;
   charactersStaff: AnimeCharactersStaffResponse;
   reviews: AnimeReviewsResponse;
   news: AnimeNewsResponse;
-  // recommendations: AnimeRecommendations;
+  recommendations: AnimeRecommendationsResponse;
 }
 
 export const getCategorisedResults = async (category: string, query: string) => {
@@ -304,6 +309,15 @@ export const getAnimeVideos = async (
   return results.data;
 };
 
+export const getAnimePictures = async (
+  category: string,
+  id: number
+): Promise<AnimePicturesResponse> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/pictures`);
+
+  return results.data;
+};
+
 export const getAnimeCharactersStaff = async (
   category: string,
   id: number
@@ -328,37 +342,40 @@ export const getAnimeNews = async (category: string, id: number): Promise<AnimeN
   return results.data;
 };
 
-// export const animeRecommendationsResponse = async (
-//   category: string,
-//   id: number
-// ): Promise<AnimeRecommendations> => {
-//   const results = await axios.get(`http://localhost:8080/${category}/${id}/recommendations`);
+export const getAnimeRecommendations = async (
+  category: string,
+  id: number
+): Promise<AnimeRecommendationsResponse> => {
+  const results = await axios.get(`http://localhost:8080/${category}/${id}/recommendations`);
 
-//   return results.data;
-// };
+  return results.data;
+};
 
 export const combinedAnimeResponse = async (
   category: string,
   id: number
 ): Promise<CombinedAnimeResponse> => {
-  const [details, videos, charactersStaff, reviews, news /*recommendations*/] = await Bluebird.map(
-    [
-      () => getAnimeDetails(category, id),
-      () => getAnimeVideos(category, id),
-      () => getAnimeCharactersStaff(category, id),
-      () => getAnimeReviews(category, id),
-      () => getAnimeNews(category, id),
-      // () => animeRecommendationsResponse(category, id),
-    ],
-    (v) => v() as any,
-    { concurrency: 2 }
-  );
+  const [details, videos, pictures, charactersStaff, reviews, news, recommendations] =
+    await Bluebird.map(
+      [
+        () => getAnimeDetails(category, id),
+        () => getAnimeVideos(category, id),
+        () => getAnimePictures(category, id),
+        () => getAnimeCharactersStaff(category, id),
+        () => getAnimeReviews(category, id),
+        () => getAnimeNews(category, id),
+        () => getAnimeRecommendations(category, id),
+      ],
+      (v) => v() as any,
+      { concurrency: 1 }
+    );
   return {
     details,
     videos,
+    pictures,
     charactersStaff,
     reviews,
     news,
-    // recommendations,
+    recommendations,
   };
 };

@@ -16,7 +16,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import { combinedAnimeResponse } from '../../api/api';
 
-export const Reviews = () => {
+export const News = () => {
   const { id } = useParams<{ id: string }>();
   const parsedId = parseInt(id);
   const { isLoading, isFetching, data, error, isError } = useQuery(
@@ -40,54 +40,49 @@ export const Reviews = () => {
     return null;
   }
 
-  const { reviews } = data;
+  const { news } = data;
 
-  const reviewsList = _.map(_.take(reviews.reviews, 20), (review) => {
-    const date = new Date(review.date).toString().split(' ');
+  const newsList = _.map(_.take(news.articles, 10), (article) => {
+    const date = new Date(article.date).toString().split(' ');
     const fixedDate = `${date[1]} ${date[2]}, ${date[3]}`;
+    const articleImage = () => {
+      if (!_.isNull(article.image_url)) {
+        return <Image w={75} border="1px solid #E1E7F5" fit="cover" src={article.image_url} />;
+      } else {
+        return null;
+      }
+    };
 
     return (
       <ListItem
-        key={review.mal_id}
+        key={article.title}
         listStyleType="none"
-        h={200}
-        w={720}
         borderBottom="1px solid #E1E7F5"
+        w={720}
+        mb={2}
+        py={2}
         ml={-4}
       >
-        <HStack
-          align="flex-start"
-          justify="space-between"
-          borderBottom="1px solid #E1E7F5"
-          p={2}
-          bgColor="#ECF2FF"
-          mt={2}
-          w={720}
-        >
-          <HStack align="flex-start">
-            <Image w={50} border="1px solid #E1E7F5" fit="cover" src={review.reviewer.image_url} />
-            <Text fontWeight="bold">{review.reviewer.username}</Text>
-          </HStack>
-          <VStack align="flex-end" p={2}>
-            <Text>{fixedDate}</Text>
-            <Text>Overall Rating: {review.reviewer.scores.overall}</Text>
+        <HStack align="flex-start">
+          {articleImage()}
+          <VStack align="flex-start">
+            <Text fontWeight="bold">{article.title}</Text>
+            <Text fontSize="sm">{article.intro}</Text>
+            <Text fontSize="sm">
+              {fixedDate} by <b>{article.author_name}</b>
+            </Text>
           </VStack>
         </HStack>
-        <Text noOfLines={4} mt={2} fontSize="sm">
-          {review.content}
-        </Text>
       </ListItem>
     );
   });
 
-  console.log('hello');
-
   return (
     <Flex w={720} flexDir="column">
-      <Text fontWeight="bold" borderBottom="1px solid #E1E7F5" w={720}>
-        Reviews
+      <Text w={720} fontWeight="bold" borderBottom="1px solid #E1E7F5">
+        News
       </Text>
-      <UnorderedList>{reviewsList}</UnorderedList>
+      <UnorderedList>{newsList}</UnorderedList>
     </Flex>
   );
 };

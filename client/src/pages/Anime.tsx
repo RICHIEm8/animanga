@@ -23,6 +23,9 @@ import { useParams } from 'react-router-dom';
 import { combinedAnimeResponse } from '../api/api';
 import { CharactersStaff } from '../components/Anime/CharactersStaff';
 import { Details } from '../components/Anime/Details';
+import { News } from '../components/Anime/News';
+import { Pictures } from '../components/Anime/Pictures';
+import { Recommendations } from '../components/Anime/Recommendations';
 import { Reviews } from '../components/Anime/Reviews';
 import { SideInfo } from '../components/Anime/SideInfo';
 
@@ -69,6 +72,12 @@ export const Anime = () => {
       return <CharactersStaff />;
     } else if (infoType === 'reviews') {
       return <Reviews />;
+    } else if (infoType === 'recommendations') {
+      return <Recommendations />;
+    } else if (infoType === 'news') {
+      return <News />;
+    } else if (infoType === 'pictures') {
+      return <Pictures />;
     } else {
       return null;
     }

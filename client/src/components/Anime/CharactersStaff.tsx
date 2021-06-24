@@ -78,8 +78,6 @@ export const CharactersStaff = () => {
     );
   });
 
-  //   console.log(charactersStaffList);
-
   return (
     <Flex w={720} flexDir="column">
       <Text w={720} fontWeight="bold" borderBottom="1px solid #E1E7F5">
