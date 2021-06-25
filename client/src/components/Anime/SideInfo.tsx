@@ -3,40 +3,14 @@ import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { combinedAnimeResponse } from '../../api/api';
+import { AnimeResponse, combinedAnimeResponse } from '../../api/api';
 
-export const SideInfo = () => {
-  const { id } = useParams<{ id: string }>();
-  const parsedId = parseInt(id);
+interface Props {
+  details: AnimeResponse;
+}
 
-  const { isLoading, isFetching, data, error, isError } = useQuery(
-    'anime',
-    () => {
-      return combinedAnimeResponse('anime', parsedId);
-    },
-    { refetchOnWindowFocus: false }
-  );
-
-  // if (isLoading || isFetching) {
-  //   return (
-  //     <Flex h="100vh" justify="center" mt={50}>
-  //       <Spinner color="blue" />
-  //     </Flex>
-  //   );
-  // }
-
-  if (isError) {
-    <Alert status="error">
-      <AlertIcon />
-      <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-    </Alert>;
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const { details } = data;
+export const SideInfo = (props: Props) => {
+  const { details } = props;
 
   const studios = _.map(details.studios, (studio) => {
     return studio.name;

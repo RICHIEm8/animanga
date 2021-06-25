@@ -14,33 +14,14 @@ import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import { combinedAnimeResponse } from '../../api/api';
+import { AnimeReviewsResponse, combinedAnimeResponse } from '../../api/api';
 
-export const Reviews = () => {
-  const { id } = useParams<{ id: string }>();
-  const parsedId = parseInt(id);
-  const { isLoading, isFetching, data, error, isError } = useQuery(
-    'anime',
-    () => {
-      return combinedAnimeResponse('anime', parsedId);
-    },
-    { refetchOnWindowFocus: false }
-  );
+interface Props {
+  reviews: AnimeReviewsResponse;
+}
 
-  if (isError) {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-      </Alert>
-    );
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const { reviews } = data;
+export const Reviews = (props: Props) => {
+  const { reviews } = props;
 
   const reviewsList = _.map(_.take(reviews.reviews, 20), (review) => {
     const date = new Date(review.date).toString().split(' ');

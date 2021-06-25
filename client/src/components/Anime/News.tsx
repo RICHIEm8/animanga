@@ -14,33 +14,14 @@ import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import { combinedAnimeResponse } from '../../api/api';
+import { AnimeNewsResponse, combinedAnimeResponse } from '../../api/api';
 
-export const News = () => {
-  const { id } = useParams<{ id: string }>();
-  const parsedId = parseInt(id);
-  const { isLoading, isFetching, data, error, isError } = useQuery(
-    'anime',
-    () => {
-      return combinedAnimeResponse('anime', parsedId);
-    },
-    { refetchOnWindowFocus: false }
-  );
+interface Props {
+  news: AnimeNewsResponse;
+}
 
-  if (isError) {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-      </Alert>
-    );
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const { news } = data;
+export const News = (props: Props) => {
+  const { news } = props;
 
   const newsList = _.map(_.take(news.articles, 10), (article) => {
     const date = new Date(article.date).toString().split(' ');

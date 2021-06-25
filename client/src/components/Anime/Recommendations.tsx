@@ -14,33 +14,14 @@ import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import { combinedAnimeResponse } from '../../api/api';
+import { AnimeRecommendationsResponse, combinedAnimeResponse } from '../../api/api';
 
-export const Recommendations = () => {
-  const { id } = useParams<{ id: string }>();
-  const parsedId = parseInt(id);
-  const { isLoading, isFetching, data, error, isError } = useQuery(
-    'anime',
-    () => {
-      return combinedAnimeResponse('anime', parsedId);
-    },
-    { refetchOnWindowFocus: false }
-  );
+interface Props {
+  recommendations: AnimeRecommendationsResponse;
+}
 
-  if (isError) {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-      </Alert>
-    );
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const { recommendations } = data;
+export const Recommendations = (props: Props) => {
+  const { recommendations } = props;
 
   const recommendationsList = _.map(
     _.take(recommendations.recommendations, 20),

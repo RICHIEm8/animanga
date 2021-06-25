@@ -20,32 +20,27 @@ import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import { combinedAnimeResponse } from '../../api/api';
+import {
+  AnimeCharactersStaffResponse,
+  AnimeNewsResponse,
+  AnimePicturesResponse,
+  AnimeRecommendationsResponse,
+  AnimeResponse,
+  AnimeReviewsResponse,
+  AnimeVideosResponse,
+  combinedAnimeResponse,
+} from '../../api/api';
 
-export const Details = () => {
-  const { id } = useParams<{ id: string }>();
-  const parsedId = parseInt(id);
+interface Props {
+  details: AnimeResponse;
+  charactersStaff: AnimeCharactersStaffResponse;
+  videos: AnimeVideosResponse;
+  reviews: AnimeReviewsResponse;
+  news: AnimeNewsResponse;
+}
 
-  const { isLoading, isFetching, data, error, isError } = useQuery(
-    'anime',
-    () => {
-      return combinedAnimeResponse('anime', parsedId);
-    },
-    { refetchOnWindowFocus: false }
-  );
-
-  if (isError) {
-    <Alert status="error">
-      <AlertIcon />
-      <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-    </Alert>;
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const { details, videos, charactersStaff, reviews, news } = data;
+export const Details = (props: Props) => {
+  const { details, videos, charactersStaff, reviews, news } = props;
 
   const studios = _.map(details.studios, (studio) => {
     return studio.name;

@@ -61,23 +61,31 @@ export const Anime = () => {
     return null;
   }
 
-  const { details } = data;
+  const { details, videos, pictures, charactersStaff, reviews, news, recommendations } = data;
 
   console.log(infoType);
 
   const infoTabDisplay = () => {
     if (infoType === 'details') {
-      return <Details />;
+      return (
+        <Details
+          details={details}
+          charactersStaff={charactersStaff}
+          reviews={reviews}
+          news={news}
+          videos={videos}
+        />
+      );
     } else if (infoType === 'charactersStaff') {
-      return <CharactersStaff />;
+      return <CharactersStaff charactersStaff={charactersStaff} />;
     } else if (infoType === 'reviews') {
-      return <Reviews />;
+      return <Reviews reviews={reviews} />;
     } else if (infoType === 'recommendations') {
-      return <Recommendations />;
+      return <Recommendations recommendations={recommendations} />;
     } else if (infoType === 'news') {
-      return <News />;
+      return <News news={news} />;
     } else if (infoType === 'pictures') {
-      return <Pictures />;
+      return <Pictures pictures={pictures} />;
     } else {
       return null;
     }
@@ -89,7 +97,7 @@ export const Anime = () => {
         {details.title}
       </Text>
       <HStack spacing={0} alignItems="flex-start">
-        <SideInfo />
+        <SideInfo details={details} />
         <VStack w={740} alignItems="flex-start" pl={2} borderLeft="1px solid #E1E7F5">
           <HStack
             w={720}

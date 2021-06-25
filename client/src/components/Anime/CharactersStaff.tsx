@@ -14,33 +14,14 @@ import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import { combinedAnimeResponse } from '../../api/api';
+import { AnimeCharactersStaffResponse, combinedAnimeResponse } from '../../api/api';
 
-export const CharactersStaff = () => {
-  const { id } = useParams<{ id: string }>();
-  const parsedId = parseInt(id);
-  const { isLoading, isFetching, data, error, isError } = useQuery(
-    'anime',
-    () => {
-      return combinedAnimeResponse('anime', parsedId);
-    },
-    { refetchOnWindowFocus: false }
-  );
+interface Props {
+  charactersStaff: AnimeCharactersStaffResponse;
+}
 
-  if (isError) {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle mr={2}>{error}placeholder</AlertTitle>
-      </Alert>
-    );
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const { charactersStaff } = data;
+export const CharactersStaff = (props: Props) => {
+  const { charactersStaff } = props;
 
   const charactersStaffList = _.map(charactersStaff.characters, (character) => {
     const voiceActors = _.map(character.voice_actors, (voiceActor) => {
