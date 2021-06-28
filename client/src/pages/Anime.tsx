@@ -28,6 +28,7 @@ import { Pictures } from '../components/Anime/Pictures';
 import { Recommendations } from '../components/Anime/Recommendations';
 import { Reviews } from '../components/Anime/Reviews';
 import { SideInfo } from '../components/Anime/SideInfo';
+import { Videos } from '../components/Anime/Videos';
 
 export const Anime = () => {
   const { id } = useParams<{ id: string }>();
@@ -86,6 +87,8 @@ export const Anime = () => {
       return <News news={news} />;
     } else if (infoType === 'pictures') {
       return <Pictures pictures={pictures} />;
+    } else if (infoType === 'videos') {
+      return <Videos videos={videos} />;
     } else {
       return null;
     }

@@ -41,7 +41,7 @@ export const Anime = (props: Props) => {
         <HStack align="left" spacing={1.5}>
           <Image w={75} h={100} fit="cover" src={anime.image_url} />
           <VStack align="left">
-            <Link>
+            <Link to={`/anime/${anime.mal_id}`}>
               <Heading color="#2E51A2" size="xs">
                 {anime.title}
               </Heading>

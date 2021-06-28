@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Bluebird from 'bluebird';
+import { SubscriptionManager } from 'framer-motion/types/utils/subscription-manager';
 
 export interface AnimeResultResponse {
   mal_id: number;
@@ -194,21 +195,17 @@ export interface AnimeResponse {
 }
 
 export interface AnimeVideosResponse {
-  promo: [
-    {
-      title: string;
-      image_url: string;
-      video_url: string;
-    }
-  ];
-  episodes: [
-    {
-      title: string;
-      episode: string;
-      url: string;
-      image_url: string;
-    }
-  ];
+  promo: {
+    title: string;
+    image_url: string;
+    video_url: string;
+  }[];
+  episodes: {
+    title: string;
+    episode: string;
+    image_url: string;
+    url: string;
+  }[];
 }
 
 export interface AnimeCharactersStaffResponse {

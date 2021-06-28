@@ -25,7 +25,9 @@ export const Pictures = (props: Props) => {
       <Text w={720} mb={2} fontWeight="bold" borderBottom="1px solid #E1E7F5">
         Pictures
       </Text>
-      <Wrap spacing="36px">{picturesList}</Wrap>
+      <Wrap spacing="40px" mb={2}>
+        {picturesList}
+      </Wrap>
     </Flex>
   );
 };
