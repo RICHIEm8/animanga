@@ -279,14 +279,32 @@ export interface CombinedAnimeResponse {
   recommendations: AnimeRecommendationsResponse;
 }
 
+export interface SeasonAnimeResponse {
+  season_name: string;
+  season_year: string;
+  anime: {
+    mal_id: number;
+    title: string;
+    image_url: string;
+  }[];
+}
+
 export const getCategorisedResults = async (category: string, query: string) => {
   const results = await axios.get(`http://localhost:8080/search/${category}/${query}`);
 
   return results.data;
 };
 
+export const getSeasonAnimeResults = async (): Promise<SeasonAnimeResponse> => {
+  const results = await axios.get(`http://localhost:8080/season`);
+
+  return results.data;
+};
+
 export const getTopResults = async (category: string, subtype?: string) => {
   const results = await axios.get(`http://localhost:8080/top/${category}/1/${subtype ?? ''}`);
+
+  console.log(results.data);
 
   return results.data;
 };

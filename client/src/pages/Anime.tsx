@@ -75,6 +75,7 @@ export const Anime = () => {
           reviews={reviews}
           news={news}
           videos={videos}
+          recommendations={recommendations}
         />
       );
     } else if (infoType === 'charactersStaff') {

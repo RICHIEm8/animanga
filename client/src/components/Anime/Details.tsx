@@ -37,10 +37,11 @@ interface Props {
   videos: AnimeVideosResponse;
   reviews: AnimeReviewsResponse;
   news: AnimeNewsResponse;
+  recommendations: AnimeRecommendationsResponse;
 }
 
 export const Details = (props: Props) => {
-  const { details, videos, charactersStaff, reviews, news } = props;
+  const { details, videos, charactersStaff, reviews, news, recommendations } = props;
 
   const studios = _.map(details.studios, (studio) => {
     return studio.name;
@@ -172,6 +173,37 @@ export const Details = (props: Props) => {
     );
   });
 
+  const recommendationsList = _.map(
+    _.take(recommendations.recommendations, 7),
+    (recommendation) => {
+      return (
+        <ListItem key={recommendation.mal_id} listStyleType="none" w={100} textAlign="center">
+          <Image
+            w={100}
+            h={125}
+            border="1px solid #E1E7F5"
+            fit="cover"
+            src={recommendation.image_url}
+          />
+          <Text
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            w={90}
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {recommendation.title}
+          </Text>
+        </ListItem>
+      );
+    }
+  );
+
+  console.log(recommendations.recommendations);
+
   return (
     <Box>
       <HStack justifyContent="space-between" alignItems="flex-start" w={720}>
@@ -246,6 +278,9 @@ export const Details = (props: Props) => {
       <Text fontWeight="bold" borderBottom="1px solid black" w={720} pt={5}>
         Recommendations
       </Text>
+      <UnorderedList w={720} ml={0}>
+        <HStack>{recommendationsList}</HStack>
+      </UnorderedList>
     </Box>
   );
 };
