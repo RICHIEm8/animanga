@@ -269,6 +269,16 @@ export interface AnimePicturesResponse {
   }[];
 }
 
+export interface SeasonAnimeResponse {
+  season_name: string;
+  season_year: string;
+  anime: {
+    mal_id: number;
+    title: string;
+    image_url: string;
+  }[];
+}
+
 export interface CombinedAnimeResponse {
   details: AnimeResponse;
   videos: AnimeVideosResponse;
@@ -279,14 +289,11 @@ export interface CombinedAnimeResponse {
   recommendations: AnimeRecommendationsResponse;
 }
 
-export interface SeasonAnimeResponse {
-  season_name: string;
-  season_year: string;
-  anime: {
-    mal_id: number;
-    title: string;
-    image_url: string;
-  }[];
+export interface HomePageResponse {
+  seasonAnime: SeasonAnimeResponse;
+  topAiring: TopAnimeListResponse[];
+  topUpcoming: TopAnimeListResponse[];
+  topPopular: TopAnimeListResponse[];
 }
 
 export const getCategorisedResults = async (category: string, query: string) => {
@@ -303,8 +310,6 @@ export const getSeasonAnimeResults = async (): Promise<SeasonAnimeResponse> => {
 
 export const getTopResults = async (category: string, subtype?: string) => {
   const results = await axios.get(`http://localhost:8080/top/${category}/1/${subtype ?? ''}`);
-
-  console.log(results.data);
 
   return results.data;
 };
@@ -364,6 +369,39 @@ export const getAnimeRecommendations = async (
   const results = await axios.get(`http://localhost:8080/${category}/${id}/recommendations`);
 
   return results.data;
+};
+
+// export const homePageResponse = async (subtype?: string): Promise<HomePageResponse> => {
+//   const [seasonAnime, topAiring, topUpcoming, topPopular] = await Bluebird.map(
+//     [
+//       () => getSeasonAnimeResults(),
+//       () => getTopResults('anime', 'airing'),
+//       () => getTopResults('anime', 'upcoming'),
+//       () => getTopResults('anime', 'bypopularity'),
+//     ],
+//     (v) => v() as any,
+//     { concurrency: 1 }
+//   );
+//   return {
+//     seasonAnime,
+//     topAiring,
+//     topUpcoming,
+//     topPopular,
+//   };
+// };
+
+export const homePageResponse = async (subtype?: string): Promise<HomePageResponse> => {
+  const seasonAnime = await getSeasonAnimeResults();
+  const topAiring = await getTopResults('anime', 'airing');
+  const topUpcoming = await getTopResults('anime', 'upcoming');
+  const topPopular = await getTopResults('anime', 'bypopularity');
+
+  return {
+    seasonAnime,
+    topAiring,
+    topUpcoming,
+    topPopular,
+  };
 };
 
 export const combinedAnimeResponse = async (
