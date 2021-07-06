@@ -12,6 +12,8 @@ import {
   UnorderedList,
   VStack,
   Image,
+  WrapItem,
+  Wrap,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
@@ -19,19 +21,6 @@ import { useQuery } from 'react-query';
 import { getSeasonAnimeResults, getTopResults, homePageResponse } from '../api/api';
 
 export const Home = () => {
-  // const {
-  //   isLoading,
-  //   isFetching,
-  //   data: seasonAnime,
-  //   error,
-  //   isError,
-  // } = useQuery(
-  //   'anime',
-  //   () => {
-  //     return getSeasonAnimeResults();
-  //   },
-  //   { refetchOnWindowFocus: false }
-  // );
   const { isLoading, isFetching, data, error, isError } = useQuery(
     'anime',
     () => {
@@ -59,7 +48,7 @@ export const Home = () => {
     return null;
   }
 
-  const { seasonAnime, topAiring, topUpcoming, topPopular } = data;
+  const { seasonAnime, topAiring, topUpcoming, topPopular, animeSchedule } = data;
 
   const currentSeasonAnimeList = _.map(_.take(seasonAnime.anime, 5), (anime) => {
     return (
@@ -163,14 +152,192 @@ export const Home = () => {
     );
   });
 
+  const weeklyAnimeSchedule = () => {
+    const mondaySchedule = _.map(_.take(animeSchedule.monday, 5), (anime) => {
+      return (
+        <ListItem key={anime.mal_id} listStyleType="none" position="relative">
+          <Image w={100} h={150} fit="cover" src={anime.image_url} />
+          <Text
+            w={100}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </ListItem>
+      );
+    });
+    const tuesdaySchedule = _.map(_.take(animeSchedule.tuesday, 5), (anime) => {
+      return (
+        <ListItem key={anime.mal_id} listStyleType="none" position="relative">
+          <Image w={100} h={150} fit="cover" src={anime.image_url} />
+          <Text
+            w={100}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </ListItem>
+      );
+    });
+    const wednesdaySchedule = _.map(_.take(animeSchedule.wednesday, 5), (anime) => {
+      return (
+        <ListItem key={anime.mal_id} listStyleType="none" position="relative">
+          <Image w={100} h={150} fit="cover" src={anime.image_url} />
+          <Text
+            w={100}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </ListItem>
+      );
+    });
+    const thursdaySchedule = _.map(_.take(animeSchedule.thursday, 5), (anime) => {
+      return (
+        <ListItem key={anime.mal_id} listStyleType="none" position="relative">
+          <Image w={100} h={150} fit="cover" src={anime.image_url} />
+          <Text
+            w={100}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </ListItem>
+      );
+    });
+    const fridaySchedule = _.map(_.take(animeSchedule.friday, 5), (anime) => {
+      return (
+        <ListItem key={anime.mal_id} listStyleType="none" position="relative">
+          <Image w={100} h={150} fit="cover" src={anime.image_url} />
+          <Text
+            w={100}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </ListItem>
+      );
+    });
+    const saturdaySchedule = _.map(_.take(animeSchedule.saturday, 5), (anime) => {
+      return (
+        <ListItem key={anime.mal_id} listStyleType="none" position="relative">
+          <Image w={100} h={150} fit="cover" src={anime.image_url} />
+          <Text
+            w={100}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </ListItem>
+      );
+    });
+    const sundaySchedule = _.map(_.take(animeSchedule.sunday, 5), (anime) => {
+      return (
+        <ListItem key={anime.mal_id} listStyleType="none" position="relative">
+          <Image w={100} h={150} fit="cover" src={anime.image_url} />
+          <Text
+            w={100}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </ListItem>
+      );
+    });
+    return (
+      <VStack spacing={0} pl={4} pr={4} alignItems="flex-start" w={720}>
+        <Text fontWeight="bold">Weekly Anime Schedule</Text>
+        <VStack w={720} borderTop="1px solid #E1E7F5" alignItems="flex-start">
+          <Text>Monday</Text>
+          <UnorderedList border="1px solid red">
+            <HStack>{mondaySchedule}</HStack>
+          </UnorderedList>
+          <Text>Tuesday</Text>
+          <UnorderedList w={720}>
+            <HStack>{tuesdaySchedule}</HStack>
+          </UnorderedList>
+          <Text>Wednesday</Text>
+          <UnorderedList w={720}>
+            <HStack>{wednesdaySchedule}</HStack>
+          </UnorderedList>
+          <Text>Thursday</Text>
+          <UnorderedList w={720}>
+            <HStack>{thursdaySchedule}</HStack>
+          </UnorderedList>
+          <Text>Friday</Text>
+          <UnorderedList w={720}>
+            <HStack>{fridaySchedule}</HStack>
+          </UnorderedList>
+          <Text>Saturday</Text>
+          <UnorderedList w={720}>
+            <HStack>{saturdaySchedule}</HStack>
+          </UnorderedList>
+          <Text>Sunday</Text>
+          <UnorderedList w={720}>
+            <HStack>{sundaySchedule}</HStack>
+          </UnorderedList>
+        </VStack>
+      </VStack>
+    );
+  };
+
   return (
     <Flex justify="center" flexDir="column" mx={200} borderX="1px solid #E1E7F5">
       <Text bgColor="#E1E7F5" fontWeight="bold" fontSize={20} pl={1} mb={25}>
         Welcome to AniMan
       </Text>
-      <HStack alignItems="flex-start" h={1500}>
+      <HStack alignItems="flex-start" minH={1500}>
         <VStack w={720} pr={2} borderRight="1px solid #E1E7F5">
-          <VStack spacing={0} ml={2} alignItems="flex-start">
+          <VStack spacing={0} ml={2} alignItems="flex-start" mb={10} border="1px solid blue">
             <Text fontWeight="bold">
               {seasonAnime.season_name} {seasonAnime.season_year} Anime
             </Text>
@@ -178,8 +345,9 @@ export const Home = () => {
               <HStack>{currentSeasonAnimeList}</HStack>
             </UnorderedList>
           </VStack>
+          {weeklyAnimeSchedule()}
         </VStack>
-        <VStack w={300} alignItems="flex-start" mr={4}>
+        <VStack w={300} alignItems="flex-start" mr={4} spacing={5}>
           <VStack w={300} mr={4} pr={4} mt={-4} alignItems="flex-start" spacing={0}>
             <Text
               justifyContent="space-evenly"
@@ -210,7 +378,7 @@ export const Home = () => {
               {topUpcomingList}
             </UnorderedList>
           </VStack>
-          <VStack w={300} mt={-4} alignItems="flex-start" spacing={0}>
+          <VStack w={300} mt={-4} mb={5} alignItems="flex-start" spacing={0}>
             <Text
               justifyContent="space-evenly"
               fontWeight="bold"

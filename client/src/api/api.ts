@@ -279,6 +279,65 @@ export interface SeasonAnimeResponse {
   }[];
 }
 
+export interface AnimeScheduleResponse {
+  [day: string]: {
+    mal_id: number;
+    title: string;
+    image_url: string;
+    type: string;
+    score: number;
+  }[];
+  // monday: {
+  //   mal_id: number;
+  //   title: string;
+  //   image_url: string;
+  //   type: string;
+  //   score: number;
+  // }[];
+  // tuesday: {
+  //   mal_id: number;
+  //   title: string;
+  //   image_url: string;
+  //   type: string;
+  //   score: number;
+  // }[];
+  // wednesday: {
+  //   mal_id: number;
+  //   title: string;
+  //   image_url: string;
+  //   type: string;
+  //   score: number;
+  // }[];
+  // thursday: {
+  //   mal_id: number;
+  //   title: string;
+  //   image_url: string;
+  //   type: string;
+  //   score: number;
+  // }[];
+  // friday: {
+  //   mal_id: number;
+  //   title: string;
+  //   image_url: string;
+  //   type: string;
+  //   score: number;
+  // }[];
+  // saturday: {
+  //   mal_id: number;
+  //   title: string;
+  //   image_url: string;
+  //   type: string;
+  //   score: number;
+  // }[];
+  // sunday: {
+  //   mal_id: number;
+  //   title: string;
+  //   image_url: string;
+  //   type: string;
+  //   score: number;
+  // }[];
+}
+
 export interface CombinedAnimeResponse {
   details: AnimeResponse;
   videos: AnimeVideosResponse;
@@ -294,6 +353,7 @@ export interface HomePageResponse {
   topAiring: TopAnimeListResponse[];
   topUpcoming: TopAnimeListResponse[];
   topPopular: TopAnimeListResponse[];
+  animeSchedule: AnimeScheduleResponse;
 }
 
 export const getCategorisedResults = async (category: string, query: string) => {
@@ -304,6 +364,12 @@ export const getCategorisedResults = async (category: string, query: string) => 
 
 export const getSeasonAnimeResults = async (): Promise<SeasonAnimeResponse> => {
   const results = await axios.get(`http://localhost:8080/season`);
+
+  return results.data;
+};
+
+export const getAnimeScheduleResults = async (): Promise<AnimeScheduleResponse> => {
+  const results = await axios.get(`http://localhost:8080/schedule`);
 
   return results.data;
 };
@@ -371,36 +437,19 @@ export const getAnimeRecommendations = async (
   return results.data;
 };
 
-// export const homePageResponse = async (subtype?: string): Promise<HomePageResponse> => {
-//   const [seasonAnime, topAiring, topUpcoming, topPopular] = await Bluebird.map(
-//     [
-//       () => getSeasonAnimeResults(),
-//       () => getTopResults('anime', 'airing'),
-//       () => getTopResults('anime', 'upcoming'),
-//       () => getTopResults('anime', 'bypopularity'),
-//     ],
-//     (v) => v() as any,
-//     { concurrency: 1 }
-//   );
-//   return {
-//     seasonAnime,
-//     topAiring,
-//     topUpcoming,
-//     topPopular,
-//   };
-// };
-
 export const homePageResponse = async (subtype?: string): Promise<HomePageResponse> => {
   const seasonAnime = await getSeasonAnimeResults();
   const topAiring = await getTopResults('anime', 'airing');
   const topUpcoming = await getTopResults('anime', 'upcoming');
   const topPopular = await getTopResults('anime', 'bypopularity');
+  const animeSchedule = await getAnimeScheduleResults();
 
   return {
     seasonAnime,
     topAiring,
     topUpcoming,
     topPopular,
+    animeSchedule,
   };
 };
 
