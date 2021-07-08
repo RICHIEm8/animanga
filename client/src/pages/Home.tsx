@@ -153,7 +153,7 @@ export const Home = () => {
   });
 
   const weeklyAnimeSchedule = () => {
-    const mondaySchedule = _.map(_.take(animeSchedule.monday, 5), (anime) => {
+    const mondaySchedule = _.map(_.take(animeSchedule.monday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
           <Image w={100} h={150} fit="cover" src={anime.image_url} />
@@ -173,7 +173,7 @@ export const Home = () => {
         </ListItem>
       );
     });
-    const tuesdaySchedule = _.map(_.take(animeSchedule.tuesday, 5), (anime) => {
+    const tuesdaySchedule = _.map(_.take(animeSchedule.tuesday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
           <Image w={100} h={150} fit="cover" src={anime.image_url} />
@@ -193,7 +193,7 @@ export const Home = () => {
         </ListItem>
       );
     });
-    const wednesdaySchedule = _.map(_.take(animeSchedule.wednesday, 5), (anime) => {
+    const wednesdaySchedule = _.map(_.take(animeSchedule.wednesday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
           <Image w={100} h={150} fit="cover" src={anime.image_url} />
@@ -213,7 +213,7 @@ export const Home = () => {
         </ListItem>
       );
     });
-    const thursdaySchedule = _.map(_.take(animeSchedule.thursday, 5), (anime) => {
+    const thursdaySchedule = _.map(_.take(animeSchedule.thursday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
           <Image w={100} h={150} fit="cover" src={anime.image_url} />
@@ -233,7 +233,7 @@ export const Home = () => {
         </ListItem>
       );
     });
-    const fridaySchedule = _.map(_.take(animeSchedule.friday, 5), (anime) => {
+    const fridaySchedule = _.map(_.take(animeSchedule.friday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
           <Image w={100} h={150} fit="cover" src={anime.image_url} />
@@ -253,7 +253,7 @@ export const Home = () => {
         </ListItem>
       );
     });
-    const saturdaySchedule = _.map(_.take(animeSchedule.saturday, 5), (anime) => {
+    const saturdaySchedule = _.map(_.take(animeSchedule.saturday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
           <Image w={100} h={150} fit="cover" src={anime.image_url} />
@@ -273,7 +273,7 @@ export const Home = () => {
         </ListItem>
       );
     });
-    const sundaySchedule = _.map(_.take(animeSchedule.sunday, 5), (anime) => {
+    const sundaySchedule = _.map(_.take(animeSchedule.sunday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
           <Image w={100} h={150} fit="cover" src={anime.image_url} />
@@ -296,35 +296,69 @@ export const Home = () => {
     return (
       <VStack spacing={0} pl={4} pr={4} alignItems="flex-start" w={720}>
         <Text fontWeight="bold">Weekly Anime Schedule</Text>
-        <VStack w={720} borderTop="1px solid #E1E7F5" alignItems="flex-start">
-          <Text>Monday</Text>
-          <UnorderedList border="1px solid red">
-            <HStack>{mondaySchedule}</HStack>
-          </UnorderedList>
-          <Text>Tuesday</Text>
-          <UnorderedList w={720}>
-            <HStack>{tuesdaySchedule}</HStack>
-          </UnorderedList>
-          <Text>Wednesday</Text>
-          <UnorderedList w={720}>
-            <HStack>{wednesdaySchedule}</HStack>
-          </UnorderedList>
-          <Text>Thursday</Text>
-          <UnorderedList w={720}>
-            <HStack>{thursdaySchedule}</HStack>
-          </UnorderedList>
-          <Text>Friday</Text>
-          <UnorderedList w={720}>
-            <HStack>{fridaySchedule}</HStack>
-          </UnorderedList>
-          <Text>Saturday</Text>
-          <UnorderedList w={720}>
-            <HStack>{saturdaySchedule}</HStack>
-          </UnorderedList>
-          <Text>Sunday</Text>
-          <UnorderedList w={720}>
-            <HStack>{sundaySchedule}</HStack>
-          </UnorderedList>
+        <VStack w={700} borderTop="1px solid #E1E7F5">
+          <VStack textAlign="center" bgColor="gray.100" pb={2}>
+            <Text py={1} bgColor="#E1E7F5" w={700} fontWeight="bold">
+              Monday
+            </Text>
+            <UnorderedList>
+              <HStack spacing={5}>{mondaySchedule}</HStack>
+            </UnorderedList>
+          </VStack>
+
+          <VStack textAlign="center" bgColor="gray.100" pb={2}>
+            <Text py={1} bgColor="#E1E7F5" w={700} fontWeight="bold">
+              Tuesday
+            </Text>
+            <UnorderedList>
+              <HStack spacing={5}>{tuesdaySchedule}</HStack>
+            </UnorderedList>
+          </VStack>
+
+          <VStack textAlign="center" bgColor="gray.100" pb={2}>
+            <Text py={1} bgColor="#E1E7F5" w={700} fontWeight="bold">
+              Wednesday
+            </Text>
+            <UnorderedList>
+              <HStack spacing={5}>{wednesdaySchedule}</HStack>
+            </UnorderedList>
+          </VStack>
+
+          <VStack textAlign="center" bgColor="gray.100" pb={2}>
+            <Text py={1} bgColor="#E1E7F5" w={700} fontWeight="bold">
+              Thursday
+            </Text>
+            <UnorderedList>
+              <HStack spacing={5}>{thursdaySchedule}</HStack>
+            </UnorderedList>
+          </VStack>
+
+          <VStack textAlign="center" bgColor="gray.100" pb={2}>
+            <Text py={1} bgColor="#E1E7F5" w={700} fontWeight="bold">
+              Friday
+            </Text>
+            <UnorderedList>
+              <HStack spacing={5}>{fridaySchedule}</HStack>
+            </UnorderedList>
+          </VStack>
+
+          <VStack textAlign="center" bgColor="gray.100" pb={2}>
+            <Text py={1} bgColor="#E1E7F5" w={700} fontWeight="bold">
+              Saturday
+            </Text>
+            <UnorderedList>
+              <HStack spacing={5}>{saturdaySchedule}</HStack>
+            </UnorderedList>
+          </VStack>
+
+          <VStack textAlign="center" bgColor="gray.100" pb={2}>
+            <Text py={1} bgColor="#E1E7F5" w={700} fontWeight="bold">
+              Sunday
+            </Text>
+            <UnorderedList>
+              <HStack spacing={5}>{sundaySchedule}</HStack>
+            </UnorderedList>
+          </VStack>
         </VStack>
       </VStack>
     );
@@ -336,8 +370,8 @@ export const Home = () => {
         Welcome to AniMan
       </Text>
       <HStack alignItems="flex-start" minH={1500}>
-        <VStack w={720} pr={2} borderRight="1px solid #E1E7F5">
-          <VStack spacing={0} ml={2} alignItems="flex-start" mb={10} border="1px solid blue">
+        <VStack w={720}>
+          <VStack spacing={0} ml={2} alignItems="flex-start" mb={10}>
             <Text fontWeight="bold">
               {seasonAnime.season_name} {seasonAnime.season_year} Anime
             </Text>
@@ -347,7 +381,14 @@ export const Home = () => {
           </VStack>
           {weeklyAnimeSchedule()}
         </VStack>
-        <VStack w={300} alignItems="flex-start" mr={4} spacing={5}>
+        <VStack
+          w={300}
+          alignItems="flex-start"
+          mr={4}
+          pl={2}
+          spacing={5}
+          borderLeft="1px solid #E1E7F5"
+        >
           <VStack w={300} mr={4} pr={4} mt={-4} alignItems="flex-start" spacing={0}>
             <Text
               justifyContent="space-evenly"
