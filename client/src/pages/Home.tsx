@@ -2,23 +2,20 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  AspectRatio,
-  Box,
   Flex,
   HStack,
+  Image,
   ListItem,
   Spinner,
   Text,
   UnorderedList,
   VStack,
-  Image,
-  WrapItem,
-  Wrap,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { getSeasonAnimeResults, getTopResults, homePageResponse } from '../api/api';
+import { Link } from 'react-router-dom';
+import { homePageResponse } from '../api/api';
 
 export const Home = () => {
   const { isLoading, isFetching, data, error, isError } = useQuery(
@@ -53,20 +50,22 @@ export const Home = () => {
   const currentSeasonAnimeList = _.map(_.take(seasonAnime.anime, 5), (anime) => {
     return (
       <ListItem key={anime.mal_id} listStyleType="none" h={200} position="relative">
-        <Image w={135} fit="cover" src={anime.image_url} />
-        <Text
-          w={135}
-          p={1}
-          fontSize="xs"
-          position="absolute"
-          bottom="1px"
-          color="white"
-          fontWeight="bold"
-          textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-          backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-        >
-          {anime.title}
-        </Text>
+        <Link to={`/anime/${anime.mal_id}`}>
+          <Image w={135} fit="cover" src={anime.image_url} />
+          <Text
+            w={135}
+            p={1}
+            fontSize="xs"
+            position="absolute"
+            bottom="1px"
+            color="white"
+            fontWeight="bold"
+            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+          >
+            {anime.title}
+          </Text>
+        </Link>
       </ListItem>
     );
   });
@@ -86,11 +85,15 @@ export const Home = () => {
           <Text w={25} align="center" color="black" fontSize="lg">
             {anime.rank}
           </Text>
-          <Image w={75} fit="cover" src={anime.image_url} p={1} />
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={75} fit="cover" src={anime.image_url} p={1} />
+          </Link>
           <VStack alignItems="flex-start" spacing={0}>
-            <Text fontSize="sm" w={200}>
-              {anime.title}
-            </Text>
+            <Link to={`/anime/${anime.mal_id}`}>
+              <Text color="#2E51A2" fontSize="sm" w={200}>
+                {anime.title}
+              </Text>
+            </Link>
             <Text fontSize="xs">{`${anime.type}, ${epsCheck()} eps, scored ${anime.score}`}</Text>
           </VStack>
         </HStack>
@@ -113,11 +116,15 @@ export const Home = () => {
           <Text w={25} align="center" color="black" fontSize="lg">
             {anime.rank}
           </Text>
-          <Image w={75} fit="cover" src={anime.image_url} p={1} />
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={75} fit="cover" src={anime.image_url} p={1} />
+          </Link>
           <VStack alignItems="flex-start" spacing={0}>
-            <Text fontSize="sm" w={200}>
-              {anime.title}
-            </Text>
+            <Link to={`/anime/${anime.mal_id}`}>
+              <Text color="#2E51A2" fontSize="sm" w={200}>
+                {anime.title}
+              </Text>
+            </Link>
             <Text fontSize="xs">{`${anime.type}, ${epsCheck()} eps, scored ${anime.score}`}</Text>
           </VStack>
         </HStack>
@@ -140,11 +147,15 @@ export const Home = () => {
           <Text w={25} align="center" color="black" fontSize="lg">
             {anime.rank}
           </Text>
-          <Image w={75} fit="cover" src={anime.image_url} p={1} />
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={75} fit="cover" src={anime.image_url} p={1} />
+          </Link>
           <VStack alignItems="flex-start" spacing={0}>
-            <Text fontSize="sm" w={200}>
-              {anime.title}
-            </Text>
+            <Link to={`/anime/${anime.mal_id}`}>
+              <Text color="#2E51A2" fontSize="sm" w={200}>
+                {anime.title}
+              </Text>
+            </Link>
             <Text fontSize="xs">{`${anime.type}, ${epsCheck()} eps, scored ${anime.score}`}</Text>
           </VStack>
         </HStack>
@@ -156,140 +167,153 @@ export const Home = () => {
     const mondaySchedule = _.map(_.take(animeSchedule.monday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
-          <Image w={100} h={150} fit="cover" src={anime.image_url} />
-          <Text
-            w={100}
-            p={1}
-            fontSize="xs"
-            position="absolute"
-            bottom="1px"
-            color="white"
-            fontWeight="bold"
-            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-          >
-            {anime.title}
-          </Text>
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={100} h={150} fit="cover" src={anime.image_url} />
+            <Text
+              w={100}
+              p={1}
+              fontSize="xs"
+              position="absolute"
+              bottom="1px"
+              color="white"
+              fontWeight="bold"
+              textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+            >
+              {anime.title}
+            </Text>
+          </Link>
         </ListItem>
       );
     });
     const tuesdaySchedule = _.map(_.take(animeSchedule.tuesday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
-          <Image w={100} h={150} fit="cover" src={anime.image_url} />
-          <Text
-            w={100}
-            p={1}
-            fontSize="xs"
-            position="absolute"
-            bottom="1px"
-            color="white"
-            fontWeight="bold"
-            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-          >
-            {anime.title}
-          </Text>
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={100} h={150} fit="cover" src={anime.image_url} />
+            <Text
+              p={1}
+              fontSize="xs"
+              position="absolute"
+              bottom="1px"
+              color="white"
+              fontWeight="bold"
+              textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+            >
+              {anime.title}
+            </Text>
+          </Link>
         </ListItem>
       );
     });
     const wednesdaySchedule = _.map(_.take(animeSchedule.wednesday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
-          <Image w={100} h={150} fit="cover" src={anime.image_url} />
-          <Text
-            w={100}
-            p={1}
-            fontSize="xs"
-            position="absolute"
-            bottom="1px"
-            color="white"
-            fontWeight="bold"
-            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-          >
-            {anime.title}
-          </Text>
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={100} h={150} fit="cover" src={anime.image_url} />
+            <Text
+              w={100}
+              p={1}
+              fontSize="xs"
+              position="absolute"
+              bottom="1px"
+              color="white"
+              fontWeight="bold"
+              textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+            >
+              {anime.title}
+            </Text>
+          </Link>
         </ListItem>
       );
     });
     const thursdaySchedule = _.map(_.take(animeSchedule.thursday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
-          <Image w={100} h={150} fit="cover" src={anime.image_url} />
-          <Text
-            w={100}
-            p={1}
-            fontSize="xs"
-            position="absolute"
-            bottom="1px"
-            color="white"
-            fontWeight="bold"
-            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-          >
-            {anime.title}
-          </Text>
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={100} h={150} fit="cover" src={anime.image_url} />
+            <Text
+              w={100}
+              p={1}
+              fontSize="xs"
+              position="absolute"
+              bottom="1px"
+              color="white"
+              fontWeight="bold"
+              textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+            >
+              {anime.title}
+            </Text>
+          </Link>
         </ListItem>
       );
     });
     const fridaySchedule = _.map(_.take(animeSchedule.friday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
-          <Image w={100} h={150} fit="cover" src={anime.image_url} />
-          <Text
-            w={100}
-            p={1}
-            fontSize="xs"
-            position="absolute"
-            bottom="1px"
-            color="white"
-            fontWeight="bold"
-            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-          >
-            {anime.title}
-          </Text>
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={100} h={150} fit="cover" src={anime.image_url} />
+            <Text
+              w={100}
+              p={1}
+              fontSize="xs"
+              position="absolute"
+              bottom="1px"
+              color="white"
+              fontWeight="bold"
+              textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+            >
+              {anime.title}
+            </Text>
+          </Link>
         </ListItem>
       );
     });
     const saturdaySchedule = _.map(_.take(animeSchedule.saturday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
-          <Image w={100} h={150} fit="cover" src={anime.image_url} />
-          <Text
-            w={100}
-            p={1}
-            fontSize="xs"
-            position="absolute"
-            bottom="1px"
-            color="white"
-            fontWeight="bold"
-            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-          >
-            {anime.title}
-          </Text>
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={100} h={150} fit="cover" src={anime.image_url} />
+            <Text
+              w={100}
+              p={1}
+              fontSize="xs"
+              position="absolute"
+              bottom="1px"
+              color="white"
+              fontWeight="bold"
+              textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+            >
+              {anime.title}
+            </Text>
+          </Link>
         </ListItem>
       );
     });
     const sundaySchedule = _.map(_.take(animeSchedule.sunday, 6), (anime) => {
       return (
         <ListItem key={anime.mal_id} listStyleType="none" position="relative">
-          <Image w={100} h={150} fit="cover" src={anime.image_url} />
-          <Text
-            w={100}
-            p={1}
-            fontSize="xs"
-            position="absolute"
-            bottom="1px"
-            color="white"
-            fontWeight="bold"
-            textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
-            backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
-          >
-            {anime.title}
-          </Text>
+          <Link to={`/anime/${anime.mal_id}`}>
+            <Image w={100} h={150} fit="cover" src={anime.image_url} />
+            <Text
+              w={100}
+              p={1}
+              fontSize="xs"
+              position="absolute"
+              bottom="1px"
+              color="white"
+              fontWeight="bold"
+              textShadow="-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              backgroundImage="linear-gradient(rgba(255,0,0,0), rgba(0, 0, 0 ,1))"
+            >
+              {anime.title}
+            </Text>
+          </Link>
         </ListItem>
       );
     });

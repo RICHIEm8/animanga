@@ -1,16 +1,15 @@
 import {
-  Flex,
-  HStack,
-  ListItem,
-  Text,
-  UnorderedList,
-  Image,
-  VStack,
-  Box,
-  Spinner,
   Alert,
   AlertIcon,
   AlertTitle,
+  Flex,
+  HStack,
+  Image,
+  ListItem,
+  Spinner,
+  Text,
+  UnorderedList,
+  VStack,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';

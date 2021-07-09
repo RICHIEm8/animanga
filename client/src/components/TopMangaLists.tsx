@@ -1,15 +1,15 @@
+import { StarIcon } from '@chakra-ui/icons';
 import {
+  Box,
+  Heading,
   HStack,
+  Image,
+  Link,
   ListItem,
   Text,
   UnorderedList,
-  Image,
   VStack,
-  Link,
-  Heading,
-  Box,
 } from '@chakra-ui/react';
-import { StarIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
 import React from 'react';
 import { TopMangaListResponse } from '../api/api';

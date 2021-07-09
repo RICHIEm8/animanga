@@ -1,9 +1,7 @@
-import { VStack, Image, Text, Flex, Spinner, Alert, AlertIcon, AlertTitle } from '@chakra-ui/react';
+import { Image, Text, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
-import { AnimeResponse, combinedAnimeResponse } from '../../api/api';
+import { AnimeResponse } from '../../api/api';
 
 interface Props {
   details: AnimeResponse;

@@ -1,15 +1,9 @@
 import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
   AspectRatio,
   Box,
-  Flex,
   HStack,
   Image,
   ListItem,
-  Spacer,
-  Spinner,
   Text,
   UnorderedList,
   VStack,
@@ -18,17 +12,14 @@ import {
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import {
   AnimeCharactersStaffResponse,
   AnimeNewsResponse,
-  AnimePicturesResponse,
   AnimeRecommendationsResponse,
   AnimeResponse,
   AnimeReviewsResponse,
   AnimeVideosResponse,
-  combinedAnimeResponse,
 } from '../../api/api';
 
 interface Props {
@@ -178,13 +169,15 @@ export const Details = (props: Props) => {
     (recommendation) => {
       return (
         <ListItem key={recommendation.mal_id} listStyleType="none" w={100} textAlign="center">
-          <Image
-            w={100}
-            h={125}
-            border="1px solid #E1E7F5"
-            fit="cover"
-            src={recommendation.image_url}
-          />
+          <Link to={`/anime/${recommendation.mal_id}`}>
+            <Image
+              w={100}
+              h={125}
+              border="1px solid #E1E7F5"
+              fit="cover"
+              src={recommendation.image_url}
+            />
+          </Link>
           <Text
             fontSize="xs"
             position="absolute"
@@ -201,8 +194,6 @@ export const Details = (props: Props) => {
       );
     }
   );
-
-  console.log(recommendations.recommendations);
 
   return (
     <Box>

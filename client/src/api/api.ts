@@ -1,6 +1,4 @@
 import axios from 'axios';
-import Bluebird from 'bluebird';
-import { SubscriptionManager } from 'framer-motion/types/utils/subscription-manager';
 
 export interface AnimeResultResponse {
   mal_id: number;
@@ -287,55 +285,6 @@ export interface AnimeScheduleResponse {
     type: string;
     score: number;
   }[];
-  // monday: {
-  //   mal_id: number;
-  //   title: string;
-  //   image_url: string;
-  //   type: string;
-  //   score: number;
-  // }[];
-  // tuesday: {
-  //   mal_id: number;
-  //   title: string;
-  //   image_url: string;
-  //   type: string;
-  //   score: number;
-  // }[];
-  // wednesday: {
-  //   mal_id: number;
-  //   title: string;
-  //   image_url: string;
-  //   type: string;
-  //   score: number;
-  // }[];
-  // thursday: {
-  //   mal_id: number;
-  //   title: string;
-  //   image_url: string;
-  //   type: string;
-  //   score: number;
-  // }[];
-  // friday: {
-  //   mal_id: number;
-  //   title: string;
-  //   image_url: string;
-  //   type: string;
-  //   score: number;
-  // }[];
-  // saturday: {
-  //   mal_id: number;
-  //   title: string;
-  //   image_url: string;
-  //   type: string;
-  //   score: number;
-  // }[];
-  // sunday: {
-  //   mal_id: number;
-  //   title: string;
-  //   image_url: string;
-  //   type: string;
-  //   score: number;
-  // }[];
 }
 
 export interface CombinedAnimeResponse {
@@ -457,20 +406,14 @@ export const combinedAnimeResponse = async (
   category: string,
   id: number
 ): Promise<CombinedAnimeResponse> => {
-  const [details, videos, pictures, charactersStaff, reviews, news, recommendations] =
-    await Bluebird.map(
-      [
-        () => getAnimeDetails(category, id),
-        () => getAnimeVideos(category, id),
-        () => getAnimePictures(category, id),
-        () => getAnimeCharactersStaff(category, id),
-        () => getAnimeReviews(category, id),
-        () => getAnimeNews(category, id),
-        () => getAnimeRecommendations(category, id),
-      ],
-      (v) => v() as any,
-      { concurrency: 1 }
-    );
+  const details = await getAnimeDetails(category, id);
+  const videos = await getAnimeVideos(category, id);
+  const pictures = await getAnimePictures(category, id);
+  const charactersStaff = await getAnimeCharactersStaff(category, id);
+  const reviews = await getAnimeReviews(category, id);
+  const news = await getAnimeNews(category, id);
+  const recommendations = await getAnimeRecommendations(category, id);
+
   return {
     details,
     videos,
@@ -481,3 +424,32 @@ export const combinedAnimeResponse = async (
     recommendations,
   };
 };
+
+// export const combinedAnimeResponse = async (
+//   category: string,
+//   id: number
+// ): Promise<CombinedAnimeResponse> => {
+//   const [details, videos, pictures, charactersStaff, reviews, news, recommendations] =
+//     await Bluebird.map(
+//       [
+//         () => getAnimeDetails(category, id),
+//         () => getAnimeVideos(category, id),
+//         () => getAnimePictures(category, id),
+//         () => getAnimeCharactersStaff(category, id),
+//         () => getAnimeReviews(category, id),
+//         () => getAnimeNews(category, id),
+//         () => getAnimeRecommendations(category, id),
+//       ],
+//       (v) => v() as any,
+//       { concurrency: 1 }
+//     );
+//   return {
+//     details,
+//     videos,
+//     pictures,
+//     charactersStaff,
+//     reviews,
+//     news,
+//     recommendations,
+//   };
+// };

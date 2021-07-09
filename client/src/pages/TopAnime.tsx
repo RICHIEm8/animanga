@@ -1,17 +1,7 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Flex,
-  HStack,
-  LinkBox,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, Box, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { getTopResults} from '../api/api';
+import { getTopResults } from '../api/api';
 import { TopAnimeLists } from '../components/TopAnimeLists';
 import { useSearch } from '../hooks/UseSearch';
 

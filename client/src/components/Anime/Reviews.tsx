@@ -1,20 +1,7 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  ListItem,
-  UnorderedList,
-  Image,
-  VStack,
-  Text,
-  HStack,
-  Flex,
-} from '@chakra-ui/react';
+import { Flex, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
-import { AnimeReviewsResponse, combinedAnimeResponse } from '../../api/api';
+import { AnimeReviewsResponse } from '../../api/api';
 
 interface Props {
   reviews: AnimeReviewsResponse;
@@ -60,8 +47,6 @@ export const Reviews = (props: Props) => {
       </ListItem>
     );
   });
-
-  console.log('hello');
 
   return (
     <Flex w={720} flexDir="column">

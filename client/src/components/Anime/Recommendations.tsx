@@ -1,20 +1,8 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  ListItem,
-  UnorderedList,
-  Image,
-  VStack,
-  Text,
-  HStack,
-  Flex,
-} from '@chakra-ui/react';
+import { Flex, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
-import { AnimeRecommendationsResponse, combinedAnimeResponse } from '../../api/api';
+import { Link } from 'react-router-dom';
+import { AnimeRecommendationsResponse } from '../../api/api';
 
 interface Props {
   recommendations: AnimeRecommendationsResponse;
@@ -37,7 +25,9 @@ export const Recommendations = (props: Props) => {
           borderBottom="1px solid #E1E7F5"
         >
           <HStack alignItems="flex-start">
-            <Image w={50} fit="cover" src={recommendation.image_url} />
+            <Link to={`/anime/${recommendation.mal_id}`}>
+              <Image w={50} fit="cover" src={recommendation.image_url} />
+            </Link>
             <VStack alignItems="flex-start">
               <Text fontSize="sm">{recommendation.title}</Text>
               <Text fontSize="xs">

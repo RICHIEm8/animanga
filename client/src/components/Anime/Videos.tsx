@@ -1,21 +1,7 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Flex,
-  Text,
-  Wrap,
-  WrapItem,
-  Image,
-  HStack,
-  AspectRatio,
-  VStack,
-} from '@chakra-ui/react';
+import { AspectRatio, Flex, Image, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
-import { AnimeVideosResponse, combinedAnimeResponse } from '../../api/api';
+import { AnimeVideosResponse } from '../../api/api';
 
 interface Props {
   videos: AnimeVideosResponse;

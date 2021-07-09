@@ -1,22 +1,4 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AspectRatio,
-  Box,
-  Flex,
-  HStack,
-  Image,
-  ListItem,
-  Spacer,
-  Spinner,
-  Text,
-  UnorderedList,
-  VStack,
-  Wrap,
-  WrapItem,
-} from '@chakra-ui/react';
-import _ from 'lodash';
+import { Alert, AlertIcon, AlertTitle, Box, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
@@ -63,8 +45,6 @@ export const Anime = () => {
   }
 
   const { details, videos, pictures, charactersStaff, reviews, news, recommendations } = data;
-
-  console.log(infoType);
 
   const infoTabDisplay = () => {
     if (infoType === 'details') {

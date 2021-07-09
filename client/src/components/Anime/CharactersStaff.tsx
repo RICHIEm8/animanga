@@ -1,20 +1,7 @@
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  ListItem,
-  UnorderedList,
-  Image,
-  VStack,
-  Text,
-  HStack,
-  Flex,
-} from '@chakra-ui/react';
+import { Flex, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
-import { AnimeCharactersStaffResponse, combinedAnimeResponse } from '../../api/api';
+import { AnimeCharactersStaffResponse } from '../../api/api';
 
 interface Props {
   charactersStaff: AnimeCharactersStaffResponse;

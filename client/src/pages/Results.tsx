@@ -19,9 +19,9 @@ import { useHistory } from 'react-router-dom';
 import {
   AnimeResultResponse,
   CharactersResultResponse,
+  getCategorisedResults,
   MangaResultResponse,
   PeopleResultResponse,
-  getCategorisedResults,
 } from '../api/api';
 import { AllSearch } from '../components/AllSearch';
 import { Anime } from '../components/AnimeSearch';

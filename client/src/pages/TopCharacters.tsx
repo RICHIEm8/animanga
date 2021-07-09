@@ -14,7 +14,7 @@ import {
 import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { getTopResults} from '../api/api';
+import { getTopResults } from '../api/api';
 
 export const TopCharacters = () => {
   const {
