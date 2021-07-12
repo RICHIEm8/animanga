@@ -1,15 +1,7 @@
-import {
-  Heading,
-  HStack,
-  Image,
-  Link,
-  ListItem,
-  Text,
-  UnorderedList,
-  VStack,
-} from '@chakra-ui/react';
+import { Heading, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { AnimeResultResponse } from '../api/api';
 
 interface Props {

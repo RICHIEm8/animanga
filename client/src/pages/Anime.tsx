@@ -1,4 +1,14 @@
-import { Alert, AlertIcon, AlertTitle, Box, Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Flex,
+  HStack,
+  Spinner,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
@@ -17,7 +27,7 @@ export const Anime = () => {
   const parsedId = parseInt(id);
   const [infoType, setInfoType] = useState('details');
 
-  const { isLoading, isFetching, data, error, isError } = useQuery(
+  const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
     'anime',
     () => {
       return combinedAnimeResponse('anime', parsedId);
@@ -25,13 +35,17 @@ export const Anime = () => {
     { refetchOnWindowFocus: false }
   );
 
-  // if (isLoading || isFetching) {
-  //   return (
-  //     <Flex h="100vh" justify="center" mt={50}>
-  //       <Spinner color="blue" />
-  //     </Flex>
-  //   );
-  // }
+  React.useEffect(() => {
+    refetch();
+  }, [id]);
+
+  if (isLoading || isFetching) {
+    return (
+      <Flex h="100vh" justify="center" mt={50}>
+        <Spinner color="blue" />
+      </Flex>
+    );
+  }
 
   if (isError) {
     <Alert status="error">

@@ -111,7 +111,7 @@ export const Results = () => {
 
   if (isLoading || isFetching) {
     return (
-      <Flex h="100vh" justify="center">
+      <Flex h="100vh" justify="center" mt={50}>
         <Spinner color="blue" />
       </Flex>
     );
