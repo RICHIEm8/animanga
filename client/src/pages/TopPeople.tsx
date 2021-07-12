@@ -1,21 +1,20 @@
 import {
-  Flex,
-  HStack,
-  ListItem,
-  Text,
-  UnorderedList,
-  Image,
-  VStack,
-  Box,
-  Spinner,
   Alert,
   AlertIcon,
   AlertTitle,
+  Flex,
+  HStack,
+  Image,
+  ListItem,
+  Spinner,
+  Text,
+  UnorderedList,
+  VStack,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { topResultsResponse } from '../api/api';
+import { getTopResults } from '../api/api';
 
 export const TopPeople = () => {
   const {
@@ -27,7 +26,7 @@ export const TopPeople = () => {
   } = useQuery(
     'search',
     async () => {
-      return topResultsResponse('people');
+      return getTopResults('people');
     },
     { refetchOnWindowFocus: false }
   );

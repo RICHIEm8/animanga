@@ -12,14 +12,19 @@ import {
 import _ from 'lodash';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AnimeResult, CharactersResult, MangaResult, PeopleResult } from '../api/api';
+import {
+  AnimeResultResponse,
+  CharactersResultResponse,
+  MangaResultResponse,
+  PeopleResultResponse,
+} from '../api/api';
 import { useSearch } from '../hooks/UseSearch';
 
 interface Props {
-  animeSearchResults: AnimeResult[];
-  mangaSearchResults: MangaResult[];
-  charactersSearchResults: CharactersResult[];
-  peopleSearchResults: PeopleResult[];
+  animeSearchResults: AnimeResultResponse[];
+  mangaSearchResults: MangaResultResponse[];
+  charactersSearchResults: CharactersResultResponse[];
+  peopleSearchResults: PeopleResultResponse[];
 }
 
 export const AllSearch = (props: Props) => {
@@ -52,7 +57,7 @@ export const AllSearch = (props: Props) => {
         <HStack align="left" spacing={2}>
           <Image w={75} h={100} fit="cover" src={anime.image_url} />
           <VStack align="left">
-            <Link>
+            <Link to={`/anime/${anime.mal_id}`}>
               <Heading color="#2E51A2" size="xs" align="left">
                 {anime.title}
               </Heading>
