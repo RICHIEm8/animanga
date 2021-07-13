@@ -305,32 +305,36 @@ export interface HomePageResponse {
   animeSchedule: AnimeScheduleResponse;
 }
 
+const apiUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : window.location.origin
+
+console.log(apiUrl)
+
 export const getCategorisedResults = async (category: string, query: string) => {
-  const results = await axios.get(`${window.location.origin}/search/${category}/${query}`);
+  const results = await axios.get(`${apiUrl}/search/${category}/${query}`);
 
   return results.data;
 };
 
 export const getSeasonAnimeResults = async (): Promise<SeasonAnimeResponse> => {
-  const results = await axios.get(`${window.location.origin}/season`);
+  const results = await axios.get(`${apiUrl}/season`);
 
   return results.data;
 };
 
 export const getAnimeScheduleResults = async (): Promise<AnimeScheduleResponse> => {
-  const results = await axios.get(`${window.location.origin}/schedule`);
+  const results = await axios.get(`${apiUrl}/schedule`);
 
   return results.data;
 };
 
 export const getTopResults = async (category: string, subtype?: string) => {
-  const results = await axios.get(`${window.location.origin}/top/${category}/1/${subtype ?? ''}`);
+  const results = await axios.get(`${apiUrl}/top/${category}/1/${subtype ?? ''}`);
 
   return results.data;
 };
 
 export const getAnimeDetails = async (category: string, id: number): Promise<AnimeResponse> => {
-  const results = await axios.get(`${window.location.origin}/${category}/${id}/`);
+  const results = await axios.get(`${apiUrl}/${category}/${id}/`);
 
   return results.data;
 };
@@ -339,7 +343,7 @@ export const getAnimeVideos = async (
   category: string,
   id: number
 ): Promise<AnimeVideosResponse> => {
-  const results = await axios.get(`${window.location.origin}/${category}/${id}/videos`);
+  const results = await axios.get(`${apiUrl}/${category}/${id}/videos`);
 
   return results.data;
 };
@@ -348,7 +352,7 @@ export const getAnimePictures = async (
   category: string,
   id: number
 ): Promise<AnimePicturesResponse> => {
-  const results = await axios.get(`${window.location.origin}/${category}/${id}/pictures`);
+  const results = await axios.get(`${apiUrl}/${category}/${id}/pictures`);
 
   return results.data;
 };
@@ -357,7 +361,7 @@ export const getAnimeCharactersStaff = async (
   category: string,
   id: number
 ): Promise<AnimeCharactersStaffResponse> => {
-  const results = await axios.get(`${window.location.origin}/${category}/${id}/characters_staff`);
+  const results = await axios.get(`${apiUrl}/${category}/${id}/characters_staff`);
 
   return results.data;
 };
@@ -366,13 +370,13 @@ export const getAnimeReviews = async (
   category: string,
   id: number
 ): Promise<AnimeReviewsResponse> => {
-  const results = await axios.get(`${window.location.origin}/${category}/${id}/reviews`);
+  const results = await axios.get(`${apiUrl}/${category}/${id}/reviews`);
 
   return results.data;
 };
 
 export const getAnimeNews = async (category: string, id: number): Promise<AnimeNewsResponse> => {
-  const results = await axios.get(`${window.location.origin}/${category}/${id}/news`);
+  const results = await axios.get(`${apiUrl}/${category}/${id}/news`);
 
   return results.data;
 };
@@ -381,7 +385,7 @@ export const getAnimeRecommendations = async (
   category: string,
   id: number
 ): Promise<AnimeRecommendationsResponse> => {
-  const results = await axios.get(`${window.location.origin}/${category}/${id}/recommendations`);
+  const results = await axios.get(`${apiUrl}/${category}/${id}/recommendations`);
 
   return results.data;
 };

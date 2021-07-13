@@ -2,6 +2,7 @@
   "name": "@animanga/client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@chakra-ui/icons": "^1.0.8",
     "@chakra-ui/react": "^1.4.2",
@@ -29,7 +30,7 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
