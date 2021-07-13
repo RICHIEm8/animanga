@@ -47,6 +47,24 @@ app.use('/:category/:id/:request?', async (req: Request, res: Response) => {
   }
 });
 
+app.use('/season', async (req: Request, res: Response) => {
+  try {
+    const seasonResult = await axios.get(`https://api.jikan.moe/v3/season`);
+    return res.status(200).send(seasonResult.data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.use('/', async (req: Request, res: Response) => {
+  try {
+    const seasonResult = await axios.get(`https://api.jikan.moe/v3/schedule`);
+    return res.status(200).send(seasonResult.data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost${port}`);
 });

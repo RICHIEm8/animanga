@@ -1,7 +1,7 @@
 import { Alert, AlertIcon, AlertTitle, Box, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { topResultsResponse } from '../api/api';
+import { getTopResults } from '../api/api';
 import { TopMangaLists } from '../components/TopMangaLists';
 import { useSearch } from '../hooks/UseSearch';
 
@@ -11,7 +11,7 @@ export const TopManga = () => {
   const { isLoading, isFetching, data, error, isError, refetch } = useQuery(
     'search',
     async () => {
-      return topResultsResponse('manga', subtype);
+      return getTopResults('manga', subtype);
     },
     { refetchOnWindowFocus: false }
   );

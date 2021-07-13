@@ -32,11 +32,11 @@ function App() {
           <Route path="/top-people" exact>
             <TopPeople />
           </Route>
-          <Route path="/results" exact>
-            <Results />
-          </Route>
           <Route path="/anime/:id" exact>
             <Anime />
+          </Route>
+          <Route path="/results" exact>
+            <Results />
           </Route>
           <Redirect to="/" />
         </Switch>

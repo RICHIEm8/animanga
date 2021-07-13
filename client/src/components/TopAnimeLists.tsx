@@ -1,22 +1,22 @@
+import { StarIcon } from '@chakra-ui/icons';
 import {
+  Box,
+  Heading,
   HStack,
+  Image,
   ListItem,
   Text,
   UnorderedList,
-  Image,
   VStack,
-  Heading,
-  Box,
 } from '@chakra-ui/react';
-import { StarIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
 import React from 'react';
-import { TopAnimeList } from '../api/api';
-import { useSearch } from '../hooks/UseSearch';
 import { Link } from 'react-router-dom';
+import { TopAnimeListResponse } from '../api/api';
+import { useSearch } from '../hooks/UseSearch';
 
 interface Props {
-  data: TopAnimeList[];
+  data: TopAnimeListResponse[];
 }
 
 export const TopAnimeLists = (props: Props) => {

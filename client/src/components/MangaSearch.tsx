@@ -10,10 +10,10 @@ import {
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { MangaResult } from '../api/api';
+import { MangaResultResponse } from '../api/api';
 
 interface Props {
-  mangaSearchResults: MangaResult[];
+  mangaSearchResults: MangaResultResponse[];
 }
 
 export const Manga = (props: Props) => {

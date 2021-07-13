@@ -1,19 +1,11 @@
-import {
-  Heading,
-  HStack,
-  Image,
-  Link,
-  ListItem,
-  Text,
-  UnorderedList,
-  VStack,
-} from '@chakra-ui/react';
+import { Heading, HStack, Image, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
 import React from 'react';
-import { AnimeResult } from '../api/api';
+import { Link } from 'react-router-dom';
+import { AnimeResultResponse } from '../api/api';
 
 interface Props {
-  animeSearchResults: AnimeResult[];
+  animeSearchResults: AnimeResultResponse[];
 }
 
 export const Anime = (props: Props) => {
@@ -41,7 +33,7 @@ export const Anime = (props: Props) => {
         <HStack align="left" spacing={1.5}>
           <Image w={75} h={100} fit="cover" src={anime.image_url} />
           <VStack align="left">
-            <Link>
+            <Link to={`/anime/${anime.mal_id}`}>
               <Heading color="#2E51A2" size="xs">
                 {anime.title}
               </Heading>
