@@ -1,5 +1,14 @@
 {
+  "name": "animanga",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "build": "yarn lerna run --stream build",
+    "start": "yarn workspace @animanga/server start"
   }
 }

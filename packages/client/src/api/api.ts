@@ -306,31 +306,31 @@ export interface HomePageResponse {
 }
 
 export const getCategorisedResults = async (category: string, query: string) => {
-  const results = await axios.get(`http://localhost:8080/search/${category}/${query}`);
+  const results = await axios.get(`${window.location.origin}/search/${category}/${query}`);
 
   return results.data;
 };
 
 export const getSeasonAnimeResults = async (): Promise<SeasonAnimeResponse> => {
-  const results = await axios.get(`http://localhost:8080/season`);
+  const results = await axios.get(`${window.location.origin}/season`);
 
   return results.data;
 };
 
 export const getAnimeScheduleResults = async (): Promise<AnimeScheduleResponse> => {
-  const results = await axios.get(`http://localhost:8080/schedule`);
+  const results = await axios.get(`${window.location.origin}/schedule`);
 
   return results.data;
 };
 
 export const getTopResults = async (category: string, subtype?: string) => {
-  const results = await axios.get(`http://localhost:8080/top/${category}/1/${subtype ?? ''}`);
+  const results = await axios.get(`${window.location.origin}/top/${category}/1/${subtype ?? ''}`);
 
   return results.data;
 };
 
 export const getAnimeDetails = async (category: string, id: number): Promise<AnimeResponse> => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/`);
+  const results = await axios.get(`${window.location.origin}/${category}/${id}/`);
 
   return results.data;
 };
@@ -339,7 +339,7 @@ export const getAnimeVideos = async (
   category: string,
   id: number
 ): Promise<AnimeVideosResponse> => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/videos`);
+  const results = await axios.get(`${window.location.origin}/${category}/${id}/videos`);
 
   return results.data;
 };
@@ -348,7 +348,7 @@ export const getAnimePictures = async (
   category: string,
   id: number
 ): Promise<AnimePicturesResponse> => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/pictures`);
+  const results = await axios.get(`${window.location.origin}/${category}/${id}/pictures`);
 
   return results.data;
 };
@@ -357,7 +357,7 @@ export const getAnimeCharactersStaff = async (
   category: string,
   id: number
 ): Promise<AnimeCharactersStaffResponse> => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/characters_staff`);
+  const results = await axios.get(`${window.location.origin}/${category}/${id}/characters_staff`);
 
   return results.data;
 };
@@ -366,13 +366,13 @@ export const getAnimeReviews = async (
   category: string,
   id: number
 ): Promise<AnimeReviewsResponse> => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/reviews`);
+  const results = await axios.get(`${window.location.origin}/${category}/${id}/reviews`);
 
   return results.data;
 };
 
 export const getAnimeNews = async (category: string, id: number): Promise<AnimeNewsResponse> => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/news`);
+  const results = await axios.get(`${window.location.origin}/${category}/${id}/news`);
 
   return results.data;
 };
@@ -381,7 +381,7 @@ export const getAnimeRecommendations = async (
   category: string,
   id: number
 ): Promise<AnimeRecommendationsResponse> => {
-  const results = await axios.get(`http://localhost:8080/${category}/${id}/recommendations`);
+  const results = await axios.get(`${window.location.origin}/${category}/${id}/recommendations`);
 
   return results.data;
 };

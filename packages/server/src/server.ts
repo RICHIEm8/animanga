@@ -2,11 +2,17 @@ import express from 'express';
 import axios from 'axios';
 import { Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path'
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(cors());
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../client/build')))
+}
+
 
 app.use('/search/:category/:query', async (req: Request, res: Response) => {
   try {
